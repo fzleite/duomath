@@ -59,6 +59,13 @@ export function StageList() {
           )
         })}
       </ol>
+
+      {/* as duas metades do mesmo assunto: estudo aqui, treino cronometrado no jogo */}
+      {module.companionGameId && (
+        <Link className="companion-link" to={`/jogo/${module.companionGameId}`}>
+          Treinar no jogo cronometrado →
+        </Link>
+      )}
     </main>
   )
 }

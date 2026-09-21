@@ -787,6 +787,45 @@ h3 {
   margin-top: auto;
 }
 
+.companion-link {
+  align-self: center;
+  padding: 10px 16px;
+  background: var(--fundo-suave);
+  border-radius: 12px;
+  color: var(--azul);
+  font-size: 0.92rem;
+  text-decoration: none;
+}
+
+/* ---------- apoio visual da multiplicacao ---------- */
+
+.dot-array {
+  width: 100%;
+  height: auto;
+}
+
+.group-sum {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.group-chip {
+  display: flex;
+  gap: 5px;
+  padding: 8px 10px;
+  background: var(--fundo-suave);
+  border-radius: 12px;
+}
+
+.group-dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
 /* ---------- Pizinho ---------- */
 
 .pizinho {

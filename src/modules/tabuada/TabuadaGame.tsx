@@ -57,7 +57,7 @@ export function TabuadaGame() {
         <Link className="link-quiet" to="/">
           Voltar
         </Link>
-        <strong>Tabuada</strong>
+        <strong>Treino de tabuada</strong>
       </header>
 
       <p className="muted">Responda o mais rapido que conseguir. O tempo de cada pergunta e cronometrado.</p>

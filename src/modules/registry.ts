@@ -1,5 +1,6 @@
 import { fractionsModule } from './fractions'
 import { tabuadaModule } from './tabuada'
+import { tabuadaEstudoModule } from './tabuada-estudo'
 import { isContentModule, isGameModule, type AnyMathModule, type ContentModule, type GameModule } from './types'
 
 /**
@@ -14,6 +15,8 @@ import { isContentModule, isGameModule, type AnyMathModule, type ContentModule, 
  */
 export const modules: AnyMathModule[] = [
   fractionsModule,
+  // a Tabuada aparece nas duas secoes: estudo em Conteudo, treino cronometrado em Jogos
+  tabuadaEstudoModule,
   tabuadaModule,
   {
     id: 'porcentagem',

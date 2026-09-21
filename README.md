@@ -42,13 +42,17 @@ public/       ícones + .htaccess (vai para dist/)
 O hub separa duas categorias, e o contrato de cada uma está em `src/modules/types.ts`:
 
 - **Conteúdo** (`ContentModule`) — exercícios declarados em etapas, trilha com desbloqueio
-  sequencial. Hoje: **Frações**. Para criar um: `src/modules/<nome>/` com `exercises.ts`
-  (etapas + exercícios, cada um com `bloom` e `hint`) e uma view que renderize os tipos
-  daquele módulo; registre em `registry.ts`. Hub, trilha, progresso, KPIs e Pizinho vêm do
-  motor (`src/screens/ExercisePlayer.tsx`).
+  sequencial. Hoje: **Frações** e **Tabuada (estudo)**. Para criar um: `src/modules/<nome>/`
+  com `exercises.ts` (etapas + exercícios, cada um com `bloom` e `hint`) e uma view que
+  renderize os tipos daquele módulo; registre em `registry.ts`. Hub, trilha, progresso, KPIs e
+  Pizinho vêm do motor (`src/screens/ExercisePlayer.tsx`).
 - **Jogo** (`GameModule`) — perguntas sorteadas, cronometradas, com níveis que abrem por
-  desempenho e acesso livre a qualquer momento. Hoje: **Tabuada**. Traz a própria tela
+  desempenho e acesso livre a qualquer momento. Hoje: **Tabuada (treino)**. Traz a própria tela
   (`GameView`) e grava tentativas com `tag` para estatística por item sorteado.
+
+A Tabuada existe nas duas categorias, como o spec pede: o estudo (`tabuada-estudo`) ensina a
+multiplicação com apoio visual e progressão por Bloom; o treino (`tabuada`) automatiza o cálculo
+mental contra o cronômetro. O estudo aponta para o treino por `companionGameId`.
 
 Os módulos do roadmap (porcentagem, álgebra, geometria/trigonometria) já estão registrados
 com `status: 'soon'` e aparecem como cards desabilitados.

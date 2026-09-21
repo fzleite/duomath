@@ -59,6 +59,20 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
   não rewrite de servidor. Ele volta com status HTTP 404 por design e isso não afeta o app.
 - Service worker/manifest só valem em build de produção; `npm run dev` não exercita isso.
 
+## A Tabuada são dois módulos, de propósito
+
+O spec pede duas partes complementares, e elas caem em categorias diferentes:
+
+- `src/modules/tabuada-estudo/` — id **`tabuada-estudo`**, categoria `conteudo`, seção Conteúdo.
+  3 etapas por Bloom com apoio visual (arranjo retangular e soma de grupos iguais). Alimenta o
+  mesmo progresso/KPI dos demais módulos de conteúdo.
+- `src/modules/tabuada/` — id **`tabuada`**, categoria `jogo`, seção Jogos. Treino cronometrado.
+
+**Os ids não podem ser trocados**: `tabuada` já era o id do jogo quando o estudo foi criado, e
+já existem tentativas gravadas com ele. Renomear o jogo orfanaria o histórico de quem já treinou
+(`Attempt.moduleId` não é migrado). O estudo aponta para o jogo via `companionGameId`, que a
+trilha de etapas usa para oferecer o atalho.
+
 ## Parâmetros do módulo de Tabuada (escolhidos por mim, feitos para calibrar)
 
 O spec diz "por exemplo, um tempo médio de resposta abaixo de um limite alvo" e deixa os

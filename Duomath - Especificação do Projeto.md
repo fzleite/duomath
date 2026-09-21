@@ -81,7 +81,21 @@ O Duomath deve ser estruturado para receber novos módulos matemáticos ao longo
 - Álgebra.
 - Geometria e trigonometria: ângulos, seno, cosseno, tangente (módulo em que o Pizinho será formalmente introduzido como referência ao número Pi).
 
-### Detalhamento do módulo de Tabuada
+### Módulo de Tabuada
+
+A Tabuada tem duas partes complementares: um modo de estudo pedagógico, com progressão de etapas dentro do plano de aprendizado (como no módulo de Frações), e um modo de jogo de treino livre e cronometrado, detalhado mais abaixo.
+
+### Modo de estudo (plano de aprendizado)
+
+Segue a mesma lógica pedagógica dos demais módulos de conteúdo, com etapas organizadas pela Taxonomia de Bloom e representações visuais (por exemplo, agrupamentos e somas repetidas para ilustrar a multiplicação).
+
+- Etapa 1 (lembrar/entender): introdução ao conceito de multiplicação como soma de parcelas iguais, com apoio visual (agrupamentos, arranjos retangulares). Tabuadas de 1 a 5.
+- Etapa 2 (aplicar): memória e reconhecimento das tabuadas de 1 a 10, com exercícios guiados e apoio do Pizinho.
+- Etapa 3 (analisar/avaliar): resolução de problemas aplicados usando a tabuada, identificação de padrões (por exemplo, comutatividade) e preparação para as tabuadas mais complexas, até 100.
+
+Esse modo de estudo alimenta o mesmo sistema de progresso e KPIs dos demais módulos (etapas concluídas, taxa de acerto na primeira tentativa, número de tentativas), visível também no painel do responsável.
+
+### Modo de jogo (treino livre cronometrado)
 
 A Tabuada fica em uma categoria própria de Jogos no menu principal, separada dos módulos de conteúdo. Assim como os demais módulos, ela tem progressão com desbloqueio de níveis mais avançados. A diferença é que ela pode ser acessada livremente a qualquer momento, como um atalho rápido de treino, sem depender de estar na vez daquele conteúdo no plano de estudo. O foco é velocidade e automatização do cálculo mental.
 

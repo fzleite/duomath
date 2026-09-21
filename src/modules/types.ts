@@ -44,6 +44,11 @@ export interface ContentModule<E extends ExerciseBase = ExerciseBase> extends Mo
   category: 'conteudo'
   stages: Stage<E>[]
   ExerciseView: ComponentType<ExerciseViewProps<E>>
+  /**
+   * Modulo de jogo que treina o mesmo assunto (ex: Tabuada estudo -> Tabuada treino).
+   * A trilha de etapas oferece o atalho, sem obrigar a passar por ela.
+   */
+  companionGameId?: string
 }
 
 /**

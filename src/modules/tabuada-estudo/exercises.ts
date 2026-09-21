@@ -1,0 +1,196 @@
+import type { ExerciseBase, Stage } from '../types'
+
+/**
+ * Apoio visual opcional do exercicio. 'array' = arranjo retangular (fileiras x colunas),
+ * 'soma' = parcelas iguais agrupadas. O enunciado carrega a pergunta; o visual mostra o
+ * porque da conta.
+ */
+export type StudyVisual =
+  | { kind: 'array'; rows: number; cols: number }
+  | { kind: 'soma'; groups: number; perGroup: number }
+
+export interface StudyExercise extends ExerciseBase {
+  /** A resposta certa e sempre options[0] nos dados; a view embaralha na renderizacao. */
+  options: string[]
+  answerIndex: number
+  visual?: StudyVisual
+}
+
+export const studyStages: Stage<StudyExercise>[] = [
+  {
+    id: 'etapa-1',
+    title: 'Multiplicacao como soma de parcelas iguais',
+    curriculum: 'tabuadas de 1 a 5 — apoio visual',
+    exercises: [
+      {
+        id: 'me1-01',
+        bloom: 'lembrar',
+        prompt: 'Quantos pontos ha nesta figura?',
+        hint: 'Sao 3 fileiras com 4 pontos cada. Conte uma fileira e repita 3 vezes.',
+        visual: { kind: 'array', rows: 3, cols: 4 },
+        options: ['12', '7', '9', '16'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me1-02',
+        bloom: 'entender',
+        prompt: 'Que multiplicacao esta figura representa?',
+        hint: 'Primeiro o numero de fileiras, depois quantos pontos tem em cada fileira.',
+        visual: { kind: 'array', rows: 2, cols: 5 },
+        options: ['2 x 5', '5 x 5', '2 x 2', '7 x 1'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me1-03',
+        bloom: 'entender',
+        prompt: 'Qual multiplicacao tem o mesmo resultado que 5 + 5 + 5?',
+        hint: 'O 5 aparece 3 vezes. Multiplicar e somar o mesmo numero varias vezes.',
+        visual: { kind: 'soma', groups: 3, perGroup: 5 },
+        options: ['3 x 5', '5 x 5', '3 x 3', '5 + 3'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me1-04',
+        bloom: 'aplicar',
+        prompt: 'Quanto e 4 + 4 + 4 + 4?',
+        hint: 'Sao quatro grupos de 4, ou seja, 4 x 4.',
+        visual: { kind: 'soma', groups: 4, perGroup: 4 },
+        options: ['16', '12', '8', '20'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me1-05',
+        bloom: 'aplicar',
+        prompt: 'Qual soma tem o mesmo resultado que 4 x 3?',
+        hint: 'Quatro grupos com 3 em cada grupo.',
+        options: ['3 + 3 + 3 + 3', '4 + 3', '4 + 4 + 4 + 4', '3 + 3 + 3'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me1-06',
+        bloom: 'analisar',
+        prompt: 'Esta figura tem 5 fileiras de 3. Quanto da ao todo?',
+        hint: 'Conte de 3 em 3, cinco vezes: 3, 6, 9...',
+        visual: { kind: 'array', rows: 5, cols: 3 },
+        options: ['15', '8', '12', '18'],
+        answerIndex: 0,
+      },
+    ],
+  },
+  {
+    id: 'etapa-2',
+    title: 'Memoria das tabuadas de 1 a 10',
+    curriculum: 'reconhecimento com apoio do Pizinho',
+    exercises: [
+      {
+        id: 'me2-01',
+        bloom: 'lembrar',
+        prompt: 'Quanto e 6 x 7?',
+        hint: 'Comece de 6 x 6 = 36 e some mais 6.',
+        options: ['42', '36', '48', '40'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me2-02',
+        bloom: 'lembrar',
+        prompt: 'Quanto e 8 x 4?',
+        hint: 'O dobro de 8 e 16; o dobro de 16 e a resposta.',
+        options: ['32', '24', '36', '28'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me2-03',
+        bloom: 'aplicar',
+        prompt: 'Quanto e 9 x 6?',
+        hint: 'Na tabuada do 9, faca 10 x 6 = 60 e tire um 6.',
+        options: ['54', '45', '56', '63'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me2-04',
+        bloom: 'aplicar',
+        prompt: 'Quanto e 7 x 7?',
+        hint: 'Pense em 7 x 5 = 35 e some mais dois 7.',
+        options: ['49', '42', '56', '47'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me2-05',
+        bloom: 'aplicar',
+        prompt: 'Quanto e 10 x 8?',
+        hint: 'Multiplicar por 10 e so acrescentar um zero.',
+        options: ['80', '18', '88', '108'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me2-06',
+        bloom: 'analisar',
+        prompt: 'Qual destes numeros NAO esta na tabuada do 3?',
+        hint: 'Na tabuada do 3 os numeros vao de 3 em 3: 3, 6, 9, 12...',
+        options: ['20', '18', '21', '27'],
+        answerIndex: 0,
+      },
+    ],
+  },
+  {
+    id: 'etapa-3',
+    title: 'Problemas, padroes e tabuadas maiores',
+    curriculum: 'comutatividade e preparacao ate 100',
+    exercises: [
+      {
+        id: 'me3-01',
+        bloom: 'entender',
+        prompt: 'Se 6 x 8 = 48, quanto e 8 x 6?',
+        hint: 'Trocar a ordem dos fatores nao muda o resultado — e a mesma quantidade vista de lado.',
+        visual: { kind: 'array', rows: 6, cols: 8 },
+        options: ['48', '68', '42', 'nao da para saber'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me3-02',
+        bloom: 'aplicar',
+        prompt: 'Cada caixa tem 12 lapis. Quantos lapis ha em 4 caixas?',
+        hint: 'Separe em 10 + 2: quatro grupos de 10 e quatro grupos de 2.',
+        options: ['48', '16', '44', '36'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me3-03',
+        bloom: 'aplicar',
+        prompt: 'Quanto e 20 x 4?',
+        hint: 'E o mesmo que 2 x 4 com um zero a mais no final.',
+        options: ['80', '24', '84', '60'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me3-04',
+        bloom: 'analisar',
+        prompt: 'Quanto e 15 x 6?',
+        hint: 'Quebre o 15: 10 x 6 = 60 e 5 x 6 = 30. Agora some.',
+        options: ['90', '21', '86', '75'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me3-05',
+        bloom: 'analisar',
+        prompt: 'Uma sala tem 7 fileiras com 8 cadeiras. Duas cadeiras estao quebradas. Quantas dao para usar?',
+        hint: 'Primeiro descubra o total (7 x 8) e so depois tire as 2 quebradas.',
+        options: ['54', '56', '52', '58'],
+        answerIndex: 0,
+      },
+      {
+        id: 'me3-06',
+        bloom: 'avaliar',
+        prompt: 'Para calcular 25 x 8, qual caminho da o resultado certo com menos esforco?',
+        hint: 'Numeros redondos ajudam: 25 x 8 e o mesmo que 100 x 2.',
+        options: [
+          'Fazer 25 x 2 = 50 e depois 50 x 4',
+          'Somar 25 + 8',
+          'Fazer 25 x 8 so somando 25 oito vezes',
+          'Fazer 20 x 8 e parar por ai',
+        ],
+        answerIndex: 0,
+      },
+    ],
+  },
+]
