@@ -33,7 +33,11 @@ jobs:
       # build tambem gera o dist/404.html (fallback de SPA do Pages)
       - run: npm run build
 
+      # enablement: liga o Pages (source = GitHub Actions) na primeira execucao. Sem isso o
+      # passo falha com "Get Pages site failed" ate alguem habilitar a mao em Settings > Pages.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
