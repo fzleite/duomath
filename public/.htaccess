@@ -1,0 +1,26 @@
+# Vai junto no dist/ do build — config do Apache local que serve o Duomath.
+#
+# 1) Fallback de SPA: sem isso, um refresh ou link direto em /modulo/fracoes/etapa-1 da 404
+#    no Apache antes de o JS/service worker existir. O navigateFallback do vite-plugin-pwa
+#    resolve so o caso offline; esta e uma camada separada, do lado do servidor.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# 2) Apache antigo pode servir o manifest com MIME type errado
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+# 3) O service worker nunca deve ser cacheado pelo navegador — senao uma versao nova
+#    do app pode nunca ser descoberta.
+<FilesMatch "(sw\.js|registerSW\.js|manifest\.webmanifest)$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </IfModule>
+</FilesMatch>

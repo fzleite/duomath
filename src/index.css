@@ -1,0 +1,628 @@
+/*
+ * Identidade do Duomath: fundo branco neutro, paleta viva em azul e verde, foco no exercicio.
+ * Sem biblioteca de UI — a tela da crianca tem poucos controles de proposito.
+ */
+
+:root {
+  --verde: #1a936f;
+  --verde-claro: #2a9d8f;
+  --azul: #3b7ba0;
+  --azul-claro: #48bfe3;
+  --tinta: #123;
+  --tinta-suave: #5a6a72;
+  --linha: #dbe6ea;
+  --fundo-suave: #f4f9fa;
+  --erro: #c1533f;
+  --raio: 16px;
+  --sombra: 0 2px 10px rgb(18 51 68 / 8%);
+
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--tinta);
+  background: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* areas seguras para o modo standalone instalado no celular/tablet */
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 640px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
+}
+
+.screen-center {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.brand {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  text-align: left;
+}
+
+.brand h1 {
+  font-size: 2rem;
+}
+
+.brand p {
+  margin: 4px 0 0;
+  color: var(--tinta-suave);
+}
+
+.topbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar-id {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.topbar-id small {
+  display: block;
+  color: var(--tinta-suave);
+}
+
+.link-quiet {
+  color: var(--azul);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.muted {
+  color: var(--tinta-suave);
+}
+
+.small {
+  font-size: 0.85rem;
+}
+
+/* ---------- perfis ---------- */
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  width: 100%;
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: 18px 12px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  font: inherit;
+}
+
+.profile-card small {
+  color: var(--tinta-suave);
+}
+
+.profile-card-new {
+  border-style: dashed;
+}
+
+.profile-initial {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.profile-initial-sm {
+  width: 38px;
+  height: 38px;
+  font-size: 1.05rem;
+}
+
+.profile-initial-new {
+  background: var(--linha);
+  color: var(--tinta-suave);
+}
+
+/* ---------- cards e formularios ---------- */
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  text-align: left;
+}
+
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+}
+
+.form input[type='text'],
+.form input:not([type]) {
+  padding: 10px 12px;
+  border: 1px solid var(--linha);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.color-picker {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 0;
+  border: 0;
+}
+
+.color-picker legend {
+  padding: 0;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.swatch {
+  width: 32px;
+  height: 32px;
+  border: 3px solid transparent;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.swatch-on {
+  border-color: var(--tinta);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.form-actions-start {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.btn {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--verde);
+  color: #fff;
+}
+
+.btn-ghost {
+  background: var(--fundo-suave);
+  color: var(--azul);
+}
+
+.btn-danger {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid var(--erro);
+  color: var(--erro);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.switch {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.status {
+  margin: 0;
+  color: var(--verde);
+  font-size: 0.9rem;
+}
+
+/* ---------- hub de modulos ---------- */
+
+.module-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.module-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.module-card p {
+  margin: 0;
+  color: var(--tinta-suave);
+}
+
+.module-card-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.module-card-soon {
+  border-color: var(--linha);
+  background: var(--fundo-suave);
+  cursor: default;
+  opacity: 0.75;
+}
+
+.badge {
+  padding: 3px 8px;
+  background: var(--fundo-suave);
+  border-radius: 999px;
+  color: var(--tinta-suave);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.bar-track {
+  height: 10px;
+  background: var(--fundo-suave);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 240ms ease;
+}
+
+.kpi-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.kpi-row strong {
+  color: var(--tinta);
+}
+
+.kpi-row-sm {
+  font-size: 0.8rem;
+}
+
+.kpi-row-lg {
+  justify-content: center;
+  font-size: 1.05rem;
+}
+
+.hub-footer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: auto;
+  color: var(--tinta-suave);
+  font-size: 0.85rem;
+}
+
+/* ---------- trilha de etapas ---------- */
+
+.stage-path {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stage-button {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.stage-locked .stage-button {
+  background: var(--fundo-suave);
+  cursor: default;
+  opacity: 0.6;
+}
+
+.stage-marker {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  background: var(--fundo-suave);
+  border-radius: 50%;
+  color: #fff;
+  font-weight: 700;
+}
+
+.stage-locked .stage-marker,
+.stage-item:not(.stage-done) .stage-marker {
+  background: var(--fundo-suave);
+  color: var(--tinta-suave);
+}
+
+.stage-done .stage-marker {
+  color: #fff;
+}
+
+.stage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stage-body small,
+.stage-kpi {
+  color: var(--tinta-suave);
+  font-size: 0.82rem;
+}
+
+/* ---------- exercicio ---------- */
+
+.exercise {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.exercise-prompt {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.exercise-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.shape-count {
+  fill: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.options-fraction {
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+}
+
+.option {
+  display: grid;
+  min-height: 62px;
+  place-items: center;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: 14px;
+  font: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.option:active:not(:disabled) {
+  border-color: var(--azul-claro);
+}
+
+.option-wide {
+  grid-column: 1 / -1;
+}
+
+.option-primary {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+  font-weight: 600;
+}
+
+.option:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.compare-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.compare-side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: 14px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.fraction-num {
+  padding: 0 6px;
+  border-bottom: 2px solid currentcolor;
+}
+
+.sliders {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.sliders label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+
+.sliders input[type='range'] {
+  width: 100%;
+  accent-color: var(--verde);
+  height: 28px;
+}
+
+.exercise-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+/* ---------- Pizinho ---------- */
+
+.pizinho {
+  position: relative;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--fundo-suave);
+  border-radius: var(--raio);
+}
+
+.pizinho-bubble {
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+.pizinho-festa {
+  background: #e8f7f1;
+}
+
+.pizinho-apoio {
+  background: #eef6f8;
+}
+
+.pizinho-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: none;
+  border: 0;
+  color: var(--tinta-suave);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+/* ---------- painel do responsavel ---------- */
+
+.report-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.report-module {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--linha);
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.report-table th,
+.report-table td {
+  padding: 6px 4px;
+  border-bottom: 1px solid var(--linha);
+  text-align: left;
+}
+
+.report-table th {
+  color: var(--tinta-suave);
+  font-weight: 600;
+}
