@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import { Pizinho, type PizinhoMood } from '../components/Pizinho'
 import { computeModuleMetrics, formatPercent } from '../data/metrics'
-import { getModule } from '../modules/registry'
+import { getContentModule } from '../modules/registry'
 import type { ExerciseBase } from '../modules/types'
 import { useApp } from '../state/store'
 
@@ -23,7 +23,7 @@ const CHEERS = ['Isso! Voce pegou a ideia.', 'Perfeito!', 'Muito bem!', 'Acertou
 export function ExercisePlayer() {
   const { moduleId, stageId } = useParams()
   const navigate = useNavigate()
-  const module = getModule(moduleId)
+  const module = getContentModule(moduleId)
   const stage = module?.stages.find((candidate: { id: string }) => candidate.id === stageId)
 
   const attempts = useApp((s) => s.attempts)

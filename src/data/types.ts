@@ -38,6 +38,12 @@ export interface Attempt {
   /** Ms entre a exibicao do exercicio e a resposta — ajuda a distinguir dominio de chute. */
   elapsedMs: number
   answeredAt: string
+  /**
+   * Agrupador do item sorteado em modulos de jogo (ex: "8" para uma pergunta da tabuada do 8).
+   * Opcional: modulos de conteudo tem exercicio fixo e nao precisam dele. E o que permite
+   * comparar desempenho por tabuada mesmo com o sorteio aleatorio.
+   */
+  tag?: string
 }
 
 export interface Settings {

@@ -9,8 +9,10 @@ import {
   listProgress,
   patchSettings,
   recordAnswer,
+  recordGameAttempt,
   type RecordAnswerInput,
   type RecordAnswerResult,
+  type RecordGameAttemptInput,
 } from '../data/repo'
 import type { Attempt, Profile, Settings, StageProgress } from '../data/types'
 
@@ -29,6 +31,7 @@ interface AppState {
   addProfile: (input: Pick<Profile, 'name' | 'guardian' | 'color'>) => Promise<Profile>
   removeProfile: (profileId: string) => Promise<void>
   answer: (input: Omit<RecordAnswerInput, 'profileId'>) => Promise<RecordAnswerResult>
+  answerGame: (input: Omit<RecordGameAttemptInput, 'profileId'>) => Promise<Attempt>
   setPizinhoEnabled: (enabled: boolean) => Promise<void>
 }
 
@@ -88,6 +91,14 @@ export const useApp = create<AppState>((set, get) => ({
       ],
     }))
     return result
+  },
+
+  answerGame: async (input) => {
+    const profileId = get().activeProfileId
+    if (!profileId) throw new Error('Nenhum perfil ativo.')
+    const attempt = await recordGameAttempt({ ...input, profileId })
+    set((state) => ({ attempts: [...state.attempts, attempt] }))
+    return attempt
   },
 
   setPizinhoEnabled: async (enabled) => {

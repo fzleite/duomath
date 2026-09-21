@@ -104,3 +104,115 @@ export function computeModuleMetrics(
 export function formatPercent(value: number | null): string {
   return value === null ? '—' : `${Math.round(value * 100)}%`
 }
+
+export function formatSeconds(ms: number | null): string {
+  return ms === null ? '—' : `${(ms / 1000).toFixed(1)}s`
+}
+
+// ---------------------------------------------------------------------------
+// Modulos de jogo (perguntas sorteadas, desempenho cronometrado)
+// ---------------------------------------------------------------------------
+
+export interface TimedStats {
+  answered: number
+  correct: number
+  accuracy: number | null
+  /** Media de tempo considerando SO as respostas certas — errar rapido nao e ser rapido. */
+  avgMs: number | null
+  bestMs: number | null
+}
+
+function timedStats(attempts: Attempt[]): TimedStats {
+  const correct = attempts.filter((a) => a.correct)
+  const times = correct.map((a) => a.elapsedMs)
+  return {
+    answered: attempts.length,
+    correct: correct.length,
+    accuracy: attempts.length ? correct.length / attempts.length : null,
+    avgMs: times.length ? times.reduce((sum, ms) => sum + ms, 0) / times.length : null,
+    bestMs: times.length ? Math.min(...times) : null,
+  }
+}
+
+export function levelStats(attempts: Attempt[], moduleId: string, levelId: string): TimedStats {
+  return timedStats(attempts.filter((a) => a.moduleId === moduleId && a.stageId === levelId))
+}
+
+/** Desempenho do modulo de jogo inteiro, somando todos os niveis. */
+export function gameStats(attempts: Attempt[], moduleId: string): TimedStats {
+  return timedStats(attempts.filter((a) => a.moduleId === moduleId))
+}
+
+export interface UnlockStatus {
+  unlocked: boolean
+  /** Falta o que para destravar — usado para mostrar o alvo em vez de um cadeado mudo. */
+  missing: { correct: number; avgMs: number | null; accuracy: number | null }
+}
+
+export function unlockStatus(
+  criteria: { fromLevelId: string; minCorrect: number; maxAvgMs: number; minAccuracy: number } | null,
+  attempts: Attempt[],
+  moduleId: string,
+): UnlockStatus {
+  if (!criteria) return { unlocked: true, missing: { correct: 0, avgMs: null, accuracy: null } }
+
+  const stats = levelStats(attempts, moduleId, criteria.fromLevelId)
+  const unlocked =
+    stats.correct >= criteria.minCorrect &&
+    stats.avgMs !== null &&
+    stats.avgMs <= criteria.maxAvgMs &&
+    stats.accuracy !== null &&
+    stats.accuracy >= criteria.minAccuracy
+
+  return {
+    unlocked,
+    missing: {
+      correct: Math.max(0, criteria.minCorrect - stats.correct),
+      avgMs: stats.avgMs,
+      accuracy: stats.accuracy,
+    },
+  }
+}
+
+export interface TagStats extends TimedStats {
+  tag: string
+  /** Tempo da resposta certa mais recente — comparavel com avgMs para ver se melhorou. */
+  lastMs: number | null
+}
+
+/** Desempenho por item sorteado (ex: tabuada do 8), agregando todos os niveis do modulo. */
+export function statsByTag(attempts: Attempt[], moduleId: string): TagStats[] {
+  const grouped = new Map<string, Attempt[]>()
+  for (const attempt of attempts) {
+    if (attempt.moduleId !== moduleId || !attempt.tag) continue
+    const list = grouped.get(attempt.tag)
+    if (list) list.push(attempt)
+    else grouped.set(attempt.tag, [attempt])
+  }
+
+  return [...grouped.entries()]
+    .map(([tag, list]) => {
+      const chronological = [...list].sort((a, b) => a.answeredAt.localeCompare(b.answeredAt))
+      const lastCorrect = [...chronological].reverse().find((a) => a.correct)
+      return { tag, ...timedStats(list), lastMs: lastCorrect?.elapsedMs ?? null }
+    })
+    .sort((a, b) => (b.avgMs ?? 0) - (a.avgMs ?? 0))
+}
+
+/**
+ * Evolucao do tempo ao longo do tempo: media por bloco de N respostas certas, em ordem
+ * cronologica. Blocos (e nao por dia) porque a crianca pode treinar varias vezes no mesmo dia
+ * ou passar dias sem treinar — o que interessa e a curva de aprendizado, nao o calendario.
+ */
+export function evolutionSeries(attempts: Attempt[], moduleId: string, blockSize = 10): number[] {
+  const correct = attempts
+    .filter((a) => a.moduleId === moduleId && a.correct)
+    .sort((a, b) => a.answeredAt.localeCompare(b.answeredAt))
+
+  const series: number[] = []
+  for (let i = 0; i + blockSize <= correct.length; i += blockSize) {
+    const block = correct.slice(i, i + blockSize)
+    series.push(block.reduce((sum, a) => sum + a.elapsedMs, 0) / blockSize)
+  }
+  return series
+}

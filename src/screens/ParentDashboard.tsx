@@ -2,10 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { exportWorkspace, importWorkspace, shareOrDownloadBackup } from '../data/backup'
-import { computeModuleMetrics, formatPercent, type ModuleMetrics } from '../data/metrics'
+import {
+  computeModuleMetrics,
+  formatPercent,
+  formatSeconds,
+  gameStats,
+  statsByTag,
+  type ModuleMetrics,
+  type TagStats,
+  type TimedStats,
+} from '../data/metrics'
 import { listAttempts, listProgress } from '../data/repo'
 import type { Profile } from '../data/types'
-import { getModule, readyModules } from '../modules/registry'
+import { getContentModule, getModule, readyContentModules, readyGameModules } from '../modules/registry'
 import type { ExerciseBase } from '../modules/types'
 import { useApp } from '../state/store'
 
@@ -14,20 +23,31 @@ function moduleTitle(moduleId: string): string {
 }
 
 function stageTitle(moduleId: string, stageId: string): string {
-  const stage = getModule(moduleId)?.stages.find((candidate: { id: string }) => candidate.id === stageId)
+  const stage = getContentModule(moduleId)?.stages.find((candidate: { id: string }) => candidate.id === stageId)
   return stage?.title ?? stageId
+}
+
+function tagLabel(tag: string): string {
+  return tag === 'contas' ? 'Contas soltas' : `Tabuada do ${tag}`
+}
+
+interface GameReport {
+  moduleId: string
+  overall: TimedStats
+  tags: TagStats[]
 }
 
 interface ProfileReport {
   profile: Profile
   modules: ModuleMetrics[]
+  games: GameReport[]
   /** Exercicios respondidos de novo depois de ja terem sido acertados. */
   repeatsAfterCleared: number
 }
 
 async function buildReport(profile: Profile): Promise<ProfileReport> {
   const [attempts, progress] = await Promise.all([listAttempts(profile.id), listProgress(profile.id)])
-  const modules = readyModules().map((module) =>
+  const modules = readyContentModules().map((module) =>
     computeModuleMetrics(
       module.id,
       module.stages.map((stage: { id: string; exercises: ExerciseBase[] }) => ({
@@ -38,12 +58,17 @@ async function buildReport(profile: Profile): Promise<ProfileReport> {
       progress,
     ),
   )
+  const games = readyGameModules().map((module) => ({
+    moduleId: module.id,
+    overall: gameStats(attempts, module.id),
+    tags: statsByTag(attempts, module.id),
+  }))
   const repeatsAfterCleared = modules
     .flatMap((m) => m.stages)
     .flatMap((s) => s.exercises)
     .reduce((sum, e) => sum + e.attemptsAfterCleared, 0)
 
-  return { profile, modules, repeatsAfterCleared }
+  return { profile, modules, games, repeatsAfterCleared }
 }
 
 export function ParentDashboard() {
@@ -133,7 +158,7 @@ export function ParentDashboard() {
         </label>
       </section>
 
-      {reports.map(({ profile, modules, repeatsAfterCleared }) => (
+      {reports.map(({ profile, modules, games, repeatsAfterCleared }) => (
         <section className="card" key={profile.id}>
           <div className="report-head">
             <span className="profile-initial profile-initial-sm" style={{ background: profile.color }}>
@@ -187,6 +212,49 @@ export function ParentDashboard() {
               </table>
             </div>
           ))}
+
+          {games
+            .filter((game) => game.overall.answered > 0)
+            .map((game) => (
+              <div className="report-module" key={game.moduleId}>
+                <h3>{moduleTitle(game.moduleId)}</h3>
+                <div className="kpi-row">
+                  <span>
+                    <strong>{game.overall.answered}</strong> respostas
+                  </span>
+                  <span>
+                    <strong>{formatPercent(game.overall.accuracy)}</strong> de acerto
+                  </span>
+                  <span>
+                    <strong>{formatSeconds(game.overall.avgMs)}</strong> de media
+                  </span>
+                </div>
+
+                <table className="report-table">
+                  <thead>
+                    <tr>
+                      <th>Tabuada</th>
+                      <th>Respostas</th>
+                      <th>Acerto</th>
+                      <th>Media</th>
+                      <th>Melhor</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* ordenado da mais lenta para a mais rapida: o topo e onde apoiar o treino */}
+                    {game.tags.map((tag) => (
+                      <tr key={tag.tag}>
+                        <td>{tagLabel(tag.tag)}</td>
+                        <td>{tag.answered}</td>
+                        <td>{formatPercent(tag.accuracy)}</td>
+                        <td>{formatSeconds(tag.avgMs)}</td>
+                        <td>{formatSeconds(tag.bestMs)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
 
           <p className="muted small">
             Repeticoes de exercicio ja acertado: <strong>{repeatsAfterCleared}</strong>

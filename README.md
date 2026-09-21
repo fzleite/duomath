@@ -1,6 +1,7 @@
 # Duomath
 
-PWA de matemática visual e interativa — um "Duolingo da matemática" para uso doméstico.
+PWA de matemática visual e interativa — um "Duolingo da matemática" para uso doméstico:
+trilha de conteúdo (Frações) e treino cronometrado (Tabuada).
 100% client-side: sem backend, sem autenticação, sem conta. Todo progresso fica no IndexedDB
 do próprio navegador, com backup/restauração em JSON.
 
@@ -27,24 +28,30 @@ python tools/gen_icons.py   # regenera os ícones do PWA a partir de código
 ```text
 src/
   data/       IndexedDB (db, repo, backup JSON, métricas derivadas)
-  modules/    um diretório por assunto matemático + registry.ts
-  screens/    seleção de perfil, hub, trilha de etapas, player, painel do responsável
-  components/ FractionShape (pizza/retângulo/barra), Pizinho (mascote)
+  modules/    um diretório por assunto + registry.ts (categorias: conteúdo e jogo)
+  screens/    seleção de perfil, hub, trilha de etapas, player, jogo, painel do responsável
+  components/ FractionShape (pizza/retângulo/barra), NumberPad, Pizinho (mascote)
   state/      store Zustand (perfil ativo, progresso do perfil em memória)
   pwa/        swUpdate.ts (recarrega aba antiga após deploy)
-tools/        geração dos ícones
+tools/        geração de ícones + fallback de SPA do build
 public/       ícones + .htaccess (vai para dist/)
 ```
 
-## Adicionar um módulo novo
+## Módulos
 
-1. `src/modules/<nome>/` com `exercises.ts` (etapas + exercícios, cada um com `bloom` e `hint`)
-   e uma view que saiba renderizar os tipos de exercício daquele módulo.
-2. Exporte um `MathModule` e registre em `src/modules/registry.ts`.
+O hub separa duas categorias, e o contrato de cada uma está em `src/modules/types.ts`:
 
-Nada mais muda: hub, trilha, progresso, KPIs, Pizinho e painel do responsável são do motor
-(`src/screens/ExercisePlayer.tsx`), não do módulo. Os módulos do roadmap (porcentagem,
-álgebra, geometria/trigonometria) já estão registrados com `status: 'soon'`.
+- **Conteúdo** (`ContentModule`) — exercícios declarados em etapas, trilha com desbloqueio
+  sequencial. Hoje: **Frações**. Para criar um: `src/modules/<nome>/` com `exercises.ts`
+  (etapas + exercícios, cada um com `bloom` e `hint`) e uma view que renderize os tipos
+  daquele módulo; registre em `registry.ts`. Hub, trilha, progresso, KPIs e Pizinho vêm do
+  motor (`src/screens/ExercisePlayer.tsx`).
+- **Jogo** (`GameModule`) — perguntas sorteadas, cronometradas, com níveis que abrem por
+  desempenho e acesso livre a qualquer momento. Hoje: **Tabuada**. Traz a própria tela
+  (`GameView`) e grava tentativas com `tag` para estatística por item sorteado.
+
+Os módulos do roadmap (porcentagem, álgebra, geometria/trigonometria) já estão registrados
+com `status: 'soon'` e aparecem como cards desabilitados.
 
 ## Deploy
 

@@ -358,6 +358,236 @@ h3 {
   font-size: 0.85rem;
 }
 
+.hub-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hub-section-title {
+  color: var(--tinta-suave);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.module-card h3 {
+  font-size: 1.15rem;
+}
+
+.module-card-game {
+  background: linear-gradient(180deg, #fff, var(--fundo-suave));
+}
+
+.badge-game {
+  background: var(--azul-claro);
+  color: #fff;
+}
+
+.link-button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* ---------- jogo: niveis, quiz e teclado ---------- */
+
+.level-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.level-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.level-card p {
+  margin: 0;
+  color: var(--tinta-suave);
+}
+
+.level-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+}
+
+.level-locked {
+  background: var(--fundo-suave);
+  cursor: default;
+  opacity: 0.7;
+}
+
+.level-kpi {
+  color: var(--tinta-suave);
+  font-size: 0.82rem;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.quiz-counter {
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.quiz-timer {
+  min-width: 56px;
+  color: var(--azul);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.quiz-question {
+  margin: 8px 0 0;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.quiz-answer {
+  display: grid;
+  width: 100%;
+  min-height: 62px;
+  place-items: center;
+  margin: 0;
+  background: var(--fundo-suave);
+  border-radius: 14px;
+  font-size: 2rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.quiz-ok {
+  background: #e8f7f1;
+  color: var(--verde);
+}
+
+.quiz-bad {
+  background: #fdeeea;
+  color: var(--erro);
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.numpad-key {
+  min-height: 60px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: 14px;
+  font: inherit;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.numpad-key:active:not(:disabled) {
+  background: var(--fundo-suave);
+}
+
+.numpad-ok {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+}
+
+.numpad-del {
+  color: var(--tinta-suave);
+}
+
+.numpad-key:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.answer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+.answer-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+.answer-ok {
+  background: #f1faf6;
+}
+
+.answer-bad {
+  background: #fdeeea;
+  color: var(--erro);
+}
+
+/* ---------- graficos das estatisticas ---------- */
+
+.chart {
+  width: 100%;
+  height: auto;
+}
+
+.chart-label {
+  fill: #5a6a72;
+  font-size: 9px;
+}
+
+.tag-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tag-bar {
+  display: grid;
+  grid-template-columns: 56px 1fr 48px;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.tag-bar-label {
+  color: var(--tinta-suave);
+}
+
+.tag-bar-value {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
 /* ---------- trilha de etapas ---------- */
 
 .stage-path {

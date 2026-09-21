@@ -76,6 +76,33 @@ Tela separada da experiência da criança, destinada ao responsável (Fernando).
 
 O Duomath deve ser estruturado para receber novos módulos matemáticos ao longo do tempo, conforme a filha de Fernando avança na escola. Próximos módulos previstos:
 
+- Tabuada (multiplicação), com prática visual e progressiva das tabelas de multiplicar.
 - Porcentagem.
 - Álgebra.
 - Geometria e trigonometria: ângulos, seno, cosseno, tangente (módulo em que o Pizinho será formalmente introduzido como referência ao número Pi).
+
+### Detalhamento do módulo de Tabuada
+
+A Tabuada fica em uma categoria própria de Jogos no menu principal, separada dos módulos de conteúdo. Assim como os demais módulos, ela tem progressão com desbloqueio de níveis mais avançados. A diferença é que ela pode ser acessada livremente a qualquer momento, como um atalho rápido de treino, sem depender de estar na vez daquele conteúdo no plano de estudo. O foco é velocidade e automatização do cálculo mental.
+
+Níveis de dificuldade e sorteio aleatório
+
+- Nível fácil: sorteio aleatório de tabuadas de 1 a 10 (exemplo: pode sortear a tabuada do 8, depois a do 7, depois a do 3). Desbloqueado desde o início.
+- Nível avançado: sorteio aleatório de tabuadas de 1 a 100. Desbloqueado ao atingir um critério de desempenho no nível fácil (por exemplo, um tempo médio de resposta abaixo de um limite alvo).
+- Nível de contas aleatórias: operações soltas (exemplo: 25 vezes 8), no mesmo formato cronometrado. Desbloqueado ao atingir um critério de desempenho no nível avançado.
+
+Mecânica do quiz:
+
+- Cronômetro mede o tempo de resposta de cada pergunta individual (por exemplo, uma pergunta da tabuada do 8).
+- Cada tentativa de resposta é registrada com seu tempo, permitindo comparar tentativas seguintes com as anteriores para medir progresso.
+
+Estatísticas e histórico (mesmo em modo de sorteio aleatório, cada tempo registrado é associado à tabuada específica sorteada, por exemplo tabuada do 8, para permitir o comparativo por tabuada depois)
+
+- Histórico completo de tentativas por tabuada especifica (quantas vezes tentou, tempos registrados em cada tentativa).
+- Evolução do tempo de resposta ao longo do tempo, para visualizar se a criança está melhorando.
+- Comparativo geral de desempenho entre diferentes tabuadas (por exemplo, comparar o desempenho na tabuada do 8 com a do 5 ou do 10).
+- Tempo médio de resposta também aplicado às contas aleatórias do nível 3.
+
+* Porcentagem.
+* Álgebra.
+* Geometria e trigonometria: ângulos, seno, cosseno, tangente (módulo em que o Pizinho será formalmente introduzido como referência ao número Pi).

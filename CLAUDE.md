@@ -8,14 +8,27 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
 - **Sem backend, sem autenticação, sem rede.** Nada de fetch para servidor próprio; todo dado
   vive no IndexedDB do dispositivo. Portabilidade entre dispositivos é backup JSON manual,
   não sync.
-- **Um módulo matemático é autocontido**: declara etapas/exercícios e renderiza os seus tipos
-  de exercício; registra-se em `src/modules/registry.ts`. Progresso, KPIs, Pizinho e o painel
-  do responsável são do motor (`ExercisePlayer`) e valem para qualquer módulo novo.
+- **Duas categorias de módulo**, ambas autocontidas e registradas em `src/modules/registry.ts`:
+  - `'conteudo'` — exercícios **declarados** em etapas, progresso por exercício resolvido,
+    trilha com desbloqueio sequencial. O motor (`ExercisePlayer`) cuida de tempo, tentativas,
+    progresso, KPIs e Pizinho; o módulo só declara exercícios e sabe renderizá-los.
+  - `'jogo'` — perguntas **sorteadas** (conjunto infinito, sem ids fixos), progressão por
+    critério de desempenho cronometrado, acesso livre a qualquer momento. Traz a própria tela
+    (`GameView`, rota `/jogo/:moduleId`) porque a mecânica não cabe no motor de etapas.
 - **Tela da criança tem poucos controles e só os 2 KPIs essenciais** (progresso do módulo e
   taxa de acerto de primeira). Métrica detalhada é no painel do responsável.
 - **`attempts` é append-only** — é a fonte de todas as métricas (taxa de primeira tentativa,
-  tentativas por exercício, repetição de exercício já acertado). Nunca reescrever nem agregar
-  destrutivamente: as agregações ficam em `src/data/metrics.ts`, derivadas em leitura.
+  tentativas por exercício, repetição de exercício já acertado, tempo por pergunta nos jogos).
+  Nunca reescrever nem agregar destrutivamente: as agregações ficam em `src/data/metrics.ts`,
+  derivadas em leitura.
+- **Módulo de jogo NÃO grava `progress`** (`recordGameAttempt`, não `recordAnswer`): acumular
+  ids de perguntas sorteadas num `StageProgress` cresceria sem limite e não significaria nada.
+  Desbloqueio de nível é derivado das tentativas em tempo de leitura.
+- **`Attempt.tag` é o agrupador do item sorteado** (ex: `'8'` = tabuada do 8) — é o que permite
+  comparar desempenho por tabuada apesar do sorteio aleatório. Campo opcional: módulos de
+  conteúdo não usam.
+- **Média de tempo considera só respostas certas** — errar rápido não é ser rápido, e o
+  desbloqueio de nível exige acerto mínimo junto com o tempo alvo.
 - Textos de UI e conteúdo dos exercícios em pt-BR. Identificadores e comentários em ASCII.
 
 ## Gotchas já resolvidos (não re-derivar)
@@ -45,6 +58,19 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
 - **Fallback de SPA no Pages é `dist/404.html`** (gerado por `tools/spa-fallback.mjs` no build),
   não rewrite de servidor. Ele volta com status HTTP 404 por design e isso não afeta o app.
 - Service worker/manifest só valem em build de produção; `npm run dev` não exercita isso.
+
+## Parâmetros do módulo de Tabuada (escolhidos por mim, feitos para calibrar)
+
+O spec diz "por exemplo, um tempo médio de resposta abaixo de um limite alvo" e deixa os
+números em aberto. Todos estão em `src/modules/tabuada/questions.ts`, num lugar só:
+
+- Sessão de **10 perguntas** (`SESSION_SIZE`).
+- **Avançado** abre com 30 acertos no fácil, média ≤ 5s e ≥ 80% de acerto.
+- **Contas aleatórias** abre com 30 acertos no avançado, média ≤ 9s e ≥ 75% de acerto.
+- Avançado sorteia tabuada de 1 a 100 × multiplicador de 1 a 10; contas soltas usam
+  11–50 × 2–12, só multiplicação (o spec exemplifica "25 vezes 8").
+- Entrada por **teclado numérico próprio**, não o do sistema: o nativo cobre metade da tela do
+  tablet e demora a abrir, o que sujaria a medição de tempo — que é o que o módulo mede.
 
 ## Pendências de conteúdo (decisões já tomadas, execução aberta)
 

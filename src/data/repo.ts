@@ -64,6 +64,45 @@ async function countAttemptsFor(profileId: string, exerciseId: string): Promise<
   return (await getDB()).countFromIndex('attempts', 'profileExercise', [profileId, exerciseId])
 }
 
+export interface RecordGameAttemptInput {
+  profileId: string
+  moduleId: string
+  /** Nivel do jogo (ex: 'facil'), no lugar da etapa de um modulo de conteudo. */
+  levelId: string
+  /** Id estavel da pergunta sorteada (ex: 'tab-8x7') — permite contar repeticoes do mesmo item. */
+  questionId: string
+  /** Agrupador para estatistica (ex: '8' = tabuada do 8). */
+  tag: string
+  correct: boolean
+  elapsedMs: number
+}
+
+/**
+ * Modulo de jogo grava so a tentativa, sem tocar em `progress`: as perguntas sao sorteadas de
+ * um conjunto infinito, entao acumular ids "resolvidos" num StageProgress cresceria sem limite
+ * e nao significaria nada. O desbloqueio de nivel e derivado das tentativas em tempo de leitura.
+ */
+export async function recordGameAttempt(input: RecordGameAttemptInput): Promise<Attempt> {
+  const db = await getDB()
+  const previousCount = await countAttemptsFor(input.profileId, input.questionId)
+
+  const attempt: Attempt = {
+    id: newId(),
+    profileId: input.profileId,
+    moduleId: input.moduleId,
+    stageId: input.levelId,
+    exerciseId: input.questionId,
+    attemptNo: previousCount + 1,
+    correct: input.correct,
+    elapsedMs: input.elapsedMs,
+    answeredAt: new Date().toISOString(),
+    tag: input.tag,
+  }
+
+  await db.put('attempts', attempt)
+  return attempt
+}
+
 export interface RecordAnswerInput {
   profileId: string
   moduleId: string

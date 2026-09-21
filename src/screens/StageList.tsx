@@ -1,13 +1,13 @@
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 
 import { computeModuleMetrics, formatPercent } from '../data/metrics'
-import { getModule } from '../modules/registry'
+import { getContentModule } from '../modules/registry'
 import { useApp } from '../state/store'
 
 export function StageList() {
   const { moduleId } = useParams()
   const navigate = useNavigate()
-  const module = getModule(moduleId)
+  const module = getContentModule(moduleId)
   const attempts = useApp((s) => s.attempts)
   const progress = useApp((s) => s.progress)
 

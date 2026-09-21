@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { ExercisePlayer } from './screens/ExercisePlayer'
+import { GameScreen } from './screens/GameScreen'
 import { ModuleHub } from './screens/ModuleHub'
 import { ParentDashboard } from './screens/ParentDashboard'
 import { ProfileSelect } from './screens/ProfileSelect'
@@ -51,6 +52,14 @@ export default function App() {
           element={
             <RequireProfile>
               <ExercisePlayer />
+            </RequireProfile>
+          }
+        />
+        <Route
+          path="/jogo/:moduleId"
+          element={
+            <RequireProfile>
+              <GameScreen />
             </RequireProfile>
           }
         />
