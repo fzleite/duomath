@@ -26,12 +26,21 @@ git remote add origin https://github.com/<usuário>/duomath.git
 git push -u origin main
 ```
 
-## 3. Ligar o Pages
+## 3. Ligar o Pages — passo manual obrigatório
 
 No repositório: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
-Só isso. Não precisa escolher branch nem criar `gh-pages`: o workflow usa o deploy nativo de
-Pages. Depois disso, todo push na `main` reconstrói e republica (acompanhe na aba **Actions**);
+**Esse clique não é opcional e tem que vir antes do primeiro deploy.** Sem ele, o workflow
+falha no passo `actions/configure-pages` com "Get Pages site failed", mesmo com `npm ci`, lint
+e build todos verdes — o que engana, porque parece problema de build. O input
+`enablement: true` do `configure-pages@v5` existe justamente para criar o site pela API e
+dispensar o clique, mas **não funcionou** neste repositório (usuário, público, `permissions:
+pages: write` declarado no workflow): o passo continuou falhando e o log do job só é legível
+com direitos de admin. Conclusão prática: trate o toggle como parte do setup, não como
+fallback.
+
+Não precisa escolher branch nem criar `gh-pages`: o workflow usa o deploy nativo de Pages.
+Depois disso, todo push na `main` reconstrói e republica (acompanhe na aba **Actions**);
 `workflow_dispatch` permite disparar à mão.
 
 A URL final aparece no próprio job de deploy e em Settings → Pages.
