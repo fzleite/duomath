@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node tools/spa-fallback.mjs",
+    "build": "tsc -b && node tools/check-content.mts && vite build && node tools/spa-fallback.mjs",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:content": "node tools/check-content.mts"
   },
   "dependencies": {
     "idb": "^8.0.3",

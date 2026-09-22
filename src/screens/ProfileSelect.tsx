@@ -38,12 +38,10 @@ export function ProfileSelect() {
 
   return (
     <main className="screen screen-center">
+      {/* o nome do produto vive na barra de titulo da casca; aqui basta a pergunta */}
       <header className="brand">
         <PizinhoFace mood="neutro" size={64} />
-        <div>
-          <h1>Duomath</h1>
-          <p>Quem vai estudar hoje?</p>
-        </div>
+        <h1>Quem vai estudar hoje?</h1>
       </header>
 
       <div className="profile-grid">

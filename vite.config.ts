@@ -17,8 +17,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/apple-touch-icon.png', 'icons/favicon-32.png'],
       manifest: {
-        name: 'Duomath',
-        short_name: 'Duomath',
+        name: 'DuoMath',
+        short_name: 'DuoMath',
         description: 'Matematica visual e interativa, um modulo por vez.',
         lang: 'pt-BR',
         start_url: BASE,

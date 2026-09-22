@@ -1,6 +1,7 @@
+import { QuizExerciseView } from '../shared/QuizExerciseView'
+import type { QuizExercise } from '../shared/quiz'
 import type { ContentModule } from '../types'
-import { StudyExerciseView } from './StudyExerciseView'
-import { studyStages, type StudyExercise } from './exercises'
+import { studyStages } from './exercises'
 
 /**
  * Modo de estudo da Tabuada — a metade pedagogica do assunto, com etapas por Bloom e apoio
@@ -10,7 +11,7 @@ import { studyStages, type StudyExercise } from './exercises'
  * gravadas com ele, entao o estudo entra como `tabuada-estudo` em vez de renomear o jogo e
  * orfanar o historico de quem ja treinou.
  */
-export const tabuadaEstudoModule: ContentModule<StudyExercise> = {
+export const tabuadaEstudoModule: ContentModule<QuizExercise> = {
   id: 'tabuada-estudo',
   title: 'Tabuada',
   tagline: 'Multiplicacao como soma de grupos iguais, memoria e padroes.',
@@ -18,6 +19,6 @@ export const tabuadaEstudoModule: ContentModule<StudyExercise> = {
   accent: '#5aa9e6',
   category: 'conteudo',
   stages: studyStages,
-  ExerciseView: StudyExerciseView,
+  ExerciseView: QuizExerciseView,
   companionGameId: 'tabuada',
 }

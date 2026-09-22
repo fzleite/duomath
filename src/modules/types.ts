@@ -16,6 +16,11 @@ export interface Stage<E extends ExerciseBase> {
   title: string
   /** Referencia curricular da etapa (ex: "base do 4o ano — BNCC"). */
   curriculum: string
+  /**
+   * Anos do Ensino Fundamental a que a etapa pertence, na sequencia da BNCC. E o que alimenta
+   * a navegacao por serie (abas) — a mesma etapa pode aparecer em mais de um ano.
+   */
+  years: number[]
   exercises: E[]
 }
 

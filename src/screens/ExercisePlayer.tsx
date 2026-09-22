@@ -49,7 +49,8 @@ export function ExercisePlayer() {
   const wrongStreak = useRef<Record<string, number>>({})
   const shownAt = useRef<number>(Date.now())
 
-  if (!module || !stage) return <Navigate to="/" replace />
+  // etapa sem exercicios escritos nao e "concluida": nao ha o que jogar ainda
+  if (!module || !stage || stage.exercises.length === 0) return <Navigate to="/" replace />
 
   const stages = module.stages.map((candidate: { id: string; exercises: ExerciseBase[] }) => ({
     id: candidate.id,

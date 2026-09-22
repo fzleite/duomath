@@ -1,7 +1,8 @@
-# Duomath
+# DuoMath
 
-PWA de matemática visual e interativa — um "Duolingo da matemática" para uso doméstico:
-trilha de conteúdo (Frações) e treino cronometrado (Tabuada).
+PWA de matemática visual e interativa — um "Duolingo da matemática" para uso doméstico,
+alinhado à BNCC do 1º ao 9º ano: trilha de conteúdo por série ou por assunto, e treino
+cronometrado de tabuada.
 100% client-side: sem backend, sem autenticação, sem conta. Todo progresso fica no IndexedDB
 do próprio navegador, com backup/restauração em JSON.
 
@@ -16,10 +17,11 @@ Zustand · React Router. Sem biblioteca de UI: CSS com tokens em `src/index.css`
 
 ```bash
 npm install
-npm run dev        # dev server (host habilitado: acessível pela LAN)
-npm run build      # tsc -b && vite build  → dist/
-npm run preview    # serve o dist/ buildado
-npm run lint       # oxlint
+npm run dev             # dev server (host habilitado: acessível pela LAN)
+npm run build           # tipos + verificação de conteúdo + vite build → dist/
+npm run preview         # serve o dist/ buildado
+npm run lint            # oxlint
+npm run check:content   # aritmética, visuais, Bloom e cobertura por ano escolar
 python tools/gen_icons.py   # regenera os ícones do PWA a partir de código
 ```
 
@@ -29,23 +31,33 @@ python tools/gen_icons.py   # regenera os ícones do PWA a partir de código
 src/
   data/       IndexedDB (db, repo, backup JSON, métricas derivadas)
   modules/    um diretório por assunto + registry.ts (categorias: conteúdo e jogo)
-  screens/    seleção de perfil, hub, trilha de etapas, player, jogo, painel do responsável
-  components/ FractionShape (pizza/retângulo/barra), NumberPad, Pizinho (mascote)
+              shared/  QuizExercise + view compartilhada
+  screens/    perfis, hub, trilha, player, jogo, painel do responsável, sobre
+  components/ AppShell (barra de título + navegação), Visual (catálogo de apoios
+              visuais), FractionShape, DotArray, NumberPad, Pizinho (mascote)
   state/      store Zustand (perfil ativo, progresso do perfil em memória)
   pwa/        swUpdate.ts (recarrega aba antiga após deploy)
-tools/        geração de ícones + fallback de SPA do build
+tools/        ícones, fallback de SPA e verificação de conteúdo
 public/       ícones + .htaccess (vai para dist/)
 ```
+
+## Navegação
+
+Duas formas de chegar ao conteúdo, como o spec pede: **por série** (abas de 1º a 9º ano, na
+sequência da BNCC — cada etapa declara os anos a que pertence em `Stage.years`) e **por
+assunto** (barra lateral fixa no desktop, menu hambúrguer no celular). A barra de título é fixa
+em todas as páginas.
 
 ## Módulos
 
 O hub separa duas categorias, e o contrato de cada uma está em `src/modules/types.ts`:
 
 - **Conteúdo** (`ContentModule`) — exercícios declarados em etapas, trilha com desbloqueio
-  sequencial. Hoje: **Frações** e **Tabuada (estudo)**. Para criar um: `src/modules/<nome>/`
-  com `exercises.ts` (etapas + exercícios, cada um com `bloom` e `hint`) e uma view que
-  renderize os tipos daquele módulo; registre em `registry.ts`. Hub, trilha, progresso, KPIs e
-  Pizinho vêm do motor (`src/screens/ExercisePlayer.tsx`).
+  sequencial. Com conteúdo: **Primeiros Números** (1º–3º), **Frações**, **Tabuada (estudo)**,
+  **Porcentagem** e **Grandezas e Medidas**. Declarados com as etapas da BNCC e conteúdo em
+  preparação: **Álgebra**, **Geometria e Trigonometria**, **Probabilidade e Estatística**.
+  Para criar um do formato comum, basta um `exercises.ts` com `QuizExercise` e registrar em
+  `registry.ts` — a view e os visuais já são compartilhados.
 - **Jogo** (`GameModule`) — perguntas sorteadas, cronometradas, com níveis que abrem por
   desempenho e acesso livre a qualquer momento. Hoje: **Tabuada (treino)**. Traz a própria tela
   (`GameView`) e grava tentativas com `tag` para estatística por item sorteado.

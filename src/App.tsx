@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
+import { AppShell } from './components/AppShell'
 import { ExercisePlayer } from './screens/ExercisePlayer'
 import { GameScreen } from './screens/GameScreen'
 import { ModuleHub } from './screens/ModuleHub'
 import { ParentDashboard } from './screens/ParentDashboard'
 import { ProfileSelect } from './screens/ProfileSelect'
+import { Sobre } from './screens/Sobre'
 import { StageList } from './screens/StageList'
 import { useApp } from './state/store'
 
@@ -13,6 +15,11 @@ import { useApp } from './state/store'
 function RequireProfile({ children }: { children: React.ReactNode }) {
   const activeProfileId = useApp((s) => s.activeProfileId)
   return activeProfileId ? <>{children}</> : <Navigate to="/perfis" replace />
+}
+
+/** A casca (barra de titulo fixa + navegacao por assunto) envolve toda pagina do app. */
+function Page({ children, nav = true }: { children: React.ReactNode; nav?: boolean }) {
+  return <AppShell showNav={nav}>{children}</AppShell>
 }
 
 export default function App() {
@@ -26,16 +33,39 @@ export default function App() {
   if (!ready) return <main className="screen screen-center">Carregando…</main>
 
   return (
-    // basename vem do base do Vite: no GitHub Pages o app vive em /duomath/, nao na raiz
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
-        <Route path="/perfis" element={<ProfileSelect />} />
-        <Route path="/responsavel" element={<ParentDashboard />} />
+        <Route
+          path="/perfis"
+          element={
+            <Page nav={false}>
+              <ProfileSelect />
+            </Page>
+          }
+        />
+        <Route
+          path="/sobre"
+          element={
+            <Page>
+              <Sobre />
+            </Page>
+          }
+        />
+        <Route
+          path="/responsavel"
+          element={
+            <Page>
+              <ParentDashboard />
+            </Page>
+          }
+        />
         <Route
           path="/"
           element={
             <RequireProfile>
-              <ModuleHub />
+              <Page>
+                <ModuleHub />
+              </Page>
             </RequireProfile>
           }
         />
@@ -43,7 +73,9 @@ export default function App() {
           path="/modulo/:moduleId"
           element={
             <RequireProfile>
-              <StageList />
+              <Page>
+                <StageList />
+              </Page>
             </RequireProfile>
           }
         />
@@ -51,7 +83,9 @@ export default function App() {
           path="/modulo/:moduleId/:stageId"
           element={
             <RequireProfile>
-              <ExercisePlayer />
+              <Page>
+                <ExercisePlayer />
+              </Page>
             </RequireProfile>
           }
         />
@@ -59,7 +93,9 @@ export default function App() {
           path="/jogo/:moduleId"
           element={
             <RequireProfile>
-              <GameScreen />
+              <Page>
+                <GameScreen />
+              </Page>
             </RequireProfile>
           }
         />

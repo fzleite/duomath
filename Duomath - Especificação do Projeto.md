@@ -1,12 +1,12 @@
-# Duomath - Especificação do Projeto
+# DuoMath - Especificação do Projeto
 
 2026-09-19 · @Someone
 
 ## Visão geral e objetivo
 
-O Duomath é uma ferramenta web progressiva (PWA), em HTML e JavaScript, para ajudar a filha de Fernando a estudar conceitos de matemática de forma visual e interativa. O projeto nasce com o módulo de Frações, mas é desenhado como um hub extensível: novos módulos (porcentagem, álgebra, trigonometria - seno, cosseno, tangente, ângulos) serão adicionados conforme ela avança na escola.
+O DuoMath é uma ferramenta web progressiva (PWA), em HTML e JavaScript, para ajudar a filha de Fernando a estudar conceitos de matemática de forma visual e interativa. O projeto nasce com o módulo de Frações, mas é desenhado como um hub extensível: novos módulos (porcentagem, álgebra, trigonometria - seno, cosseno, tangente, ângulos) serão adicionados conforme ela avança na escola.
 
-A proposta é funcionar como um Duolingo da matemática: exercícios visuais, progresso acompanhável por etapas, e um mascote que guia e incentiva.
+a proposta é funcionar como um Duolingo da matemática: exercícios visuais, progresso acompanhável por etapas, e um mascote que guia e incentiva.
 
 ## Limites técnicos e arquitetura
 
@@ -41,6 +41,12 @@ Interface visualmente limpa e minimalista, com foco no exercício e na visualiza
 Fundo branco como base neutra, com paleta de cores vivas em tons de azul e verde, remetendo a calma e paz. As cores também servem para separar visualmente os elementos das frações (por exemplo, cada parte de um todo com uma tonalidade diferente).
 
 Representações visuais variadas para os conceitos matemáticos: gráficos de pizza (círculo dividido em fatias) e também outras formas geométricas, como retangulos e barras, permitindo generalizar o conceito de fração além de uma única representação. Slider interativo para ajustar numerador e denominador e ver a fração mudar visualmente em tempo real.
+
+Nome do produto grafado como `DuoMath` (D e M maiúsculos, demais letras minúsculas), consistentemente em toda a interface, incluindo a barra de título.
+
+Barra de título constante, fixa no topo da tela em todas as páginas do Duomath.
+
+Navegação dupla para acessar o conteúdo, responsiva ao tamanho de tela: a progressão por série ou ano escolar (seguindo a sequência da BNCC) fica em estrutura de abas. O menu por assunto ou temática (Frações, Tabuada, Porcentagem, Álgebra, Geometria e Trigonometria, Grandezas e Medidas, Probabilidade e Estatística) fica oculto dentro de um menu hambúrguer em telas de celular, e exibido como uma barra lateral fixa em telas de computador, permitindo acessar um módulo específico diretamente, sem depender da progressão linear por série.
 
 ## Mascote: Pizinho
 
@@ -120,3 +126,112 @@ Estatísticas e histórico (mesmo em modo de sorteio aleatório, cada tempo regi
 * Porcentagem.
 * Álgebra.
 * Geometria e trigonometria: ângulos, seno, cosseno, tangente (módulo em que o Pizinho será formalmente introduzido como referência ao número Pi).
+
+## Módulo 2: Porcentagem
+
+Alinhado à progressão da BNCC do 5 ao 8 ano, conectando com a base já construída em frações (a ligação entre fração e porcentagem já aparece na etapa 2 do módulo de Frações). Segue os mesmos ritos dos demais módulos: representações visuais e lúdicas (barras de progresso, círculos preenchidos, grades de cem quadrados), progressão por etapas seguindo a Taxonomia de Bloom, o Pizinho dando dicas e apoio contextual, e gamificação com desbloqueio de etapas.
+
+- Etapa 1 (lembrar/entender): associação visual entre porcentagens simples (10 por cento, 25 por cento, 50 por cento, 75 por cento, 100 por cento) e a décima, quarta, metade e totalidade de um todo, retomando a conexão com frações já vista no módulo anterior.
+- Etapa 2 (aplicar): cálculo de porcentagens de quantidades em contextos práticos do dia a dia.
+- Etapa 3 (analisar/avaliar): problemas envolvendo acréscimos e decréscimos simples (por exemplo, desconto ou aumento de preço), no contexto de educação financeira, usando estratégias pessoais, cálculo mental e comparação de resultados.
+
+## Módulo 3: Álgebra
+
+Alinhado à progressão da BNCC do 6 ao 8 ano. Segue os mesmos ritos dos demais módulos: representações visuais e lúdicas (balanças de equilíbrio para ilustrar equações, blocos e caixas representando incógnitas), progressão por etapas seguindo a Taxonomia de Bloom, o Pizinho dando dicas e apoio contextual, e gamificação com desbloqueio de etapas.
+
+- Etapa 1 (lembrar/entender): noção de variável e expressões algébricas simples, calculando o valor numérico de expressões usando as propriedades das operações.
+- Etapa 2 (aplicar): resolução de equações do primeiro grau, representadas visualmente como uma balança em equilíbrio.
+- Etapa 3 (analisar/avaliar): problemas representados por equações do primeiro grau e sistemas de equações do primeiro grau com duas incógnitas, incluindo interpretação gráfica no plano cartesiano.
+- Etapa 4 (aplicar/analisar): funções como relações de dependência entre duas variáveis, com representação numérica, algébrica e gráfica. Plote dinâmico da função afim (f de x igual a a x mais b) no plano cartesiano, com sliders para os coeficientes a e b, mostrando a reta se transformando em tempo real.
+- Etapa 5 (analisar/avaliar): fatoração de expressões algébricas e produtos notáveis, como base para equações do segundo grau.
+- Etapa 6 (avaliar/criar): equações do segundo grau (a x ao quadrado mais b x mais c igual a zero), resolvidas por fatoração, completamento de quadrado e pela fórmula de Báskara. Plote dinâmico da função quadrática no plano cartesiano, com sliders para os coeficientes a, b e c, mostrando a parábola se transformando em tempo real e a relação entre as raízes da equação e os pontos onde a parábola cruza o eixo x.
+
+## Módulo 4: Geometria e Trigonometria
+
+Alinhado à progressão da BNCC do 6 ao 9 ano. Módulo em que o Pizinho é formalmente introduzido como referência ao número Pi. Segue os mesmos ritos dos demais módulos: representações visuais e lúdicas, progressão por etapas seguindo a Taxonomia de Bloom, apoio contextual do Pizinho, e gamificação com desbloqueio de etapas.
+
+- Etapa 1 (lembrar/entender): reconhecimento, nomeação e comparação de polígonos, considerando lados, vértices e ângulos, classificando-os em regulares e não regulares. Localização de pontos no plano cartesiano associando pares ordenados a vértices de polígonos.
+- Etapa 2 (aplicar): relações entre número de vértices, faces e arestas de prismas e pirâmides, com apoio visual tridimensional.
+- Etapa 3 (analisar): ângulos formados por retas paralelas cortadas por uma transversal, verificando e depois demonstrando as relações entre eles.
+- Etapa 4 (aplicar/criar): construções geométricas mais precisas (mediatriz, bissetriz, ângulos de 90, 60, 45 e 30 graus e polígonos regulares), simulando instrumentos de desenho ou geometria dinâmica na tela.
+- Etapa 5 (analisar/avaliar): semelhança de triângulos, como base conceitual para a trigonometria.
+- Etapa 6 (aplicar/analisar): relações trigonométricas no triângulo retângulo (seno, cosseno e tangente), com círculo trigonométrico interativo e triângulos manipuláveis, ligando o ângulo escolhido ao valor de cada razão em tempo real.
+
+## Módulo 0: Primeiros Números (1 ao 3 ano)
+
+Criado para incluir a filha mais nova de Fernando, que está no primeiro ano e se sentiu excluída por não conseguir usar o Duomath. Alinhado à progressão da BNCC do 1 ao 3 ano do Ensino Fundamental, com o mesmo perfil próprio dentro do sistema multi-perfil, visual lúdico, apoio do Pizinho e gamificação adaptados a essa idade.
+
+- Etapa 1 (lembrar/entender): reconhecimento, leitura, escrita e comparação de números naturais, com apoio visual de contagem de objetos.
+- Etapa 2 (aplicar): composição e decomposição de números, noções do sistema de numeração decimal (valor posicional e função do zero).
+- Etapa 3 (aplicar/analisar): operações básicas de adição e subtração com números naturais, incluindo as relações inversas entre adição e subtração, resolvendo problemas práticos simples.
+- Etapa 4 (analisar/avaliar): reconhecimento de padrões, primeiras noções geométricas básicas (formas, direita e esquerda, sentido) e leitura simples de tabelas e gráficos.
+
+## Módulo 5: Grandezas e Medidas
+
+Alinhado à progressão da BNCC do Ensino Fundamental. Segue os mesmos ritos dos demais módulos: representações visuais e lúdicas (réguas e trenas interativas, grades de área preenchível, sólidos tridimensionais manipuláveis), progressão por etapas seguindo a Taxonomia de Bloom, apoio contextual do Pizinho, e gamificação com desbloqueio de etapas. Útil também como revisão para Fernando.
+
+- Etapa 1 (lembrar/entender): noções de comprimento, massa, capacidade e tempo, com conversão entre unidades de medida (por exemplo, metros e centímetros).
+- Etapa 2 (aplicar): cálculo de perímetro de figuras planas, com apoio visual de contorno das figuras.
+- Etapa 3 (aplicar/analisar): cálculo de área de figuras planas (quadrados, retângulos, triângulos e círculos), com apoio visual de grades preenchíveis.
+- Etapa 4 (analisar/avaliar): cálculo de volume de sólidos geométricos simples (cubos e blocos retangulares), com apoio visual tridimensional.
+- Etapa 5 (avaliar): problemas envolvendo escala (mapas e maquetes) e conversão entre unidades em contextos práticos.
+
+* Grandezas e medidas: perímetro, área, volume, conversão de unidades e escala.
+* Probabilidade e estatística: média, moda, mediana, leitura e construção de gráficos e tabelas.
+* Proporção e razão como tema à parte (já tangenciado dentro de Porcentagem e Álgebra).
+
+## Módulo 6: Probabilidade e Estatística
+
+Alinhado à progressão da BNCC do Ensino Fundamental. Segue os mesmos ritos dos demais módulos: representações visuais e lúdicas (gráficos de barras e pizza interativos, urnas de sorteio simuladas, linhas do tempo de dados), progressão por etapas seguindo a Taxonomia de Bloom, apoio contextual do Pizinho, e gamificação com desbloqueio de etapas. Bom também como revisão de conceitos estatísticos para Fernando.
+
+- Etapa 1 (lembrar/entender): leitura e interpretação de tabelas e gráficos simples (barras, colunas, pizza).
+- Etapa 2 (aplicar): construção de gráficos e tabelas a partir de um conjunto de dados dado.
+- Etapa 3 (aplicar/analisar): noções básicas de probabilidade (chance de um evento ocorrer), com simulações visuais de sorteios e resultados aleatórios.
+- Etapa 4 (analisar/avaliar): medidas de tendência central, média, moda e mediana, e amplitude de um conjunto de dados.
+- Etapa 5 (avaliar/criar): planejamento simples de uma pesquisa amostral, coleta de dados e comunicação dos resultados por meio de gráficos e relatórios.
+
+* Logaritmo.
+* Vetores.
+* Matrizes e determinantes.
+* Progressões aritméticas e geométricas.
+* Ciclo trigonométrico completo (além do triângulo retângulo já coberto no Fundamental).
+* Estatística aprofundada.
+
+## Ajuda: metodologia e fontes
+
+Esta seção reúne as referências metodológicas e curriculares usadas para estruturar o DuoMath, para permitir revisão e consulta posterior.
+
+### Taxonomia de Bloom
+
+Cada exercício dos módulos de conteúdo segue os níveis cognitivos da Taxonomia de Bloom (lembrar, entender, aplicar, analisar, avaliar, criar), progredindo em complexidade dentro de cada etapa de um módulo.
+
+### BNCC (Base Nacional Comum Curricular)
+
+A progressão de etapas de cada módulo foi alinhada às habilidades previstas na BNCC para o Ensino Fundamental, do 1 ao 9 ano, incluindo as unidades temáticas de Números, Álgebra, Geometria, Grandezas e Medidas, e Probabilidade e Estatística. Conceitos de Ensino Médio (logaritmo, vetores, matrizes, progressões, ciclo trigonométrico completo) foram identificados como fora do Ensino Fundamental e mantidos apenas como roadmap de longo prazo.
+
+### Fontes consultadas
+
+- [Base Nacional Comum Curricular - MEC](https://basenacionalcomum.mec.gov.br/abase/)
+- [Habilidades da BNCC - Tudo Sala de Aula](https://www.tudosaladeaula.com/habilidades-da-bncc/)
+- [Habilidades da BNCC de Matemática do 4 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-4-ano-do-ensino-fundamental/)
+- [Habilidades da BNCC de Matemática do 5 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-5-ano-do-ensino-fundamental/)
+- [Habilidades da BNCC de Matemática do 6 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-6-ano-do-ensino-fundamental/)
+- [Habilidades da BNCC de Matemática do 7 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-7-ano-do-ensino-fundamental/)
+- [Habilidades da BNCC de Matemática do 8 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-8-ano-do-ensino-fundamental/)
+- [Habilidades da BNCC de Matemática do 9 ano](https://www.tudosaladeaula.com/2019/04/habilidades-da-bncc-de-matematica-do-9-ano-do-ensino-fundamental/)
+- [Matemática 6 Ano BNCC - Matemática e Vida](https://matematicaevida.com.br/6-ano-matematica-bncc/)
+- [Matemática 7 Ano BNCC - Matemática e Vida](https://matematicaevida.com.br/7o-ano-matematica-bncc/)
+- [Matemática 8 Ano BNCC - Matemática e Vida](https://matematicaevida.com.br/8o-ano-matematica-bncc/)
+- [Matemática 9 Ano BNCC - Matemática e Vida](https://matematicaevida.com.br/9o-ano-matematica-bncc/)
+- [Habilidades essenciais - Anos Finais - Matemática (SEDU-ES)](https://efape.educacao.sp.gov.br/curriculopaulista/wp-content/uploads/download/habilidades-essenciais-anos-finais%202021/Habilidades%20essenciais%20_%20Anos%20Finais_Matem%C3%A1tica.pdf)
+- [Mapa de Progressão das Habilidades - Matemática EF (SEDU-ES)](https://curriculo.sedu.es.gov.br/curriculo/wp-content/uploads/2021/10/MAPA-DE-PROGRESSAO-DAS-HABILIDADES-MATEMATICA-EF.pdf)
+- [Compare as mudanças dos PCNs para a BNCC em Matemática - Nova Escola](https://novaescola.org.br/bncc/conteudo/33/compare-as-mudancas-dos-pcns-para-a-bncc-em-matematica)
+- [Habilidades essenciais - Anos Iniciais - Matemática (SEDU-ES)](https://efape.educacao.sp.gov.br/curriculopaulista/wp-content/uploads/downloads/Anos%20iniciais%20EM/Habilidades%20essenciais_Anos%20Iniciais_Matem%C3%A1tica.pdf)
+
+As fontes foram consultadas em setembro de 2026 e refletem a versão da BNCC vigente naquele momento; recomenda-se revisar periodicamente caso a base curricular seja atualizada.
+
+## Sobre
+
+O DuoMath foi idealizado por Fernando Zimmermann como uma ferramenta para acompanhar e apoiar o aprendizado de matemática de suas duas filhas, com carinho e dedicação.
+
+Este projeto é dedicado a Isabella e Helena: que cada gráfico, cada exercício e cada conquista aqui dentro sirva de incentivo para que continuem curiosas e confiantes diante dos números.

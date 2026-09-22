@@ -11,7 +11,7 @@ export function StageList() {
   const attempts = useApp((s) => s.attempts)
   const progress = useApp((s) => s.progress)
 
-  if (!module || module.status === 'soon') return <Navigate to="/" replace />
+  if (!module) return <Navigate to="/" replace />
 
   const stages = module.stages.map((stage) => ({
     id: stage.id,
@@ -31,12 +31,20 @@ export function StageList() {
       <ol className="stage-path">
         {module.stages.map((stage, index) => {
           const stageMetrics = metrics.stages[index]
-          const done = stageMetrics.clearedExercises >= stageMetrics.totalExercises
-          // etapa destravada quando a anterior foi concluida — progressao estilo trilha
-          const unlocked = index === 0 || metrics.stages[index - 1].clearedExercises >= metrics.stages[index - 1].totalExercises
+          // etapa declarada mas sem exercicios escritos: mostra o plano, nao deixa entrar
+          const vazia = stageMetrics.totalExercises === 0
+          const done = !vazia && stageMetrics.clearedExercises >= stageMetrics.totalExercises
+          const anterior = metrics.stages[index - 1]
+          // destravada quando a anterior foi concluida — progressao estilo trilha.
+          // uma etapa vazia nunca conta como concluida, senao destravaria a seguinte de graca
+          const unlocked =
+            !vazia && (index === 0 || (anterior.totalExercises > 0 && anterior.clearedExercises >= anterior.totalExercises))
 
           return (
-            <li key={stage.id} className={`stage-item ${done ? 'stage-done' : ''} ${unlocked ? '' : 'stage-locked'}`}>
+            <li
+              key={stage.id}
+              className={`stage-item ${done ? 'stage-done' : ''} ${unlocked ? '' : 'stage-locked'}`}
+            >
               <button
                 type="button"
                 className="stage-button"
@@ -50,8 +58,9 @@ export function StageList() {
                   <strong>{stage.title}</strong>
                   <small>{stage.curriculum}</small>
                   <span className="stage-kpi">
-                    {stageMetrics.clearedExercises}/{stageMetrics.totalExercises} exercicios ·{' '}
-                    {formatPercent(stageMetrics.firstTryAccuracy)} de primeira
+                    {vazia
+                      ? 'conteudo em preparacao'
+                      : `${stageMetrics.clearedExercises}/${stageMetrics.totalExercises} exercicios · ${formatPercent(stageMetrics.firstTryAccuracy)} de primeira`}
                   </span>
                 </span>
               </button>

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 
-import { DotArray, GroupSum } from '../../components/DotArray'
+import { Visual } from '../../components/Visual'
 import type { ExerciseViewProps } from '../types'
-import type { StudyExercise } from './exercises'
+import type { QuizExercise } from './quiz'
 
 function shuffle<T>(items: T[]): T[] {
   const copy = [...items]
@@ -13,26 +13,28 @@ function shuffle<T>(items: T[]): T[] {
   return copy
 }
 
-export function StudyExerciseView({ exercise, locked, onAnswer }: ExerciseViewProps<StudyExercise>) {
-  // o ExercisePlayer monta a view com key={exercise.id}, entao trocar de exercicio reembaralha
+/**
+ * View compartilhada dos modulos de quiz. O ExercisePlayer monta com key={exercise.id},
+ * entao trocar de exercicio remonta o componente e reembaralha as alternativas.
+ */
+export function QuizExerciseView({ exercise, locked, onAnswer }: ExerciseViewProps<QuizExercise>) {
   const order = useMemo(
     () => shuffle(Array.from({ length: exercise.options.length }, (_, i) => i)),
     [exercise.options.length],
   )
 
+  // alternativas longas (frases) ficam melhores empilhadas do que em grade
+  const longas = exercise.options.some((option) => option.length > 18)
+
   return (
     <>
       {exercise.visual && (
         <div className="exercise-visual">
-          {exercise.visual.kind === 'array' ? (
-            <DotArray rows={exercise.visual.rows} cols={exercise.visual.cols} />
-          ) : (
-            <GroupSum groups={exercise.visual.groups} perGroup={exercise.visual.perGroup} />
-          )}
+          <Visual spec={exercise.visual} />
         </div>
       )}
 
-      <div className="options">
+      <div className={`options ${longas ? 'options-stacked' : ''}`}>
         {order.map((i) => (
           <button
             key={i}

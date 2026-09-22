@@ -1,26 +1,12 @@
-import type { ExerciseBase, Stage } from '../types'
+import type { QuizExercise } from '../shared/quiz'
+import type { Stage } from '../types'
 
-/**
- * Apoio visual opcional do exercicio. 'array' = arranjo retangular (fileiras x colunas),
- * 'soma' = parcelas iguais agrupadas. O enunciado carrega a pergunta; o visual mostra o
- * porque da conta.
- */
-export type StudyVisual =
-  | { kind: 'array'; rows: number; cols: number }
-  | { kind: 'soma'; groups: number; perGroup: number }
-
-export interface StudyExercise extends ExerciseBase {
-  /** A resposta certa e sempre options[0] nos dados; a view embaralha na renderizacao. */
-  options: string[]
-  answerIndex: number
-  visual?: StudyVisual
-}
-
-export const studyStages: Stage<StudyExercise>[] = [
+export const studyStages: Stage<QuizExercise>[] = [
   {
     id: 'etapa-1',
     title: 'Multiplicacao como soma de parcelas iguais',
     curriculum: 'tabuadas de 1 a 5 — apoio visual',
+    years: [2, 3],
     exercises: [
       {
         id: 'me1-01',
@@ -81,6 +67,7 @@ export const studyStages: Stage<StudyExercise>[] = [
     id: 'etapa-2',
     title: 'Memoria das tabuadas de 1 a 10',
     curriculum: 'reconhecimento com apoio do Pizinho',
+    years: [3, 4],
     exercises: [
       {
         id: 'me2-01',
@@ -136,6 +123,7 @@ export const studyStages: Stage<StudyExercise>[] = [
     id: 'etapa-3',
     title: 'Problemas, padroes e tabuadas maiores',
     curriculum: 'comutatividade e preparacao ate 100',
+    years: [5],
     exercises: [
       {
         id: 'me3-01',

@@ -46,6 +46,7 @@ export const fractionStages: Stage<FractionExercise>[] = [
     id: 'etapa-1',
     title: 'Percepcao visual e comparacao simples',
     curriculum: 'base do 4o ano — BNCC',
+    years: [4],
     exercises: [
       {
         id: 'e1-01',
@@ -127,6 +128,7 @@ export const fractionStages: Stage<FractionExercise>[] = [
     id: 'etapa-2',
     title: 'Equivalencia, decimais e porcentagem',
     curriculum: 'base do 5o ano — BNCC',
+    years: [5],
     exercises: [
       {
         id: 'e2-01',
@@ -197,6 +199,7 @@ export const fractionStages: Stage<FractionExercise>[] = [
     id: 'etapa-3',
     title: 'Operacoes e fracao de quantidades',
     curriculum: 'base do 6o ano — BNCC',
+    years: [6],
     exercises: [
       {
         id: 'e3-01',

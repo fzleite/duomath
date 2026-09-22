@@ -1,5 +1,5 @@
 /*
- * Identidade do Duomath: fundo branco neutro, paleta viva em azul e verde, foco no exercicio.
+ * Identidade do DuoMath: fundo branco neutro, paleta viva em azul e verde, foco no exercicio.
  * Sem biblioteca de UI — a tela da crianca tem poucos controles de proposito.
  */
 
@@ -39,13 +39,184 @@ h3 {
   line-height: 1.2;
 }
 
+/* ---------- casca: barra de titulo fixa + navegacao por assunto ---------- */
+
+.app {
+  min-height: 100vh;
+}
+
+.titlebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 30;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  height: calc(56px + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 12px 0;
+  background: #fff;
+  border-bottom: 1px solid var(--linha);
+}
+
+.brand-link {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.titlebar-right {
+  display: flex;
+  margin-left: auto;
+  align-items: center;
+}
+
+.titlebar-profile {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: inherit;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.profile-initial-xs {
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+}
+
+.menu-toggle {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  background: var(--fundo-suave);
+  border: 0;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.app-body {
+  display: flex;
+  padding-top: calc(56px + env(safe-area-inset-top));
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* celular: gaveta sobre a tela, fechada por padrao */
+.subject-nav {
+  position: fixed;
+  top: calc(56px + env(safe-area-inset-top));
+  bottom: 0;
+  left: 0;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 264px;
+  padding: 14px 12px;
+  overflow-y: auto;
+  background: #fff;
+  border-right: 1px solid var(--linha);
+  transform: translateX(-100%);
+  transition: transform 180ms ease;
+}
+
+.subject-nav-open {
+  transform: translateX(0);
+  box-shadow: 8px 0 24px rgb(18 51 68 / 12%);
+}
+
+.nav-backdrop {
+  position: fixed;
+  top: calc(56px + env(safe-area-inset-top));
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  background: rgb(18 51 68 / 28%);
+  border: 0;
+}
+
+.nav-group {
+  margin: 14px 0 4px;
+  color: var(--tinta-suave);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav-group:first-of-type {
+  margin-top: 0;
+}
+
+.nav-item {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: var(--tinta);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.nav-item-on {
+  background: var(--fundo-suave);
+  font-weight: 600;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-radius: 50%;
+}
+
+.badge-sm {
+  margin-left: auto;
+  font-size: 0.62rem;
+}
+
+/* desktop: barra lateral fixa, sem hamburguer */
+@media (width >= 900px) {
+  .menu-toggle,
+  .nav-backdrop {
+    display: none;
+  }
+
+  .subject-nav {
+    position: sticky;
+    top: calc(56px + env(safe-area-inset-top));
+    height: calc(100vh - 56px);
+    transform: none;
+    box-shadow: none;
+  }
+}
+
 /* areas seguras para o modo standalone instalado no celular/tablet */
 .screen {
   display: flex;
   flex-direction: column;
   gap: 20px;
   max-width: 640px;
-  min-height: 100vh;
+  /* desconta a barra de titulo fixa, senao toda pagina ganha rolagem inutil */
+  min-height: calc(100vh - 56px);
   margin: 0 auto;
   padding: max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
 }
@@ -362,6 +533,97 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* ---------- navegacao dupla: alternador e abas por ano ---------- */
+
+.hub-switch {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--fundo-suave);
+  border-radius: 12px;
+}
+
+.switch-tab {
+  flex: 1;
+  padding: 9px 12px;
+  background: none;
+  border: 0;
+  border-radius: 9px;
+  color: var(--tinta-suave);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.switch-tab-on {
+  background: #fff;
+  color: var(--tinta);
+  box-shadow: var(--sombra);
+}
+
+.year-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.year-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.year-tab {
+  min-width: 46px;
+  padding: 9px 10px;
+  background: #fff;
+  border: 2px solid var(--linha);
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.year-tab-on {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: #fff;
+}
+
+/* ---------- pagina Sobre ---------- */
+
+.sobre-card h1 {
+  font-size: 1.6rem;
+}
+
+.sobre-head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.sobre-dedicatoria {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--fundo-suave);
+  border-left: 4px solid var(--verde);
+  border-radius: 10px;
+  font-style: italic;
+}
+
+.fonte-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.9rem;
+}
+
+.fonte-list a {
+  color: var(--azul);
 }
 
 .hub-section-title {
@@ -692,6 +954,40 @@ h3 {
 
 .options-fraction {
   grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+}
+
+/* alternativas em frase: empilhadas, alinhadas a esquerda, mais legiveis que em grade */
+.options-stacked {
+  grid-template-columns: 1fr;
+}
+
+.options-stacked .option {
+  min-height: 52px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  text-align: left;
+  place-items: center start;
+}
+
+/* ---------- contagem de objetos (Primeiros Numeros) ---------- */
+
+.contagem {
+  display: grid;
+  gap: 8px;
+  justify-content: center;
+}
+
+.contagem-item {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.chart-dim {
+  fill: #123;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .option {

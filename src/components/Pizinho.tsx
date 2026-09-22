@@ -1,5 +1,5 @@
 /**
- * Pizinho — mascote do Duomath, alusao ao numero Pi (sugerido pela filha do Fernando).
+ * Pizinho — mascote do DuoMath, alusao ao numero Pi (sugerido pela filha do Fernando).
  * Nao e um guia obrigatorio em cada tela: aparece de forma contextual para dar dica,
  * comemorar um acerto/etapa e apoiar quando a crianca erra o mesmo exercicio varias vezes.
  * Pensado para ser reaproveitado no futuro modulo de geometria.

@@ -5,7 +5,7 @@ import type { Attempt, BackupFile, Profile, StageProgress } from './types'
 export const BACKUP_VERSION = 1
 
 /**
- * O backup e um JSON unico (nao um .zip): o Duomath nao guarda blobs, so dados estruturados.
+ * O backup e um JSON unico (nao um .zip): o DuoMath nao guarda blobs, so dados estruturados.
  * Convencao a manter ao evoluir o formato: todo campo novo entra opcional e e lido com
  * fallback vazio, para que um backup gerado antes daquela feature continue restaurando.
  */
@@ -48,7 +48,7 @@ export async function shareOrDownloadBackup(backup: BackupFile): Promise<'shared
 
   if (navigator.canShare?.({ files: [file] })) {
     try {
-      await navigator.share({ files: [file], title: 'Backup do Duomath' })
+      await navigator.share({ files: [file], title: 'Backup do DuoMath' })
       return 'shared'
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return 'cancelled'
@@ -68,10 +68,10 @@ export async function shareOrDownloadBackup(backup: BackupFile): Promise<'shared
 function assertBackup(data: unknown): BackupFile {
   const candidate = data as Partial<BackupFile>
   if (!candidate || candidate.format !== 'duomath-backup') {
-    throw new Error('Arquivo nao parece um backup do Duomath.')
+    throw new Error('Arquivo nao parece um backup do DuoMath.')
   }
   if (typeof candidate.version !== 'number' || candidate.version > BACKUP_VERSION) {
-    throw new Error('Este backup foi gerado por uma versao mais nova do Duomath.')
+    throw new Error('Este backup foi gerado por uma versao mais nova do DuoMath.')
   }
   return {
     format: 'duomath-backup',
