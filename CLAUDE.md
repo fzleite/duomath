@@ -80,6 +80,11 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
   `quadratica`). É o "ver a reta se transformando" do spec; a resposta é a configuração certa.
 - `ponto` — clicar na reta numérica ou no plano cartesiano.
 
+Cada prévia do `ajuste` lê controles com **ids específicos**: `afim` usa `a`/`b`, `quadratica`
+usa `a`/`b`/`c`, `trigonometria` usa `angulo` e `barras` usa um controle por categoria (o
+`label` vira o rótulo da barra). Id errado renderiza um slider morto — o `check:content`
+reprova.
+
 `options` e `input` são mutuamente exclusivos e o `check:content` reprova os dois juntos (ou
 nenhum). Resposta negativa exige `negativo: true` e decimal exige `decimal: true` — senão a
 criança não consegue digitar a resposta, e o verificador acusa.
@@ -93,9 +98,10 @@ grade de área, contorno e blocos 3D. Um módulo novo desse tipo referencia o vi
 não escreve componente nenhum. Frações é a exceção: tem interações próprias (comparar, montar
 com slider), então mantém a própria view.
 
-**Etapa declarada sem exercícios é intencional.** As etapas que dependem de componente
-interativo ainda não construído ficam em `stages.ts` com a progressão da BNCC e `exercises: []`,
-e aparecem na navegação como "conteúdo em preparação". Isso mantém o plano visível sem conteúdo inventado.
+**Todas as 40 etapas dos 8 módulos de conteúdo têm exercícios** (214 no total). O mecanismo de
+etapa vazia (`exercises: []`, exibida como "conteúdo em preparação", nunca contada como
+concluída e não jogável) continua no código e é o caminho para declarar módulo novo antes de
+escrever o conteúdo. Isso mantém o plano visível sem conteúdo inventado.
 Regra que o código já respeita: etapa vazia nunca conta como concluída (senão destravaria a
 seguinte de graça) e não é jogável.
 
@@ -140,20 +146,17 @@ Node não processa JSX.
 
 ## Pendências de conteúdo (decisões já tomadas, execução aberta)
 
-Quatro componentes interativos que o spec pede e que são cada um um ciclo à parte — é o que
-bloqueia o conteúdo de Álgebra, Geometria e Probabilidade:
+O plano da BNCC está fechado: todas as etapas de todos os módulos têm exercícios, verificados
+por script. O que fica em aberto é refinamento, não lacuna:
 
-1. **Plano cartesiano com sliders de coeficiente** (Álgebra 4 e 6): reta e parábola se
-   transformando em tempo real, com as raízes ligadas aos cortes no eixo x.
-2. **Balança de equilíbrio** (Álgebra 2): equação do 1º grau como os dois pratos.
-3. **Círculo trigonométrico interativo + triângulo manipulável** (Geometria 6).
-4. **Instrumentos de desenho simulados** (Geometria 4: mediatriz, bissetriz, polígonos
-   regulares) e **construtor de gráficos** (Probabilidade 2, onde a criança monta o gráfico a
-   partir dos dados em vez de escolher alternativa).
-
-- **Reta numérica** (posicionar fração na reta) aparece na Etapa 2 do spec, mas precisa de um
-  tipo de exercício com interação própria (arrastar/marcar ponto) — hoje só existe como visual
-  de leitura, usado em Primeiros Números.
+- **Construções geométricas** (Geometria 4) e **pesquisa amostral** (Probabilidade 5) usam a
+  abordagem conceitual decidida com o usuário: ilustração da construção pronta e perguntas
+  sobre as decisões do planejamento, em vez de compasso simulado e fluxo de coleta. Foi escolha
+  explícita — nessas duas o acerto e o erro não têm resposta única para validar.
+- **Ano escolar no perfil**: com 9 abas, a aba inicial fixa (1º ano) incomoda quem está no 6º.
+- **Calibrar os limiares do jogo de tabuada** depois de ver as crianças jogando.
+- **Roadmap de Ensino Médio** (logaritmo, vetores, matrizes, progressões, ciclo trigonométrico
+  completo) segue fora do escopo, só citado na página Sobre.
 - Soma/subtração de frações na Etapa 3 está como alternativa de texto; a versão visual
   (juntar dois desenhos) seria mais fiel à proposta do app.
 - Etapas 2 e 3 têm 6 exercícios cada, suficiente para exercitar a mecânica — volume de

@@ -53,11 +53,15 @@ em todas as páginas.
 O hub separa duas categorias, e o contrato de cada uma está em `src/modules/types.ts`:
 
 - **Conteúdo** (`ContentModule`) — exercícios declarados em etapas, trilha com desbloqueio
-  sequencial. Com conteúdo: **Primeiros Números** (1º–3º), **Frações**, **Tabuada (estudo)**,
-  **Porcentagem** e **Grandezas e Medidas**. Declarados com as etapas da BNCC e conteúdo em
-  preparação: **Álgebra**, **Geometria e Trigonometria**, **Probabilidade e Estatística**.
-  Para criar um do formato comum, basta um `exercises.ts` com `QuizExercise` e registrar em
-  `registry.ts` — a view e os visuais já são compartilhados.
+  sequencial. Oito módulos, 40 etapas, 214 exercícios cobrindo 1º a 9º ano: **Primeiros
+  Números**, **Frações**, **Tabuada (estudo)**, **Porcentagem**, **Grandezas e Medidas**,
+  **Álgebra**, **Geometria e Trigonometria** e **Probabilidade e Estatística**. Para criar um
+  do formato comum, basta um `exercises.ts` com `QuizExercise` e registrar em `registry.ts` —
+  view, visuais e formas de resposta já são compartilhados.
+
+  Quatro formas de responder: alternativas, entrada numérica pelo teclado do app, ajuste de
+  coeficientes com prévia ao vivo (reta, parábola, círculo trigonométrico, gráfico de barras) e
+  escolha de ponto na reta ou no plano cartesiano.
 - **Jogo** (`GameModule`) — perguntas sorteadas, cronometradas, com níveis que abrem por
   desempenho e acesso livre a qualquer momento. Hoje: **Tabuada (treino)**. Traz a própria tela
   (`GameView`) e grava tentativas com `tag` para estatística por item sorteado.

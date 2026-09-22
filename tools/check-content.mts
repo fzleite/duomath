@@ -217,6 +217,94 @@ function checarInput(ctx: string, ex: any) {
     if (ex.visual?.kind === 'poligono' && /vertices|lados/.test(ex.prompt) && input.answer !== ex.visual.lados) {
       falha(ctx, `poligono de ${ex.visual.lados} lados, resposta ${input.answer}`)
     }
+
+    // balanca: resolve a equacao do 1o grau que os dois pratos representam
+    if (ex.visual?.kind === 'balanca') {
+      const { esquerda: e, direita: d } = ex.visual
+      const coef = e.x - d.x
+      if (coef === 0) falha(ctx, 'balanca sem incognita para resolver')
+      else {
+        const esperado = (d.c - e.c) / coef
+        if (Math.abs(esperado - input.answer) > 1e-9) {
+          falha(ctx, `a balanca resolve x = ${esperado}, resposta ${input.answer}`)
+        }
+      }
+    }
+
+    // prisma de base n: V=2n, F=n+2, A=3n | piramide de base n: V=n+1, F=n+1, A=2n
+    if (ex.visual?.kind === 'solido') {
+      const { tipo, base } = ex.visual
+      const contagem = /vertices/.test(ex.prompt)
+        ? tipo === 'prisma'
+          ? 2 * base
+          : base + 1
+        : /faces/.test(ex.prompt)
+          ? tipo === 'prisma'
+            ? base + 2
+            : base + 1
+          : /arestas/.test(ex.prompt)
+            ? tipo === 'prisma'
+              ? 3 * base
+              : 2 * base
+            : null
+      if (contagem !== null && contagem !== input.answer) {
+        falha(ctx, `${tipo} de base ${base}: esperado ${contagem}, resposta ${input.answer}`)
+      }
+    }
+
+    // angulos entre paralelas: correspondente e alterno mantem o valor, colateral e suplementar
+    if (ex.visual?.kind === 'angulos') {
+      const a = ex.visual.angulo
+      const esperado = /colateral|suplementar/i.test(ex.prompt)
+        ? 180 - a
+        : /correspondente|alterno|oposto/i.test(ex.prompt)
+          ? a
+          : null
+      if (esperado !== null && esperado !== input.answer) {
+        falha(ctx, `com angulo ${a}, esperado ${esperado}, resposta ${input.answer}`)
+      }
+    }
+
+    // razoes trigonometricas do angulo desenhado
+    if (ex.visual?.kind === 'trig') {
+      const razao = ex.prompt.match(/\b(seno|cosseno|tangente)\b/i)
+      const grausNoTexto = ex.prompt.match(/(\d+) graus/)
+      if (razao && grausNoTexto && /Quanto vale/i.test(ex.prompt)) {
+        const g = Number(grausNoTexto[1])
+        const rad = (g * Math.PI) / 180
+        const nome = razao[1].toLowerCase()
+        const valor = nome === 'seno' ? Math.sin(rad) : nome === 'cosseno' ? Math.cos(rad) : Math.tan(rad)
+        if (Math.abs(valor - input.answer) > 0.01) {
+          falha(ctx, `${nome} de ${g} graus vale ${valor.toFixed(3)}, resposta ${input.answer}`)
+        }
+      }
+    }
+
+    // leitura de grafico: total, valor de uma categoria e diferenca entre duas
+    if (ex.visual?.kind === 'grafico') {
+      const dados: { label: string; valor: number }[] = ex.visual.dados
+      const total = dados.reduce((s, d) => s + d.valor, 0)
+      if (/ao todo|no total|juntos|Quantos alunos responderam|total de/i.test(ex.prompt) && total !== input.answer) {
+        falha(ctx, `o grafico soma ${total}, resposta ${input.answer}`)
+      }
+      const citada = dados.find((d) => new RegExp(`\\b${d.label}\\b`, 'i').test(ex.prompt))
+      if (citada && /Quantas|Quantos/.test(ex.prompt) && !/a mais|diferenca|todo|total|juntos/i.test(ex.prompt)) {
+        if (citada.valor !== input.answer) falha(ctx, `${citada.label} vale ${citada.valor}, resposta ${input.answer}`)
+      }
+    }
+
+    // chance em porcentagem sobre a composicao da urna
+    if ((ex.visual?.kind === 'urna' || ex.visual?.kind === 'sorteio') && /porcentagem|por cento|%/.test(ex.prompt)) {
+      const bolas: { cor: string; qtd: number }[] = ex.visual.bolas
+      const total = bolas.reduce((s, b) => s + b.qtd, 0)
+      const citada = bolas.find((b) => new RegExp(`\\b${b.cor}\\b`, 'i').test(ex.prompt))
+      if (citada) {
+        const esperado = (citada.qtd / total) * 100
+        if (Math.abs(esperado - input.answer) > 1e-9) {
+          falha(ctx, `${citada.cor}: ${citada.qtd} de ${total} da ${esperado}%, resposta ${input.answer}`)
+        }
+      }
+    }
   }
 
   if (input.mode === 'ajuste') {
@@ -224,10 +312,25 @@ function checarInput(ctx: string, ex: any) {
     for (const c of input.controls) {
       if (c.target < c.min || c.target > c.max) falha(ctx, `alvo de ${c.id} fora da faixa do slider`)
     }
-    const esperados = input.preview === 'quadratica' ? ['a', 'b', 'c'] : ['a', 'b']
+    // cada previa le controles com ids especificos; id errado sai como slider morto
     const dados = input.controls.map((c: any) => c.id)
+    const esperados =
+      input.preview === 'quadratica'
+        ? ['a', 'b', 'c']
+        : input.preview === 'afim'
+          ? ['a', 'b']
+          : input.preview === 'trigonometria'
+            ? ['angulo']
+            : []
     if (esperados.some((id) => !dados.includes(id))) {
       falha(ctx, `previa '${input.preview}' precisa dos controles ${esperados.join(', ')}`)
+    }
+    // barras usa um controle por categoria, com o nome aparecendo como rotulo no grafico
+    if (input.preview === 'barras' && input.controls.length < 2) {
+      falha(ctx, 'grafico de barras com menos de 2 categorias')
+    }
+    if (input.preview === 'trigonometria' && input.controls.some((c: any) => c.min < 0 || c.max > 90)) {
+      falha(ctx, 'angulo fora de 0..90 no circulo trigonometrico')
     }
   }
 

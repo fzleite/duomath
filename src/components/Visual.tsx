@@ -1,4 +1,6 @@
 import { CartesianPlane, type PlanePoint } from './CartesianPlane'
+import { Balanca, GraficoBarras, GraficoPizza, Sorteio, Urna, type Bola } from './Estatistica'
+import { AngulosParalelas, CirculoTrig, Construcao, Solido } from './Geometria'
 import { FractionShape, type ShapeKind } from './FractionShape'
 import { DotArray, GroupSum } from './DotArray'
 
@@ -34,6 +36,22 @@ export type VisualSpec =
   | { kind: 'poligono'; lados: number }
   /** Plano cartesiano de leitura (pontos e, opcionalmente, o poligono que eles formam). */
   | { kind: 'plano'; pontos: PlanePoint[]; poligono?: boolean }
+  /** Prisma ou piramide com vertices marcados, para contar vertices, faces e arestas. */
+  | { kind: 'solido'; tipo: 'prisma' | 'piramide'; base: number }
+  /** Duas paralelas cortadas por transversal, com um angulo dado. */
+  | { kind: 'angulos'; angulo: number }
+  /** Ilustracao de construcao classica com regua e compasso. */
+  | { kind: 'construcao'; tipo: 'mediatriz' | 'bissetriz' | 'angulo-60' }
+  /** Circulo trigonometrico com o triangulo do angulo e as tres razoes. */
+  | { kind: 'trig'; angulo: number }
+  /** Grafico de barras ou de pizza, para leitura. */
+  | { kind: 'grafico'; tipo: 'barras' | 'pizza'; dados: { label: string; valor: number }[] }
+  /** Urna com a composicao visivel. */
+  | { kind: 'urna'; bolas: Bola[] }
+  /** Urna com sorteio simulado: a crianca sorteia e a contagem acumula. */
+  | { kind: 'sorteio'; bolas: Bola[] }
+  /** Balanca de equilibrio: os dois lados de uma equacao do 1o grau. */
+  | { kind: 'balanca'; esquerda: { x: number; c: number }; direita: { x: number; c: number } }
 
 const AZUL = '#3b7ba0'
 const AZUL_CLARO = '#48bfe3'
@@ -76,6 +94,22 @@ export function Visual({ spec }: { spec: VisualSpec }) {
       return <Poligono lados={spec.lados} />
     case 'plano':
       return <CartesianPlane points={spec.pontos} polygon={spec.poligono} />
+    case 'solido':
+      return <Solido tipo={spec.tipo} base={spec.base} />
+    case 'angulos':
+      return <AngulosParalelas angulo={spec.angulo} />
+    case 'construcao':
+      return <Construcao tipo={spec.tipo} />
+    case 'trig':
+      return <CirculoTrig angulo={spec.angulo} />
+    case 'grafico':
+      return spec.tipo === 'barras' ? <GraficoBarras dados={spec.dados} /> : <GraficoPizza dados={spec.dados} />
+    case 'urna':
+      return <Urna bolas={spec.bolas} />
+    case 'sorteio':
+      return <Sorteio bolas={spec.bolas} />
+    case 'balanca':
+      return <Balanca esquerda={spec.esquerda} direita={spec.direita} />
   }
 }
 

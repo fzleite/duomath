@@ -5,9 +5,10 @@ import type { Stage } from '../types'
  * Modulo 4 — Geometria e Trigonometria, 6o ao 9o ano. E o modulo em que o Pizinho e
  * formalmente apresentado como referencia ao numero Pi.
  *
- * Etapas 1 e 5 com conteudo. Seguem declaradas: a 2 (precisa de solidos 3D com contagem de
- * vertices, faces e arestas), a 3 (angulos em paralelas), a 4 (instrumentos de desenho
- * simulados) e a 6 (circulo trigonometrico interativo).
+ * A etapa 4 (construcoes geometricas) usa a abordagem conceitual combinada: a ilustracao da
+ * construcao pronta com a pergunta sobre o que ela garante, em vez de um compasso simulado.
+ * A etapa 6 usa o circulo trigonometrico, esse sim interativo — a crianca move o angulo e ve
+ * seno, cosseno e tangente mudando em tempo real.
  */
 export const geometriaStages: Stage<QuizExercise>[] = [
   {
@@ -80,21 +81,187 @@ export const geometriaStages: Stage<QuizExercise>[] = [
     title: 'Vertices, faces e arestas de prismas e piramides',
     curriculum: 'base do 6o e 7o ano — BNCC',
     years: [6, 7],
-    exercises: [],
+    exercises: [
+      {
+        id: 'ge2-01',
+        bloom: 'lembrar',
+        prompt: 'Quantos vertices tem este prisma?',
+        hint: 'Conte as bolinhas: sao 3 embaixo e 3 em cima.',
+        visual: { kind: 'solido', tipo: 'prisma', base: 3 },
+        input: { mode: 'numero', answer: 6 },
+      },
+      {
+        id: 'ge2-02',
+        bloom: 'lembrar',
+        prompt: 'Quantos vertices tem esta piramide?',
+        hint: 'Sao os 4 da base mais o do topo.',
+        visual: { kind: 'solido', tipo: 'piramide', base: 4 },
+        input: { mode: 'numero', answer: 5 },
+      },
+      {
+        id: 'ge2-03',
+        bloom: 'entender',
+        prompt: 'Quantas arestas tem este prisma?',
+        hint: 'Sao 4 embaixo, 4 em cima e 4 em pe ligando as duas bases.',
+        visual: { kind: 'solido', tipo: 'prisma', base: 4 },
+        input: { mode: 'numero', answer: 12 },
+      },
+      {
+        id: 'ge2-04',
+        bloom: 'aplicar',
+        prompt: 'Quantas faces tem esta piramide?',
+        hint: 'A base e uma face, e cada lado da base gera uma face triangular.',
+        visual: { kind: 'solido', tipo: 'piramide', base: 3 },
+        input: { mode: 'numero', answer: 4 },
+      },
+      {
+        id: 'ge2-05',
+        bloom: 'aplicar',
+        prompt: 'Quantas faces tem este prisma?',
+        hint: 'As duas bases mais uma face para cada lado da base.',
+        visual: { kind: 'solido', tipo: 'prisma', base: 5 },
+        input: { mode: 'numero', answer: 7 },
+      },
+      {
+        id: 'ge2-06',
+        bloom: 'analisar',
+        prompt: 'Num solido, vertices menos arestas mais faces sempre da quanto?',
+        hint: 'Teste no prisma de base 3: 6 - 9 + 5. E na piramide de base 4: 5 - 8 + 5.',
+        input: { mode: 'numero', answer: 2 },
+      },
+    ],
   },
   {
     id: 'etapa-3',
     title: 'Angulos em retas paralelas cortadas por transversal',
     curriculum: 'base do 7o ano — BNCC',
     years: [7],
-    exercises: [],
+    exercises: [
+      {
+        id: 'ge3-01',
+        bloom: 'lembrar',
+        prompt: 'Entre duas paralelas cortadas por uma transversal, os angulos que ocupam a mesma posicao se chamam...',
+        hint: 'Eles se correspondem: um em cada reta, do mesmo lado e na mesma posicao.',
+        options: ['Correspondentes', 'Suplementares', 'Retos', 'Opostos pelo vertice'],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge3-02',
+        bloom: 'entender',
+        prompt: 'Qual e o valor do angulo correspondente, marcado na reta de baixo?',
+        hint: 'Angulos correspondentes entre paralelas tem o mesmo valor.',
+        visual: { kind: 'angulos', angulo: 70 },
+        input: { mode: 'numero', answer: 70 },
+      },
+      {
+        id: 'ge3-03',
+        bloom: 'aplicar',
+        prompt: 'Qual e o valor do angulo alterno interno, marcado na reta de baixo?',
+        hint: 'Alternos internos tambem sao iguais entre paralelas.',
+        visual: { kind: 'angulos', angulo: 120 },
+        input: { mode: 'numero', answer: 120 },
+      },
+      {
+        id: 'ge3-04',
+        bloom: 'aplicar',
+        prompt: 'Qual e o valor do angulo colateral interno, marcado na reta de baixo?',
+        hint: 'Colaterais internos nao sao iguais: os dois juntos fecham 180 graus.',
+        visual: { kind: 'angulos', angulo: 65 },
+        input: { mode: 'numero', answer: 115 },
+      },
+      {
+        id: 'ge3-05',
+        bloom: 'analisar',
+        prompt: 'Dois angulos colaterais internos somam quantos graus?',
+        hint: 'Juntos eles formam uma meia volta.',
+        input: { mode: 'numero', answer: 180 },
+      },
+      {
+        id: 'ge3-06',
+        bloom: 'avaliar',
+        prompt: 'Se as duas retas NAO forem paralelas, os angulos correspondentes continuam iguais?',
+        hint: 'A igualdade depende do paralelismo: e ele que garante a mesma inclinacao nas duas.',
+        options: [
+          'Nao, a igualdade depende de as retas serem paralelas',
+          'Sim, sempre sao iguais',
+          'Sim, se a transversal for vertical',
+          'Nunca sao iguais',
+        ],
+        answerIndex: 0,
+      },
+    ],
   },
   {
     id: 'etapa-4',
     title: 'Construcoes geometricas: mediatriz, bissetriz e angulos',
     curriculum: 'base do 7o e 8o ano — BNCC',
     years: [7, 8],
-    exercises: [],
+    exercises: [
+      {
+        id: 'ge4-01',
+        bloom: 'lembrar',
+        prompt: 'O que a mediatriz de um segmento faz?',
+        hint: 'Olhe o desenho: ela passa pelo meio do segmento e forma canto reto com ele.',
+        visual: { kind: 'construcao', tipo: 'mediatriz' },
+        options: [
+          'Corta o segmento no meio formando angulo reto',
+          'Divide o angulo em dois iguais',
+          'Liga as duas pontas do segmento',
+          'Mede o comprimento do segmento',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge4-02',
+        bloom: 'entender',
+        prompt: 'O que a bissetriz de um angulo faz?',
+        hint: 'A linha tracejada do desenho divide a abertura em duas partes iguais.',
+        visual: { kind: 'construcao', tipo: 'bissetriz' },
+        options: [
+          'Divide o angulo em duas partes iguais',
+          'Corta um segmento no meio',
+          'Forma sempre 90 graus',
+          'Mede o lado do triangulo',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge4-03',
+        bloom: 'entender',
+        prompt: 'O triangulo equilatero serve de base para construir qual angulo, em graus?',
+        hint: 'Os tres angulos do equilatero sao iguais e somam 180.',
+        visual: { kind: 'construcao', tipo: 'angulo-60' },
+        input: { mode: 'numero', answer: 60 },
+      },
+      {
+        id: 'ge4-04',
+        bloom: 'aplicar',
+        prompt: 'Para achar os pontos que ficam a mesma distancia de A e de B, qual construcao usar?',
+        hint: 'Todo ponto dessa linha fica igualmente longe das duas pontas.',
+        visual: { kind: 'construcao', tipo: 'mediatriz' },
+        options: [
+          'A mediatriz do segmento AB',
+          'A bissetriz do angulo A',
+          'Um circulo com centro em A',
+          'Uma reta paralela a AB',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge4-05',
+        bloom: 'aplicar',
+        prompt: 'Tracando a bissetriz de um angulo reto, cada parte fica com quantos graus?',
+        hint: 'O angulo reto tem 90 graus. Divida em duas partes iguais.',
+        input: { mode: 'numero', answer: 45 },
+      },
+      {
+        id: 'ge4-06',
+        bloom: 'analisar',
+        prompt: 'Partindo de 60 graus e tracando a bissetriz duas vezes, chega-se a quantos graus?',
+        hint: 'Metade de 60 da 30; metade de 30 da o resultado.',
+        input: { mode: 'numero', answer: 15 },
+      },
+    ],
   },
   {
     id: 'etapa-5',
@@ -142,7 +309,7 @@ export const geometriaStages: Stage<QuizExercise>[] = [
         id: 'ge5-05',
         bloom: 'analisar',
         prompt: 'Se a razao de semelhanca entre dois triangulos e 3, a razao entre as areas e...',
-        hint: 'Area tem duas dimensoes: a razao aparece duas vezes, uma vez em cada.',
+        hint: 'Area tem duas dimensoes: a razao aparece duas vezes, uma em cada.',
         input: { mode: 'numero', answer: 9 },
       },
       {
@@ -165,6 +332,63 @@ export const geometriaStages: Stage<QuizExercise>[] = [
     title: 'Seno, cosseno e tangente no triangulo retangulo',
     curriculum: 'base do 9o ano — BNCC',
     years: [9],
-    exercises: [],
+    exercises: [
+      {
+        id: 'ge6-01',
+        bloom: 'lembrar',
+        prompt: 'Qual razao compara o cateto oposto ao angulo com a hipotenusa?',
+        hint: 'No desenho, e o cateto vertical (verde) dividido pelo lado inclinado.',
+        visual: { kind: 'trig', angulo: 30 },
+        options: ['Seno', 'Cosseno', 'Tangente', 'Nenhuma das tres'],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge6-02',
+        bloom: 'entender',
+        prompt: 'Mova o angulo ate 30 graus e observe as tres razoes.',
+        hint: 'Arraste o controle e repare: o seno chega perto de 0,50.',
+        input: {
+          mode: 'ajuste',
+          preview: 'trigonometria',
+          controls: [{ id: 'angulo', label: 'Angulo (graus)', min: 0, max: 90, target: 30, step: 5 }],
+        },
+      },
+      {
+        id: 'ge6-03',
+        bloom: 'aplicar',
+        prompt: 'Quanto vale o seno de 30 graus?',
+        hint: 'E exatamente a metade. Use a virgula: 0,5.',
+        visual: { kind: 'trig', angulo: 30 },
+        input: { mode: 'numero', answer: 0.5, decimal: true },
+      },
+      {
+        id: 'ge6-04',
+        bloom: 'aplicar',
+        prompt: 'No angulo de 45 graus, como ficam o seno e o cosseno?',
+        hint: 'Os dois catetos ficam do mesmo tamanho nesse angulo.',
+        visual: { kind: 'trig', angulo: 45 },
+        options: ['Sao iguais', 'O seno e o dobro do cosseno', 'O cosseno vale zero', 'O seno vale 1'],
+        answerIndex: 0,
+      },
+      {
+        id: 'ge6-05',
+        bloom: 'analisar',
+        prompt: 'Mova o angulo ate onde o cosseno chega a zero.',
+        hint: 'O cosseno e o cateto horizontal: ele desaparece quando o angulo fica de pe.',
+        input: {
+          mode: 'ajuste',
+          preview: 'trigonometria',
+          controls: [{ id: 'angulo', label: 'Angulo (graus)', min: 0, max: 90, target: 90, step: 5 }],
+        },
+      },
+      {
+        id: 'ge6-06',
+        bloom: 'avaliar',
+        prompt: 'Uma rampa de 6 m de comprimento sobe 3 m. O seno do angulo vale 0,5. Qual e o angulo, em graus?',
+        hint: 'Seno igual a 0,5 corresponde a um angulo conhecido — o mesmo dos exercicios anteriores.',
+        visual: { kind: 'trig', angulo: 30 },
+        input: { mode: 'numero', answer: 30 },
+      },
+    ],
   },
 ]

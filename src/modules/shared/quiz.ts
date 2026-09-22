@@ -23,8 +23,13 @@ export interface NumeroInput {
  */
 export interface AjusteInput {
   mode: 'ajuste'
-  /** Que previa desenhar enquanto a crianca mexe nos controles. */
-  preview: 'afim' | 'quadratica'
+  /**
+   * Que previa desenhar enquanto a crianca mexe nos controles:
+   * - 'afim' e 'quadratica' — reta e parabola no plano cartesiano (controles a, b, c)
+   * - 'trigonometria' — circulo trigonometrico e triangulo (controle 'angulo')
+   * - 'barras' — grafico de barras que a crianca monta (um controle por barra)
+   */
+  preview: 'afim' | 'quadratica' | 'trigonometria' | 'barras'
   controls: { id: string; label: string; min: number; max: number; target: number; step?: number }[]
 }
 

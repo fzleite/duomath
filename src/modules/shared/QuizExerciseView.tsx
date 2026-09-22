@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 
 import { CartesianPlane, NumberLinePicker } from '../../components/CartesianPlane'
+import { GraficoBarras } from '../../components/Estatistica'
+import { CirculoTrig } from '../../components/Geometria'
 import { NumberPad } from '../../components/NumberPad'
 import { Visual } from '../../components/Visual'
 import type { ExerciseViewProps } from '../types'
@@ -128,22 +130,39 @@ function AjusteAnswer({
   )
 
   const alvo = Object.fromEntries(input.controls.map((c) => [c.id, c.target]))
-  const fn =
-    input.preview === 'afim'
-      ? (x: number) => (valores.a ?? 0) * x + (valores.b ?? 0)
-      : (x: number) => (valores.a ?? 0) * x * x + (valores.b ?? 0) * x + (valores.c ?? 0)
 
-  const expressao =
-    input.preview === 'afim'
-      ? `y = ${valores.a ?? 0}x ${(valores.b ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.b ?? 0)}`
-      : `y = ${valores.a ?? 0}x² ${(valores.b ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.b ?? 0)}x ${(valores.c ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.c ?? 0)}`
+  const previa = () => {
+    if (input.preview === 'trigonometria') {
+      return <CirculoTrig angulo={valores.angulo ?? 0} />
+    }
+    if (input.preview === 'barras') {
+      return (
+        <GraficoBarras
+          dados={input.controls.map((c) => ({ label: c.label, valor: valores[c.id] ?? 0 }))}
+        />
+      )
+    }
+
+    const fn =
+      input.preview === 'afim'
+        ? (x: number) => (valores.a ?? 0) * x + (valores.b ?? 0)
+        : (x: number) => (valores.a ?? 0) * x * x + (valores.b ?? 0) * x + (valores.c ?? 0)
+    const expressao =
+      input.preview === 'afim'
+        ? `y = ${valores.a ?? 0}x ${(valores.b ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.b ?? 0)}`
+        : `y = ${valores.a ?? 0}x² ${(valores.b ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.b ?? 0)}x ${(valores.c ?? 0) < 0 ? '-' : '+'} ${Math.abs(valores.c ?? 0)}`
+
+    return (
+      <>
+        <CartesianPlane fn={fn} />
+        <p className="expressao">{expressao}</p>
+      </>
+    )
+  }
 
   return (
     <>
-      <div className="exercise-visual">
-        <CartesianPlane fn={fn} />
-        <p className="expressao">{expressao}</p>
-      </div>
+      <div className="exercise-visual">{previa()}</div>
 
       <div className="sliders">
         {input.controls.map((control) => (
