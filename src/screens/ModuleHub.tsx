@@ -174,6 +174,9 @@ function SubjectList({
           }))
           const metrics = computeModuleMetrics(module.id, stages, attempts, progress)
           const soon = module.status === 'soon'
+          // completude e calculada sobre o que existe: dizer "3 de 6 etapas" evita a leitura
+          // de que o modulo inteiro esta pronto so porque as etapas escritas foram concluidas
+          const prontas = module.stages.filter((s: { exercises: unknown[] }) => s.exercises.length > 0).length
 
           return (
             <button
@@ -200,12 +203,17 @@ function SubjectList({
                   </div>
                   <div className="kpi-row">
                     <span>
-                      <strong>{formatPercent(metrics.completion)}</strong> do modulo
+                      <strong>{formatPercent(metrics.completion)}</strong> do que esta disponivel
                     </span>
                     <span>
                       <strong>{formatPercent(metrics.firstTryAccuracy)}</strong> de acerto de primeira
                     </span>
                   </div>
+                  {prontas < module.stages.length && (
+                    <span className="stage-kpi">
+                      {prontas} de {module.stages.length} etapas disponiveis
+                    </span>
+                  )}
                 </>
               )}
             </button>

@@ -2,11 +2,13 @@ import type { QuizExercise } from '../shared/quiz'
 import type { Stage } from '../types'
 
 /**
- * Modulo 3 — Algebra, 6o ao 9o ano. As etapas estao declaradas com a progressao da BNCC para
- * que o plano apareca na navegacao por serie, mas os exercicios ainda nao foram escritos:
- * as etapas 4 e 6 dependem de um plano cartesiano interativo com sliders de coeficiente
- * (reta e parabola se transformando em tempo real) e a etapa 2 de uma balanca de equilibrio.
- * Cada um desses e um componente de porte, nao conteudo.
+ * Modulo 3 — Algebra, 6o ao 9o ano.
+ *
+ * Etapas 1, 3, 4, 5 e 6 com conteudo. A etapa 2 (equacao do 1o grau na balanca) segue
+ * declarada: depende do componente de balanca de equilibrio, que e o proximo ciclo.
+ *
+ * As etapas 4 e 6 usam o modo 'ajuste': a crianca move os coeficientes e ve a reta ou a
+ * parabola se transformando ao vivo, que e exatamente o que o spec pede.
  */
 export const algebraStages: Stage<QuizExercise>[] = [
   {
@@ -14,7 +16,57 @@ export const algebraStages: Stage<QuizExercise>[] = [
     title: 'Variavel e expressoes algebricas',
     curriculum: 'base do 6o ano — BNCC',
     years: [6],
-    exercises: [],
+    exercises: [
+      {
+        id: 'al1-01',
+        bloom: 'lembrar',
+        prompt: 'Numa expressao como 3x, o que a letra x representa?',
+        hint: 'A letra guarda o lugar de um numero que ainda nao sabemos, ou que pode mudar.',
+        options: [
+          'Um numero que pode variar',
+          'A letra x mesmo, como no alfabeto',
+          'Sempre o numero 10',
+          'Uma operacao de multiplicar',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'al1-02',
+        bloom: 'entender',
+        prompt: 'Se x vale 4, quanto vale 3x?',
+        hint: '3x quer dizer 3 vezes x. Troque o x por 4.',
+        input: { mode: 'numero', answer: 12 },
+      },
+      {
+        id: 'al1-03',
+        bloom: 'aplicar',
+        prompt: 'Se x vale 5, quanto vale 2x + 7?',
+        hint: 'Primeiro 2 vezes 5, e so depois some o 7.',
+        input: { mode: 'numero', answer: 17 },
+      },
+      {
+        id: 'al1-04',
+        bloom: 'aplicar',
+        prompt: 'Se a vale 3 e b vale 6, quanto vale a x b - 4?',
+        hint: 'Multiplique primeiro: 3 vezes 6. Depois tire 4.',
+        input: { mode: 'numero', answer: 14 },
+      },
+      {
+        id: 'al1-05',
+        bloom: 'aplicar',
+        prompt: 'Se x vale 2, quanto vale 5x - 12?',
+        hint: '5 vezes 2 da 10, e 10 menos 12 passa do zero: a resposta e negativa.',
+        input: { mode: 'numero', answer: -2, negativo: true },
+      },
+      {
+        id: 'al1-06',
+        bloom: 'analisar',
+        prompt: 'Uma caneta custa c reais. Qual expressao representa o preco de 4 canetas?',
+        hint: 'Quatro vezes o mesmo preco.',
+        options: ['4c', 'c + 4', 'c4 reais a mais', '4 - c'],
+        answerIndex: 0,
+      },
+    ],
   },
   {
     id: 'etapa-2',
@@ -28,27 +80,247 @@ export const algebraStages: Stage<QuizExercise>[] = [
     title: 'Sistemas do 1o grau e plano cartesiano',
     curriculum: 'base do 8o ano — BNCC',
     years: [8],
-    exercises: [],
+    exercises: [
+      {
+        id: 'al3-01',
+        bloom: 'entender',
+        prompt: 'No plano cartesiano, o que o par ordenado (3, 2) indica?',
+        hint: 'O primeiro numero anda na horizontal; o segundo, na vertical.',
+        options: [
+          'Andar 3 na horizontal e 2 na vertical',
+          'Andar 2 na horizontal e 3 na vertical',
+          'O numero 32',
+          'Somar 3 com 2',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'al3-02',
+        bloom: 'aplicar',
+        prompt: 'Duas retas se cruzam no ponto (2, 3). Quanto vale x na solucao do sistema?',
+        hint: 'O encontro das retas e a solucao: o x e a primeira coordenada.',
+        input: { mode: 'numero', answer: 2 },
+      },
+      {
+        id: 'al3-03',
+        bloom: 'aplicar',
+        prompt: 'No sistema x + y = 10 e x - y = 4, quanto vale x?',
+        hint: 'Somando as duas equacoes o y desaparece: 2x = 14.',
+        input: { mode: 'numero', answer: 7 },
+      },
+      {
+        id: 'al3-04',
+        bloom: 'aplicar',
+        prompt: 'No mesmo sistema (x + y = 10 e x - y = 4), quanto vale y?',
+        hint: 'Se x vale 7 e x + y da 10, o que sobra para o y?',
+        input: { mode: 'numero', answer: 3 },
+      },
+      {
+        id: 'al3-05',
+        bloom: 'analisar',
+        prompt: 'Duas retas paralelas representam um sistema com quantas solucoes?',
+        hint: 'Solucao e onde as retas se cruzam. Paralelas se cruzam em algum lugar?',
+        options: ['Nenhuma', 'Uma', 'Duas', 'Infinitas'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al3-06',
+        bloom: 'avaliar',
+        prompt: 'Dois lapis e uma borracha custam 10 reais; a borracha custa 2. Quanto custa um lapis?',
+        hint: 'Tire a borracha do total: sobram 8 reais para dois lapis iguais.',
+        input: { mode: 'numero', answer: 4, unit: 'reais' },
+      },
+    ],
   },
   {
     id: 'etapa-4',
     title: 'Funcao afim com sliders de coeficiente',
     curriculum: 'base do 8o e 9o ano — BNCC',
     years: [8, 9],
-    exercises: [],
+    exercises: [
+      {
+        id: 'al4-01',
+        bloom: 'entender',
+        prompt: 'Na funcao y = ax + b, o que o coeficiente b faz no grafico?',
+        hint: 'Experimente: mudando so o b, a reta sobe ou desce sem mudar de inclinacao.',
+        options: [
+          'Move a reta para cima ou para baixo',
+          'Muda a inclinacao da reta',
+          'Nao muda nada',
+          'Vira a reta de cabeca para baixo',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'al4-02',
+        bloom: 'entender',
+        prompt: 'Monte a reta y = 2x + 1 usando os controles.',
+        hint: 'O a e a inclinacao (2) e o b e onde a reta corta o eixo vertical (1).',
+        input: {
+          mode: 'ajuste',
+          preview: 'afim',
+          controls: [
+            { id: 'a', label: 'Inclinacao (a)', min: -3, max: 3, target: 2 },
+            { id: 'b', label: 'Onde corta o eixo y (b)', min: -4, max: 4, target: 1 },
+          ],
+        },
+      },
+      {
+        id: 'al4-03',
+        bloom: 'aplicar',
+        prompt: 'Monte uma reta que desce, cortando o eixo y em -2.',
+        hint: 'Para descer, a inclinacao tem que ser negativa. Use a = -1 e b = -2.',
+        input: {
+          mode: 'ajuste',
+          preview: 'afim',
+          controls: [
+            { id: 'a', label: 'Inclinacao (a)', min: -3, max: 3, target: -1 },
+            { id: 'b', label: 'Onde corta o eixo y (b)', min: -4, max: 4, target: -2 },
+          ],
+        },
+      },
+      {
+        id: 'al4-04',
+        bloom: 'aplicar',
+        prompt: 'Na funcao y = 3x - 5, quanto vale y quando x vale 4?',
+        hint: '3 vezes 4 da 12; agora tire 5.',
+        input: { mode: 'numero', answer: 7 },
+      },
+      {
+        id: 'al4-05',
+        bloom: 'analisar',
+        prompt: 'Na funcao y = 2x - 6, para que valor de x o y fica zero?',
+        hint: 'E onde a reta cruza o eixo x: 2x tem que dar 6.',
+        input: { mode: 'numero', answer: 3 },
+      },
+      {
+        id: 'al4-06',
+        bloom: 'avaliar',
+        prompt: 'Uma corrida custa 5 reais fixos mais 2 por quilometro. Quanto custa uma corrida de 7 km?',
+        hint: 'E uma funcao afim: y = 2x + 5, com x igual a 7.',
+        input: { mode: 'numero', answer: 19, unit: 'reais' },
+      },
+    ],
   },
   {
     id: 'etapa-5',
     title: 'Fatoracao e produtos notaveis',
     curriculum: 'base do 8o e 9o ano — BNCC',
     years: [8, 9],
-    exercises: [],
+    exercises: [
+      {
+        id: 'al5-01',
+        bloom: 'lembrar',
+        prompt: 'Qual e o desenvolvimento de (x + 1) ao quadrado?',
+        hint: 'Quadrado do primeiro, mais duas vezes o produto, mais quadrado do segundo.',
+        options: ['x² + 2x + 1', 'x² + 1', 'x² + 2x', '2x + 2'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al5-02',
+        bloom: 'entender',
+        prompt: 'Qual e o desenvolvimento de (x + 3)(x - 3)?',
+        hint: 'Produto da soma pela diferenca: os termos do meio se cancelam.',
+        options: ['x² - 9', 'x² + 9', 'x² - 6x + 9', 'x² - 3'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al5-03',
+        bloom: 'aplicar',
+        prompt: 'Como fica 2x + 6 com o fator comum em evidencia?',
+        hint: 'O que aparece nos dois termos? O 2 divide 2x e 6.',
+        options: ['2(x + 3)', '2(x + 6)', 'x(2 + 6)', '2x(1 + 3)'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al5-04',
+        bloom: 'aplicar',
+        prompt: 'Como fatorar x² - 25?',
+        hint: 'E uma diferenca de quadrados: 25 e 5 ao quadrado.',
+        options: ['(x + 5)(x - 5)', '(x - 25)(x + 1)', '(x + 5)²', 'x(x - 25)'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al5-05',
+        bloom: 'aplicar',
+        prompt: 'Usando produto notavel, quanto e 21 ao quadrado?',
+        hint: '21 e 20 + 1: faca 400 + 2 x 20 x 1 + 1.',
+        input: { mode: 'numero', answer: 441 },
+      },
+      {
+        id: 'al5-06',
+        bloom: 'analisar',
+        prompt: 'Qual e a fatoracao de x² + 6x + 9?',
+        hint: '9 e 3 ao quadrado e 6x e duas vezes 3x: e um quadrado perfeito.',
+        options: ['(x + 3)²', '(x + 9)²', '(x + 3)(x - 3)', '(x + 6)(x + 3)'],
+        answerIndex: 0,
+      },
+    ],
   },
   {
     id: 'etapa-6',
     title: 'Equacao do 2o grau e a parabola',
     curriculum: 'base do 9o ano — BNCC',
     years: [9],
-    exercises: [],
+    exercises: [
+      {
+        id: 'al6-01',
+        bloom: 'entender',
+        prompt: 'O que as raizes de uma equacao do 2o grau representam no grafico?',
+        hint: 'Sao os valores de x em que y fica zero — ou seja, onde a curva encosta no eixo x.',
+        options: [
+          'Os pontos onde a parabola corta o eixo x',
+          'O ponto mais alto da parabola',
+          'Onde a parabola corta o eixo y',
+          'A largura da parabola',
+        ],
+        answerIndex: 0,
+      },
+      {
+        id: 'al6-02',
+        bloom: 'entender',
+        prompt: 'Monte a parabola y = x² - 4 usando os controles.',
+        hint: 'Deixe a em 1, b em 0 e c em -4. Veja onde ela corta o eixo x.',
+        input: {
+          mode: 'ajuste',
+          preview: 'quadratica',
+          controls: [
+            { id: 'a', label: 'Abertura (a)', min: -2, max: 2, target: 1 },
+            { id: 'b', label: 'Deslocamento (b)', min: -4, max: 4, target: 0 },
+            { id: 'c', label: 'Altura (c)', min: -5, max: 5, target: -4 },
+          ],
+        },
+      },
+      {
+        id: 'al6-03',
+        bloom: 'aplicar',
+        prompt: 'Quais sao as raizes de x² - 4 = 0?',
+        hint: 'x² tem que dar 4. Dois numeros elevados ao quadrado dao 4.',
+        options: ['2 e -2', 'Apenas 2', '4 e -4', 'Nao tem raiz'],
+        answerIndex: 0,
+      },
+      {
+        id: 'al6-04',
+        bloom: 'aplicar',
+        prompt: 'Na equacao x² - 5x + 6 = 0, qual e a maior raiz?',
+        hint: 'Procure dois numeros que somam 5 e multiplicam 6.',
+        input: { mode: 'numero', answer: 3 },
+      },
+      {
+        id: 'al6-05',
+        bloom: 'analisar',
+        prompt: 'Em x² - 6x + 9 = 0, o discriminante vale zero. Quantas raizes distintas existem?',
+        hint: 'Discriminante zero significa que a parabola so encosta no eixo x, num unico ponto.',
+        input: { mode: 'numero', answer: 1 },
+      },
+      {
+        id: 'al6-06',
+        bloom: 'avaliar',
+        prompt: 'Se o coeficiente a e negativo, a parabola abre para onde?',
+        hint: 'Experimente deixar o a negativo no exercicio dos controles e veja o que acontece.',
+        options: ['Para baixo', 'Para cima', 'Para o lado', 'Vira uma reta'],
+        answerIndex: 0,
+      },
+    ],
   },
 ]

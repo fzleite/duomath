@@ -39,7 +39,28 @@ export interface ChoiceExercise extends ExerciseBase {
   visual?: { shape: ShapeKind; value: Fraction }
 }
 
-export type FractionExercise = IdentifyExercise | CompareExercise | BuildExercise | ChoiceExercise
+/** Marcar a fracao na reta numerica — a reta dividida em `d` partes, alvo no numerador. */
+export interface RetaExercise extends ExerciseBase {
+  kind: 'reta'
+  target: Fraction
+}
+
+/** Somar ou subtrair duas fracoes vendo as duas barras lado a lado. */
+export interface OperarExercise extends ExerciseBase {
+  kind: 'operar'
+  op: '+' | '-'
+  left: Fraction
+  right: Fraction
+  options: Fraction[]
+}
+
+export type FractionExercise =
+  | IdentifyExercise
+  | CompareExercise
+  | BuildExercise
+  | ChoiceExercise
+  | RetaExercise
+  | OperarExercise
 
 export const fractionStages: Stage<FractionExercise>[] = [
   {
@@ -103,16 +124,6 @@ export const fractionStages: Stage<FractionExercise>[] = [
         right: { n: 1, d: 6 },
       },
       {
-        id: 'e1-05',
-        kind: 'compare',
-        bloom: 'analisar',
-        prompt: 'Qual fracao e maior?',
-        hint: 'Olhe quanto falta para completar o inteiro em cada desenho.',
-        shape: 'bar',
-        left: { n: 3, d: 4 },
-        right: { n: 2, d: 3 },
-      },
-      {
         id: 'e1-06',
         kind: 'build',
         bloom: 'aplicar',
@@ -121,6 +132,16 @@ export const fractionStages: Stage<FractionExercise>[] = [
         shape: 'pizza',
         target: { n: 3, d: 4 },
         maxDenominator: 10,
+      },
+      {
+        id: 'e1-05',
+        kind: 'compare',
+        bloom: 'analisar',
+        prompt: 'Qual fracao e maior?',
+        hint: 'Olhe quanto falta para completar o inteiro em cada desenho.',
+        shape: 'bar',
+        left: { n: 3, d: 4 },
+        right: { n: 2, d: 3 },
       },
     ],
   },
@@ -145,16 +166,6 @@ export const fractionStages: Stage<FractionExercise>[] = [
         ],
       },
       {
-        id: 'e2-02',
-        kind: 'choice',
-        bloom: 'aplicar',
-        prompt: 'Qual destas fracoes e equivalente a 2/3?',
-        hint: 'Multiplique o numero de cima e o de baixo pelo mesmo valor: 2x2 e 3x2.',
-        options: ['4/6', '3/4', '2/6', '4/3'],
-        answerIndex: 0,
-        visual: { shape: 'pizza', value: { n: 2, d: 3 } },
-      },
-      {
         id: 'e2-03',
         kind: 'choice',
         bloom: 'entender',
@@ -163,6 +174,16 @@ export const fractionStages: Stage<FractionExercise>[] = [
         options: ['10%', '1%', '100%', '20%'],
         answerIndex: 0,
         visual: { shape: 'rect', value: { n: 1, d: 10 } },
+      },
+      {
+        id: 'e2-02',
+        kind: 'choice',
+        bloom: 'aplicar',
+        prompt: 'Qual destas fracoes e equivalente a 2/3?',
+        hint: 'Multiplique o numero de cima e o de baixo pelo mesmo valor: 2x2 e 3x2.',
+        options: ['4/6', '3/4', '2/6', '4/3'],
+        answerIndex: 0,
+        visual: { shape: 'pizza', value: { n: 2, d: 3 } },
       },
       {
         id: 'e2-04',
@@ -175,6 +196,14 @@ export const fractionStages: Stage<FractionExercise>[] = [
         visual: { shape: 'bar', value: { n: 3, d: 4 } },
       },
       {
+        id: 'e2-07',
+        kind: 'reta',
+        bloom: 'aplicar',
+        prompt: 'Marque 3/4 na reta numerica.',
+        hint: 'A reta de 0 a 1 esta dividida em 4 partes iguais. Conte 3 delas.',
+        target: { n: 3, d: 4 },
+      },
+      {
         id: 'e2-05',
         kind: 'choice',
         bloom: 'analisar',
@@ -182,6 +211,14 @@ export const fractionStages: Stage<FractionExercise>[] = [
         hint: 'Todas tem o mesmo inteiro dividido. Compare quantos pedacos estao pintados.',
         options: ['1/4, 1/2, 3/4', '1/2, 1/4, 3/4', '3/4, 1/2, 1/4', '1/4, 3/4, 1/2'],
         answerIndex: 0,
+      },
+      {
+        id: 'e2-08',
+        kind: 'reta',
+        bloom: 'analisar',
+        prompt: 'Marque 2/5 na reta numerica.',
+        hint: 'Cinco partes iguais entre 0 e 1. Pare na segunda.',
+        target: { n: 2, d: 5 },
       },
       {
         id: 'e2-06',
@@ -248,6 +285,36 @@ export const fractionStages: Stage<FractionExercise>[] = [
         options: ['3/8', '7/8', '3/16', '2/8'],
         answerIndex: 0,
         visual: { shape: 'pizza', value: { n: 3, d: 8 } },
+      },
+      {
+        id: 'e3-07',
+        kind: 'operar',
+        bloom: 'aplicar',
+        prompt: 'Junte as duas barras: quanto da 1/4 + 2/4?',
+        hint: 'O total de pedacos e o mesmo nas duas. Some so os pedacos pintados.',
+        op: '+',
+        left: { n: 1, d: 4 },
+        right: { n: 2, d: 4 },
+        options: [
+          { n: 3, d: 4 },
+          { n: 3, d: 8 },
+          { n: 2, d: 4 },
+        ],
+      },
+      {
+        id: 'e3-08',
+        kind: 'operar',
+        bloom: 'analisar',
+        prompt: 'Tire a segunda barra da primeira: quanto da 5/6 - 2/6?',
+        hint: 'Comece com 5 pedacos pintados e apague 2.',
+        op: '-',
+        left: { n: 5, d: 6 },
+        right: { n: 2, d: 6 },
+        options: [
+          { n: 3, d: 6 },
+          { n: 7, d: 6 },
+          { n: 3, d: 12 },
+        ],
       },
       {
         id: 'e3-06',

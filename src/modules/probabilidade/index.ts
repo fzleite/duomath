@@ -7,7 +7,7 @@ export const probabilidadeModule: ContentModule<QuizExercise> = {
   id: 'probabilidade',
   title: 'Probabilidade e Estatistica',
   tagline: 'Graficos, chance, media e leitura de dados.',
-  status: 'soon',
+  status: 'ready',
   accent: '#5aa9e6',
   category: 'conteudo',
   stages: probabilidadeStages,

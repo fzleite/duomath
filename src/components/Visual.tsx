@@ -1,3 +1,4 @@
+import { CartesianPlane, type PlanePoint } from './CartesianPlane'
 import { FractionShape, type ShapeKind } from './FractionShape'
 import { DotArray, GroupSum } from './DotArray'
 
@@ -25,6 +26,14 @@ export type VisualSpec =
   | { kind: 'contorno'; largura: number; altura: number }
   /** Bloco 3D em projecao isometrica, para volume. */
   | { kind: 'blocos'; x: number; y: number; z: number }
+  /** Dois triangulos em escala, para semelhanca. */
+  | { kind: 'triangulos'; base: number; altura: number; fator: number }
+  /** Conjunto de dados como barras rotuladas, para estatistica. */
+  | { kind: 'dados'; valores: number[] }
+  /** Poligono regular com os vertices marcados. */
+  | { kind: 'poligono'; lados: number }
+  /** Plano cartesiano de leitura (pontos e, opcionalmente, o poligono que eles formam). */
+  | { kind: 'plano'; pontos: PlanePoint[]; poligono?: boolean }
 
 const AZUL = '#3b7ba0'
 const AZUL_CLARO = '#48bfe3'
@@ -59,6 +68,14 @@ export function Visual({ spec }: { spec: VisualSpec }) {
       return <Contorno largura={spec.largura} altura={spec.altura} />
     case 'blocos':
       return <Blocos x={spec.x} y={spec.y} z={spec.z} />
+    case 'triangulos':
+      return <Triangulos base={spec.base} altura={spec.altura} fator={spec.fator} />
+    case 'dados':
+      return <Dados valores={spec.valores} />
+    case 'poligono':
+      return <Poligono lados={spec.lados} />
+    case 'plano':
+      return <CartesianPlane points={spec.pontos} polygon={spec.poligono} />
   }
 }
 
@@ -222,6 +239,87 @@ function Blocos({ x, y, z }: { x: number; y: number; z: number }) {
             strokeWidth={1.5}
           />
         </g>
+      ))}
+    </svg>
+  )
+}
+
+/** Dois triangulos retangulos com o mesmo formato e tamanhos diferentes: semelhanca a olho. */
+function Triangulos({ base, altura, fator }: { base: number; altura: number; fator: number }) {
+  const escala = 14
+  const w1 = base * escala
+  const h1 = altura * escala
+  const w2 = w1 * fator
+  const h2 = h1 * fator
+  const width = w1 + w2 + 40
+  const height = Math.max(h1, h2) + 30
+
+  const tri = (x: number, w: number, h: number, cor: string, b: number, a: number) => (
+    <g>
+      <polygon
+        points={`${x},${height - 20} ${x + w},${height - 20} ${x},${height - 20 - h}`}
+        fill={cor}
+        fillOpacity={0.3}
+        stroke={cor}
+        strokeWidth={2.5}
+      />
+      <text x={x + w / 2} y={height - 6} textAnchor="middle" className="chart-dim">
+        {b}
+      </text>
+      <text x={x - 12} y={height - 20 - h / 2} className="chart-dim">
+        {a}
+      </text>
+    </g>
+  )
+
+  return (
+    <svg
+      viewBox={`0 0 ${width} ${height}`}
+      className="dot-array"
+      style={{ maxWidth: '280px' }}
+      role="img"
+      aria-label={`triangulos semelhantes de razao ${fator}`}
+    >
+      {tri(16, w1, h1, VERDE, base, altura)}
+      {tri(w1 + 34, w2, h2, AZUL, base * fator, altura * fator)}
+    </svg>
+  )
+}
+
+/** Barras rotuladas com o valor: le-se o conjunto sem precisar de tabela. */
+function Dados({ valores }: { valores: number[] }) {
+  const max = Math.max(...valores, 1)
+  return (
+    <div className="dados">
+      {valores.map((valor, index) => (
+        <div className="dado-col" key={index}>
+          <span className="dado-valor">{valor}</span>
+          <div className="dado-barra" style={{ height: `${(valor / max) * 90 + 10}px` }} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function Poligono({ lados }: { lados: number }) {
+  const size = 180
+  const r = size / 2 - 16
+  const pontos = Array.from({ length: lados }, (_, i) => {
+    const angulo = (i / lados) * 2 * Math.PI - Math.PI / 2
+    return [size / 2 + r * Math.cos(angulo), size / 2 + r * Math.sin(angulo)] as const
+  })
+
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} role="img" aria-label={`poligono de ${lados} lados`}>
+      <polygon
+        points={pontos.map(([x, y]) => `${x},${y}`).join(' ')}
+        fill={AZUL_CLARO}
+        fillOpacity={0.35}
+        stroke={AZUL}
+        strokeWidth={3}
+      />
+      {pontos.map(([x, y], index) => (
+        <circle key={index} cx={x} cy={y} r={4.5} fill={VERDE} />
       ))}
     </svg>
   )

@@ -779,7 +779,88 @@ h3 {
   color: #fff;
 }
 
-.numpad-del {
+.numpad-aux {
+  color: var(--tinta-suave);
+}
+
+/* ---------- entrada numerica e ajuste nos modulos de conteudo ---------- */
+
+.quiz-answer-open {
+  border: 2px dashed var(--linha);
+  background: #fff;
+}
+
+.quiz-unit {
+  color: var(--tinta-suave);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.expressao {
+  margin: 0;
+  color: var(--azul);
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.plane {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+.plane-clickable {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ---------- conjunto de dados (estatistica) ---------- */
+
+.dados {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.dado-col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+}
+
+.dado-valor {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.dado-barra {
+  width: 26px;
+  background: var(--azul-claro);
+  border-radius: 6px 6px 0 0;
+}
+
+/* ---------- operacao com fracoes lado a lado ---------- */
+
+.operar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+.operar-parte {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.operar-sinal {
+  font-size: 1.8rem;
+  font-weight: 700;
   color: var(--tinta-suave);
 }
 

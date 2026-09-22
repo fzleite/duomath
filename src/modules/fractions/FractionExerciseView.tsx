@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 
+import { NumberLinePicker } from '../../components/CartesianPlane'
 import { FractionLabel, FractionShape } from '../../components/FractionShape'
 import type { ExerciseViewProps } from '../types'
 import type { Fraction, FractionExercise } from './exercises'
@@ -28,6 +29,8 @@ export function FractionExerciseView({ exercise, locked, onAnswer }: ExerciseVie
   if (exercise.kind === 'identify') return <IdentifyView exercise={exercise} locked={locked} onAnswer={onAnswer} />
   if (exercise.kind === 'compare') return <CompareView exercise={exercise} locked={locked} onAnswer={onAnswer} />
   if (exercise.kind === 'build') return <BuildView exercise={exercise} locked={locked} onAnswer={onAnswer} />
+  if (exercise.kind === 'reta') return <RetaView exercise={exercise} locked={locked} onAnswer={onAnswer} />
+  if (exercise.kind === 'operar') return <OperarView exercise={exercise} locked={locked} onAnswer={onAnswer} />
   return <ChoiceView exercise={exercise} locked={locked} onAnswer={onAnswer} />
 }
 
@@ -176,6 +179,77 @@ function ChoiceView({ exercise, locked, onAnswer }: ExerciseViewProps<Extract<Fr
             {exercise.options[i]}
           </button>
         ))}
+      </div>
+    </>
+  )
+}
+
+/**
+ * Marcar a fracao na reta. A reta anda em passos inteiros de 0 a `d` e os rotulos mostram a
+ * fracao correspondente — e a mesma reta do modulo de Primeiros Numeros, com outra legenda.
+ */
+function RetaView({ exercise, locked, onAnswer }: ExerciseViewProps<Extract<FractionExercise, { kind: 'reta' }>>) {
+  const [escolhido, setEscolhido] = useState<number | null>(null)
+  const d = exercise.target.d
+
+  return (
+    <>
+      <div className="exercise-visual">
+        <NumberLinePicker
+          max={d}
+          selected={escolhido}
+          onPick={locked ? undefined : setEscolhido}
+          labelFor={(value) => (value === 0 ? '0' : value === d ? '1' : `${value}/${d}`)}
+        />
+      </div>
+      <div className="options">
+        <button
+          type="button"
+          className="option option-wide option-primary"
+          disabled={locked || escolhido === null}
+          onClick={() => onAnswer(escolhido === exercise.target.n)}
+        >
+          Conferir
+        </button>
+      </div>
+    </>
+  )
+}
+
+/** Soma e subtracao com as duas barras visiveis: a operacao acontece no desenho. */
+function OperarView({ exercise, locked, onAnswer }: ExerciseViewProps<Extract<FractionExercise, { kind: 'operar' }>>) {
+  const order = useShuffledIndexes(exercise.options.length)
+  const resultado = exercise.op === '+' ? exercise.left.n + exercise.right.n : exercise.left.n - exercise.right.n
+
+  return (
+    <>
+      <div className="operar">
+        <div className="operar-parte">
+          <FractionShape kind="bar" numerator={exercise.left.n} denominator={exercise.left.d} size={120} />
+          <FractionLabel numerator={exercise.left.n} denominator={exercise.left.d} />
+        </div>
+        <span className="operar-sinal">{exercise.op}</span>
+        <div className="operar-parte">
+          <FractionShape kind="bar" numerator={exercise.right.n} denominator={exercise.right.d} size={120} />
+          <FractionLabel numerator={exercise.right.n} denominator={exercise.right.d} />
+        </div>
+      </div>
+
+      <div className="options options-fraction">
+        {order.map((i) => {
+          const option = exercise.options[i]
+          return (
+            <button
+              key={i}
+              type="button"
+              className="option"
+              disabled={locked}
+              onClick={() => onAnswer(option.n === resultado && option.d === exercise.left.d)}
+            >
+              <FractionLabel numerator={option.n} denominator={option.d} />
+            </button>
+          )
+        })}
       </div>
     </>
   )

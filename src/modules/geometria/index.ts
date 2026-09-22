@@ -7,7 +7,7 @@ export const geometriaModule: ContentModule<QuizExercise> = {
   id: 'geometria',
   title: 'Geometria e Trigonometria',
   tagline: 'Formas, angulos e as razoes do triangulo — a casa do Pizinho.',
-  status: 'soon',
+  status: 'ready',
   accent: '#1a936f',
   category: 'conteudo',
   stages: geometriaStages,

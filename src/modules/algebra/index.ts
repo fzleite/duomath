@@ -7,7 +7,7 @@ export const algebraModule: ContentModule<QuizExercise> = {
   id: 'algebra',
   title: 'Algebra',
   tagline: 'Letras no lugar de numeros, equacoes e funcoes.',
-  status: 'soon',
+  status: 'ready',
   accent: '#48bfe3',
   category: 'conteudo',
   stages: algebraStages,

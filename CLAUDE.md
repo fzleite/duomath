@@ -69,6 +69,21 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
   não rewrite de servidor. Ele volta com status HTTP 404 por design e isso não afeta o app.
 - Service worker/manifest só valem em build de produção; `npm run dev` não exercita isso.
 
+## Quatro formas de responder
+
+`QuizExercise` aceita alternativas (padrão, `options` + `answerIndex: 0`) **ou** um `input`:
+
+- `numero` — entrada pelo teclado do app (`NumberPad`, com `decimal`/`negativo` opcionais).
+  Use quando reconhecer a resposta numa lista for mais fácil que produzi-la: expressão
+  algébrica, média, raiz de equação.
+- `ajuste` — sliders de coeficiente com prévia ao vivo no plano cartesiano (`afim` ou
+  `quadratica`). É o "ver a reta se transformando" do spec; a resposta é a configuração certa.
+- `ponto` — clicar na reta numérica ou no plano cartesiano.
+
+`options` e `input` são mutuamente exclusivos e o `check:content` reprova os dois juntos (ou
+nenhum). Resposta negativa exige `negativo: true` e decimal exige `decimal: true` — senão a
+criança não consegue digitar a resposta, e o verificador acusa.
+
 ## Módulo novo é (quase sempre) só um arquivo de dados
 
 `QuizExercise` + `QuizExerciseView` (em `src/modules/shared/`) cobrem o formato "enunciado +
@@ -78,9 +93,9 @@ grade de área, contorno e blocos 3D. Um módulo novo desse tipo referencia o vi
 não escreve componente nenhum. Frações é a exceção: tem interações próprias (comparar, montar
 com slider), então mantém a própria view.
 
-**Etapa declarada sem exercícios é intencional.** Os módulos de Álgebra, Geometria e
-Probabilidade têm as etapas em `stages.ts` com a progressão da BNCC, `exercises: []`, e aparecem
-na navegação como "conteúdo em preparação". Isso mantém o plano visível sem conteúdo inventado.
+**Etapa declarada sem exercícios é intencional.** As etapas que dependem de componente
+interativo ainda não construído ficam em `stages.ts` com a progressão da BNCC e `exercises: []`,
+e aparecem na navegação como "conteúdo em preparação". Isso mantém o plano visível sem conteúdo inventado.
 Regra que o código já respeita: etapa vazia nunca conta como concluída (senão destravaria a
 seguinte de graça) e não é jogável.
 
