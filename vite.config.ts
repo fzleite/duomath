@@ -19,7 +19,7 @@ export default defineConfig({
       manifest: {
         name: 'DuoMath',
         short_name: 'DuoMath',
-        description: 'Matematica visual e interativa, um modulo por vez.',
+        description: 'Matemática visual e interativa, um módulo por vez.',
         lang: 'pt-BR',
         start_url: BASE,
         scope: BASE,

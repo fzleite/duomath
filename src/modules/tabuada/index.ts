@@ -5,8 +5,8 @@ import { tabuadaLevels } from './questions'
 export const tabuadaModule: GameModule = {
   id: 'tabuada',
   // titulo distingue do modulo de estudo, que cobre o mesmo assunto na secao Conteudo
-  title: 'Tabuada - treino rapido',
-  tagline: 'Treino cronometrado de multiplicacao. Entre quando quiser.',
+  title: 'Tabuada - treino rápido',
+  tagline: 'Treino cronometrado de multiplicação. Entre quando quiser.',
   status: 'ready',
   accent: '#48bfe3',
   category: 'jogo',

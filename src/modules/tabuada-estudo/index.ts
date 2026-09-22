@@ -2,6 +2,7 @@ import { QuizExerciseView } from '../shared/QuizExerciseView'
 import type { QuizExercise } from '../shared/quiz'
 import type { ContentModule } from '../types'
 import { studyStages } from './exercises'
+import { tabuadaEstudoApoio } from './apoio'
 
 /**
  * Modo de estudo da Tabuada — a metade pedagogica do assunto, com etapas por Bloom e apoio
@@ -14,11 +15,12 @@ import { studyStages } from './exercises'
 export const tabuadaEstudoModule: ContentModule<QuizExercise> = {
   id: 'tabuada-estudo',
   title: 'Tabuada',
-  tagline: 'Multiplicacao como soma de grupos iguais, memoria e padroes.',
+  tagline: 'Multiplicação como soma de grupos iguais, memória e padrões.',
   status: 'ready',
   accent: '#5aa9e6',
   category: 'conteudo',
   stages: studyStages,
+  apoio: tabuadaEstudoApoio,
   ExerciseView: QuizExerciseView,
   companionGameId: 'tabuada',
 }

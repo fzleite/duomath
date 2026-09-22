@@ -27,7 +27,7 @@ export function ProfileSelect() {
     if (!name.trim()) return
     const profile = await addProfile({
       name: name.trim(),
-      guardian: guardian.trim() || 'Responsavel',
+      guardian: guardian.trim() || 'Responsável',
       color,
     })
     setName('')
@@ -73,11 +73,11 @@ export function ProfileSelect() {
         <form className="card form" onSubmit={submit}>
           <h2>Novo perfil</h2>
           <label>
-            <span>Nome da crianca</span>
+            <span>Nome da criança</span>
             <input value={name} onChange={(e) => setName(e.target.value)} autoFocus required />
           </label>
           <label>
-            <span>Responsavel</span>
+            <span>Responsável</span>
             <input
               value={guardian}
               onChange={(e) => setGuardian(e.target.value)}
@@ -111,7 +111,7 @@ export function ProfileSelect() {
       )}
 
       <Link className="link-quiet" to="/responsavel">
-        Painel do responsavel
+        Painel do responsável
       </Link>
     </main>
   )

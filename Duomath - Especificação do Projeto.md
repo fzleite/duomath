@@ -8,6 +8,26 @@ O DuoMath é uma ferramenta web progressiva (PWA), em HTML e JavaScript, para aj
 
 a proposta é funcionar como um Duolingo da matemática: exercícios visuais, progresso acompanhável por etapas, e um mascote que guia e incentiva.
 
+## Material de apoio e quantidade de exercícios
+
+### Material de apoio contextual por tema
+
+Cada tema ou sessão de exercícios deve vir acompanhado de material de apoio explicativo, disponibilizado antes ou junto dos exercícios, para reforçar a compreensão do conceito e permitir que Fernando revise e valide o conteúdo posteriormente. Esse material deve se basear apenas em fontes oficiais e confiáveis (como MEC, BNCC, secretarias de educação e instituições de ensino reconhecidas), evitando conteúdo de origem não verificada. Esse material deve incluir:
+
+- Uma explicação textual do conceito, contextualizando sua origem e propósito (por exemplo, ao introduzir a fórmula de Bhaskara, explicar o que ela resolve e de onde vem).
+- Sugestões de vídeos de referência disponíveis na internet que abordem o tema, buscados entre fontes confiáveis, para reforço do conteúdo.
+- Trechos de materiais escritos de referência (incluindo trechos públicos de livros e das fontes já listadas na seção de Ajuda) que expliquem o conceito.
+
+Esse material de apoio deve ficar acessível a partir da tela do exercício ou da etapa, para consulta antes, durante ou depois de resolver os exercícios, e permitir que Fernando revise as sugestões de vídeos e textos posteriormente. Além disso, o material de apoio de cada tema deve estar sempre disponível para consulta independente, a qualquer momento, mesmo fora do fluxo do exercício: ao acessar um módulo (por exemplo, Álgebra), deve ser possível abrir, voltar e revisar os conceitos livremente, sem depender de estar respondendo exercícios naquele momento. Os materiais devem ser organizados de forma categórica, por tema e etapa, e aparecer como sub-opções dentro do menu de navegação por assunto, ao lado dos módulos de exercícios. Os vídeos não ficam em uma seção separada: eles são inseridos junto do texto do material oficial, ao longo da explicação, como complemento no ponto em que fizerem sentido (por exemplo, um vídeo que traga uma abordagem ou formato diferente do mesmo conceito, logo abaixo do trecho de texto correspondente). Esses vídeos devem vir de sites oficiais ou de canais e fontes fidedignas (por exemplo, canais educativos reconhecidos como Manual do Mundo). Fernando pretende consultar o professor de sua filha para identificar canais de boa qualidade que cubram os temas do DuoMath de forma consistente, e a curadoria desses vídeos por fonte deve poder ser feita manualmente.
+
+### Quantidade de exercícios por sessão
+
+Cada sessão ou etapa deve conter 20 exercícios.
+
+### Geração aleatória de valores
+
+Os exercícios não devem ter valores numéricos fixos. Cada tipo de exercício deve ser guardado como um padrão ou fórmula (por exemplo, uma soma de dois números), com os valores numéricos gerados de forma aleatória a cada vez, dentro de faixas apropriadas ao conceito e à etapa. Isso permite que a criança refaça a mesma etapa ou tipo de exercício múltiplas vezes, praticando com combinações de números diferentes em vez de repetir os mesmos exercícios.
+
 ## Limites técnicos e arquitetura
 
 Aplicativo estritamente client-side, sem backend nem autenticação. Hospedagem em servidor Apache local, na rede doméstica de Fernando, acessível por outros dispositivos (tablets, celulares) dentro dessa rede.

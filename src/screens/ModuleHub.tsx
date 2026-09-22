@@ -31,7 +31,7 @@ export function ModuleHub() {
           className={`switch-tab ${view === 'serie' ? 'switch-tab-on' : ''}`}
           onClick={() => setView('serie')}
         >
-          Por serie
+          Por série
         </button>
         <button
           type="button"
@@ -72,7 +72,7 @@ export function ModuleHub() {
                   {overall.answered > 0 && (
                     <div className="kpi-row">
                       <span>
-                        <strong>{formatSeconds(overall.avgMs)}</strong> de media
+                        <strong>{formatSeconds(overall.avgMs)}</strong> de média
                       </span>
                       <span>
                         <strong>{formatPercent(overall.accuracy)}</strong> de acerto
@@ -141,7 +141,7 @@ function YearTabs({ year, onYear }: { year: number; onYear: (year: number) => vo
                     {module.title} · {stage.curriculum}
                   </small>
                   <span className="stage-kpi">
-                    {vazia ? 'conteudo em preparacao' : `${cleared}/${total} exercicios`}
+                    {vazia ? 'conteúdo em preparação' : `${cleared}/${total} exercícios`}
                   </span>
                 </span>
               </button>
@@ -165,7 +165,7 @@ function SubjectList({
 }) {
   return (
     <section className="hub-section">
-      <h2 className="hub-section-title">Conteudo</h2>
+      <h2 className="hub-section-title">Conteúdo</h2>
       <div className="module-grid">
         {contentModules().map((module) => {
           const stages = module.stages.map((stage: { id: string; exercises: ExerciseBase[] }) => ({
@@ -203,7 +203,7 @@ function SubjectList({
                   </div>
                   <div className="kpi-row">
                     <span>
-                      <strong>{formatPercent(metrics.completion)}</strong> do que esta disponivel
+                      <strong>{formatPercent(metrics.completion)}</strong> do que está disponível
                     </span>
                     <span>
                       <strong>{formatPercent(metrics.firstTryAccuracy)}</strong> de acerto de primeira
@@ -211,7 +211,7 @@ function SubjectList({
                   </div>
                   {prontas < module.stages.length && (
                     <span className="stage-kpi">
-                      {prontas} de {module.stages.length} etapas disponiveis
+                      {prontas} de {module.stages.length} etapas disponíveis
                     </span>
                   )}
                 </>

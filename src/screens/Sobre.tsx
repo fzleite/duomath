@@ -50,7 +50,7 @@ export function Sobre() {
         </p>
 
         <p className="sobre-dedicatoria">
-          Dedicado a Isabella e Helena: que cada grafico, cada exercicio e cada conquista aqui
+          Dedicado a Isabella e Helena: que cada grafico, cada exercício e cada conquista aqui
           dentro sirva de incentivo para que continuem curiosas e confiantes diante dos numeros.
         </p>
       </section>
@@ -82,13 +82,13 @@ export function Sobre() {
           ))}
         </ul>
         <p className="muted small">
-          Consultadas em setembro de 2026, refletindo a versao da BNCC vigente naquele momento.
+          Consultadas em setembro de 2026, refletindo a versão da BNCC vigente naquele momento.
           Vale revisar se a base curricular for atualizada.
         </p>
       </section>
 
       <Link className="link-quiet" to="/">
-        Voltar para o inicio
+        Voltar para o início
       </Link>
     </main>
   )

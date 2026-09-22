@@ -1,7 +1,7 @@
 export interface Profile {
   id: string
   name: string
-  /** Responsavel que administra este perfil — agrupa irmaos e, no futuro, colegas de classe. */
+  /** Responsável que administra este perfil — agrupa irmaos e, no futuro, colegas de classe. */
   guardian: string
   /** Cor de identificacao do perfil na tela de selecao. */
   color: string
@@ -15,7 +15,7 @@ export interface StageProgress {
   profileId: string
   moduleId: string
   stageId: string
-  /** Ids dos exercicios ja resolvidos corretamente pelo menos uma vez. */
+  /** Ids dos exercícios ja resolvidos corretamente pelo menos uma vez. */
   clearedExerciseIds: string[]
   completedAt: string | null
   updatedAt: string
@@ -23,7 +23,7 @@ export interface StageProgress {
 
 /**
  * Log append-only de cada resposta dada. E a fonte de verdade das metricas:
- * taxa de acerto na primeira tentativa e numero de tentativas por exercicio
+ * taxa de acerto na primeira tentativa e numero de tentativas por exercício
  * (incluindo repeticoes depois de errar).
  */
 export interface Attempt {
@@ -32,15 +32,15 @@ export interface Attempt {
   moduleId: string
   stageId: string
   exerciseId: string
-  /** 1 na primeira vez que este perfil responde este exercicio, 2 na segunda, etc. */
+  /** 1 na primeira vez que este perfil responde este exercício, 2 na segunda, etc. */
   attemptNo: number
   correct: boolean
-  /** Ms entre a exibicao do exercicio e a resposta — ajuda a distinguir dominio de chute. */
+  /** Ms entre a exibicao do exercício e a resposta — ajuda a distinguir dominio de chute. */
   elapsedMs: number
   answeredAt: string
   /**
    * Agrupador do item sorteado em modulos de jogo (ex: "8" para uma pergunta da tabuada do 8).
-   * Opcional: modulos de conteudo tem exercicio fixo e nao precisam dele. E o que permite
+   * Opcional: modulos de conteudo tem exercício fixo e nao precisam dele. E o que permite
    * comparar desempenho por tabuada mesmo com o sorteio aleatorio.
    */
   tag?: string

@@ -5,7 +5,7 @@ export interface ExerciseMetrics {
   attempts: number
   firstTryCorrect: boolean
   cleared: boolean
-  /** Respostas dadas depois do primeiro acerto — repeticao do exercicio ja dominado. */
+  /** Respostas dadas depois do primeiro acerto — repeticao do exercício ja dominado. */
   attemptsAfterCleared: number
 }
 
@@ -24,7 +24,7 @@ export interface ModuleMetrics {
   stages: StageMetrics[]
   clearedExercises: number
   totalExercises: number
-  /** 0..1 — fracao dos exercicios do modulo ja resolvidos. */
+  /** 0..1 — fracao dos exercícios do modulo ja resolvidos. */
   completion: number
   firstTryAccuracy: number | null
   totalAttempts: number
@@ -200,7 +200,7 @@ export function statsByTag(attempts: Attempt[], moduleId: string): TagStats[] {
 }
 
 /**
- * Evolucao do tempo ao longo do tempo: media por bloco de N respostas certas, em ordem
+ * Evolução do tempo ao longo do tempo: média por bloco de N respostas certas, em ordem
  * cronologica. Blocos (e nao por dia) porque a crianca pode treinar varias vezes no mesmo dia
  * ou passar dias sem treinar — o que interessa e a curva de aprendizado, nao o calendario.
  */

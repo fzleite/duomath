@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 
 import { AppShell } from './components/AppShell'
+import { ApoioEtapa, ApoioModulo } from './screens/Apoio'
 import { ExercisePlayer } from './screens/ExercisePlayer'
 import { GameScreen } from './screens/GameScreen'
 import { ModuleHub } from './screens/ModuleHub'
@@ -97,6 +98,23 @@ export default function App() {
                 <GameScreen />
               </Page>
             </RequireProfile>
+          }
+        />
+        {/* material de apoio: consultavel fora do fluxo de exercicio */}
+        <Route
+          path="/apoio/:moduleId"
+          element={
+            <Page>
+              <ApoioModulo />
+            </Page>
+          }
+        />
+        <Route
+          path="/apoio/:moduleId/:stageId"
+          element={
+            <Page>
+              <ApoioEtapa />
+            </Page>
           }
         />
         <Route path="*" element={<Navigate to="/" replace />} />

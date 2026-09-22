@@ -16,9 +16,9 @@ interface Feedback {
 const CHEERS = ['Isso! Voce pegou a ideia.', 'Perfeito!', 'Muito bem!', 'Acertou de novo!']
 
 /**
- * Motor de exercicios, compartilhado por todos os modulos: cronometra a resposta, grava a
+ * Motor de exercícios, compartilhado por todos os modulos: cronometra a resposta, grava a
  * tentativa, atualiza o progresso da etapa e decide quando o Pizinho aparece. Um modulo novo
- * so precisa declarar exercicios e saber renderizar os seus tipos.
+ * so precisa declarar exercícios e saber renderizar os seus tipos.
  */
 export function ExercisePlayer() {
   const { moduleId, stageId } = useParams()
@@ -31,7 +31,7 @@ export function ExercisePlayer() {
   const pizinhoEnabled = useApp((s) => s.settings.pizinhoEnabled)
   const answer = useApp((s) => s.answer)
 
-  // fila inicial: exercicios ainda nao resolvidos; se a etapa ja acabou, e revisao de tudo
+  // fila inicial: exercícios ainda nao resolvidos; se a etapa ja acabou, e revisao de tudo
   const initialQueue = useMemo(() => {
     if (!stage) return []
     const cleared = new Set(
@@ -39,7 +39,7 @@ export function ExercisePlayer() {
     )
     const pending = stage.exercises.filter((exercise: ExerciseBase) => !cleared.has(exercise.id))
     return (pending.length ? pending : stage.exercises).map((exercise: ExerciseBase) => exercise.id)
-    // recalcular a fila a cada resposta tiraria o exercicio da tela no meio do feedback
+    // recalcular a fila a cada resposta tiraria o exercício da tela no meio do feedback
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moduleId, stageId])
 
@@ -49,7 +49,7 @@ export function ExercisePlayer() {
   const wrongStreak = useRef<Record<string, number>>({})
   const shownAt = useRef<number>(Date.now())
 
-  // etapa sem exercicios escritos nao e "concluida": nao ha o que jogar ainda
+  // etapa sem exercícios escritos nao e "concluida": nao ha o que jogar ainda
   if (!module || !stage || stage.exercises.length === 0) return <Navigate to="/" replace />
 
   const stages = module.stages.map((candidate: { id: string; exercises: ExerciseBase[] }) => ({
@@ -63,10 +63,10 @@ export function ExercisePlayer() {
   if (!exercise) {
     return (
       <main className="screen screen-center">
-        <Pizinho mood="festa" message={`Etapa concluida! ${stage.title} esta completa.`} size={96} />
+        <Pizinho mood="festa" message={`Etapa concluída! ${stage.title} está completa.`} size={96} />
         <div className="kpi-row kpi-row-lg">
           <span>
-            <strong>{stageMetrics.clearedExercises}/{stageMetrics.totalExercises}</strong> exercicios
+            <strong>{stageMetrics.clearedExercises}/{stageMetrics.totalExercises}</strong> exercícios
           </span>
           <span>
             <strong>{formatPercent(stageMetrics.firstTryAccuracy)}</strong> de acerto de primeira
@@ -112,7 +112,7 @@ export function ExercisePlayer() {
     wrongStreak.current[exercise.id] = streak
     setFeedback({
       correct: false,
-      // errar de novo o mesmo exercicio muda o tom: de dica para apoio
+      // errar de novo o mesmo exercício muda o tom: de dica para apoio
       mood: streak >= 2 ? 'apoio' : 'dica',
       message:
         streak >= 2
@@ -126,7 +126,7 @@ export function ExercisePlayer() {
     shownAt.current = Date.now()
     setQueue((current) => {
       const [head, ...rest] = current
-      // errou: o exercicio volta para o fim da fila em vez de travar a etapa
+      // errou: o exercício volta para o fim da fila em vez de travar a etapa
       return feedback?.correct ? rest : [...rest, head]
     })
     setFeedback(null)
@@ -141,6 +141,12 @@ export function ExercisePlayer() {
         <Link className="link-quiet" to={`/modulo/${module.id}`}>
           Sair
         </Link>
+        {/* consulta durante o exercício: o spec pede antes, durante ou depois */}
+        {module.apoio?.some((m: { stageId: string }) => m.stageId === stage.id) ? (
+          <Link className="link-quiet" to={`/apoio/${module.id}/${stage.id}`}>
+            Apoio
+          </Link>
+        ) : null}
         <div className="kpi-row kpi-row-sm">
           <span>
             <strong>{formatPercent(metrics.completion)}</strong> do modulo
@@ -163,7 +169,7 @@ export function ExercisePlayer() {
 
       <section className="exercise">
         <p className="exercise-prompt">{exercise.prompt}</p>
-        {/* key por exercicio: remonta a view e zera estado local (sliders, ordem das opcoes) */}
+        {/* key por exercício: remonta a view e zera estado local (sliders, ordem das opcoes) */}
         <ExerciseView key={exercise.id} exercise={exercise} locked={Boolean(feedback)} onAnswer={handleAnswer} />
       </section>
 

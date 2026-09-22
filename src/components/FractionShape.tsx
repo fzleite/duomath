@@ -15,7 +15,7 @@ interface Props {
   numerator: number
   denominator: number
   size?: number
-  /** Numera as partes pintadas — ajuda na contagem nos primeiros exercicios. */
+  /** Numera as partes pintadas — ajuda na contagem nos primeiros exercícios. */
   showCount?: boolean
 }
 

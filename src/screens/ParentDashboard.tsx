@@ -111,13 +111,13 @@ export function ParentDashboard() {
         <Link className="link-quiet" to="/perfis">
           Voltar
         </Link>
-        <strong>Painel do responsavel</strong>
+        <strong>Painel do responsável</strong>
       </header>
 
       <section className="card">
-        <h2>Backup e transferencia</h2>
+        <h2>Backup e transferência</h2>
         <p className="muted">
-          Os dados ficam so neste navegador. O backup em JSON leva todos os perfis de uma vez, para
+          Os dados ficam só neste navegador. O backup em JSON leva todos os perfis de uma vez, para
           guardar ou abrir em outro dispositivo.
         </p>
         <div className="form-actions form-actions-start">
@@ -147,14 +147,14 @@ export function ParentDashboard() {
       </section>
 
       <section className="card">
-        <h2>Preferencias</h2>
+        <h2>Preferências</h2>
         <label className="switch">
           <input
             type="checkbox"
             checked={pizinhoEnabled}
             onChange={(event) => void setPizinhoEnabled(event.target.checked)}
           />
-          <span>Pizinho dando dicas durante os exercicios</span>
+          <span>Pizinho dando dicas durante os exercícios</span>
         </label>
       </section>
 
@@ -166,7 +166,7 @@ export function ParentDashboard() {
             </span>
             <div>
               <h2>{profile.name}</h2>
-              <small className="muted">responsavel: {profile.guardian}</small>
+              <small className="muted">responsável: {profile.guardian}</small>
             </div>
           </div>
 
@@ -178,7 +178,7 @@ export function ParentDashboard() {
                   <strong>
                     {moduleMetrics.clearedExercises}/{moduleMetrics.totalExercises}
                   </strong>{' '}
-                  exercicios
+                  exercícios
                 </span>
                 <span>
                   <strong>{formatPercent(moduleMetrics.firstTryAccuracy)}</strong> de primeira
@@ -192,7 +192,7 @@ export function ParentDashboard() {
                 <thead>
                   <tr>
                     <th>Etapa</th>
-                    <th>Concluido</th>
+                    <th>Concluído</th>
                     <th>1a tentativa</th>
                     <th>Tentativas</th>
                   </tr>
@@ -226,7 +226,7 @@ export function ParentDashboard() {
                     <strong>{formatPercent(game.overall.accuracy)}</strong> de acerto
                   </span>
                   <span>
-                    <strong>{formatSeconds(game.overall.avgMs)}</strong> de media
+                    <strong>{formatSeconds(game.overall.avgMs)}</strong> de média
                   </span>
                 </div>
 
@@ -236,7 +236,7 @@ export function ParentDashboard() {
                       <th>Tabuada</th>
                       <th>Respostas</th>
                       <th>Acerto</th>
-                      <th>Media</th>
+                      <th>Média</th>
                       <th>Melhor</th>
                     </tr>
                   </thead>
@@ -257,7 +257,7 @@ export function ParentDashboard() {
             ))}
 
           <p className="muted small">
-            Repeticoes de exercicio ja acertado: <strong>{repeatsAfterCleared}</strong>
+            Repetições de exercício já acertado: <strong>{repeatsAfterCleared}</strong>
           </p>
 
           <button

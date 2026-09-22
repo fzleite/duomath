@@ -39,7 +39,13 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
   conteúdo não usam.
 - **Média de tempo considera só respostas certas** — errar rápido não é ser rápido, e o
   desbloqueio de nível exige acerto mínimo junto com o tempo alvo.
-- Textos de UI e conteúdo dos exercícios em pt-BR. Identificadores e comentários em ASCII.
+- **Textos de UI e conteúdo em pt-BR ACENTUADO.** `npm run acentuar` aplica; o `build` roda
+  `--check` e falha se sobrar texto sem acento. A substituição é escopada ao valor das chaves de
+  texto conhecidas (`prompt`, `hint`, `corpo`, `options`, …) porque literais de TIPO precisam
+  ficar em ASCII: `kind: 'construcao'`, `id: 'angulo'`, `category: 'conteudo'`. Palavras curtas
+  ambíguas (e/é, da/dá, tem/têm) não entram no mapa por palavra — são tratadas por padrão de
+  frase e por uma lista de reparos literais em `tools/acentuar.mjs`.
+- Identificadores em ASCII. Comentários podem ficar em ASCII.
 
 ## Gotchas já resolvidos (não re-derivar)
 
@@ -68,6 +74,23 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
 - **Fallback de SPA no Pages é `dist/404.html`** (gerado por `tools/spa-fallback.mjs` no build),
   não rewrite de servidor. Ele volta com status HTTP 404 por design e isso não afeta o app.
 - Service worker/manifest só valem em build de produção; `npm run dev` não exercita isso.
+
+## Material de apoio
+
+Cada etapa tem material em `src/modules/<mod>/apoio.ts`: explicação do conceito com **vídeo e
+citação intercalados no texto**, não em seção separada (o spec é explícito). Acessível de três
+lugares: sub-opção "Material de apoio" no menu por assunto, atalho na trilha de etapas e link
+"Apoio" durante o exercício.
+
+**Proveniência é regra, não recomendação.** Todo link tem de vir de uma fonte em
+`FONTES_CONFIAVEIS` (`src/modules/shared/apoio.ts`) e a URL precisa bater com o domínio dela — o
+`check:content` reprova o que estiver fora. Curadoria é manual: aprovar fonte nova é editar esse
+array.
+
+**As URLs de vídeo apontam para a BUSCA do tema no canal/site, não para um vídeo específico.**
+Isso é deliberado: inventar id de vídeo seria informação falsa, e link direto sem curadoria
+humana envelhece mal. Trocar por link direto é o passo manual que o spec prevê (Fernando vai
+consultar a professora para indicar canais).
 
 ## Quatro formas de responder
 

@@ -110,7 +110,7 @@ export interface RecordAnswerInput {
   exerciseId: string
   correct: boolean
   elapsedMs: number
-  /** Total de exercicios da etapa — usado para marcar a etapa como concluida. */
+  /** Total de exercícios da etapa — usado para marcar a etapa como concluida. */
   stageExerciseCount: number
 }
 

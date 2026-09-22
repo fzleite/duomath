@@ -2,6 +2,7 @@ import { QuizExerciseView } from '../shared/QuizExerciseView'
 import type { QuizExercise } from '../shared/quiz'
 import type { ContentModule } from '../types'
 import { primeirosNumerosStages } from './exercises'
+import { primeirosNumerosApoio } from './apoio'
 
 /**
  * Modulo 0 — existe para incluir a filha mais nova, que estava de fora por idade.
@@ -9,11 +10,12 @@ import { primeirosNumerosStages } from './exercises'
  */
 export const primeirosNumerosModule: ContentModule<QuizExercise> = {
   id: 'primeiros-numeros',
-  title: 'Primeiros Numeros',
-  tagline: 'Contar, comparar, somar e ver padroes. Do 1o ao 3o ano.',
+  title: 'Primeiros Números',
+  tagline: 'Contar, comparar, somar e ver padrões. Do 1o ao 3º ano.',
   status: 'ready',
   accent: '#4c9f70',
   category: 'conteudo',
   stages: primeirosNumerosStages,
+  apoio: primeirosNumerosApoio,
   ExerciseView: QuizExerciseView,
 }

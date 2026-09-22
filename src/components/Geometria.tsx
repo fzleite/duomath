@@ -3,7 +3,7 @@
  *
  * O circulo trigonometrico e o unico interativo por dentro (recebe o angulo de fora e
  * redesenha): e o "ligar o angulo escolhido ao valor de cada razao em tempo real" do spec.
- * Os demais sao ilustracoes — o exercicio pergunta sobre o que esta desenhado.
+ * Os demais sao ilustracoes — o exercício pergunta sobre o que esta desenhado.
  */
 
 const VERDE = '#1a936f'
@@ -59,7 +59,7 @@ export function CirculoTrig({ angulo }: { angulo: number }) {
           cosseno <strong>{cos.toFixed(2)}</strong>
         </span>
         <span>
-          tangente <strong>{tan === null ? 'nao existe' : tan.toFixed(2)}</strong>
+          tangente <strong>{tan === null ? 'não existe' : tan.toFixed(2)}</strong>
         </span>
       </div>
     </div>
@@ -156,7 +156,7 @@ export function AngulosParalelas({ angulo }: { angulo: number }) {
   )
 }
 
-/** Ilustracao das construcoes classicas — o desenho pronto, para o exercicio raciocinar sobre. */
+/** Ilustracao das construcoes classicas — o desenho pronto, para o exercício raciocinar sobre. */
 export function Construcao({ tipo }: { tipo: 'mediatriz' | 'bissetriz' | 'angulo-60' }) {
   const width = 240
   const height = 160

@@ -21,20 +21,20 @@ export const SESSION_SIZE = 10
 export const tabuadaLevels: GameLevel[] = [
   {
     id: 'facil',
-    title: 'Facil',
+    title: 'Fácil',
     description: 'Tabuadas de 1 a 10, sorteadas.',
     unlock: null,
   },
   {
     id: 'avancado',
-    title: 'Avancado',
+    title: 'Avançado',
     description: 'Tabuadas de 1 a 100, sorteadas.',
     unlock: { fromLevelId: 'facil', minCorrect: 30, maxAvgMs: 5000, minAccuracy: 0.8 },
   },
   {
     id: 'contas',
-    title: 'Contas aleatorias',
-    description: 'Multiplicacoes soltas, como 25 x 8.',
+    title: 'Contas aleatórias',
+    description: 'Multiplicações soltas, como 25 x 8.',
     unlock: { fromLevelId: 'avancado', minCorrect: 30, maxAvgMs: 9000, minAccuracy: 0.75 },
   },
 ]

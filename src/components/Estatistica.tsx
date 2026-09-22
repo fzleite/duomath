@@ -4,7 +4,7 @@ import { useState } from 'react'
  * Apoios visuais de probabilidade e estatistica.
  *
  * O sorteio simulado tem estado proprio de proposito: a crianca aperta, ve o resultado sair e
- * a contagem subir. Isso e exploracao, nao resposta — a pergunta do exercicio continua sendo
+ * a contagem subir. Isso e exploracao, nao resposta — a pergunta do exercício continua sendo
  * verificavel (a chance teorica), e o simulador serve para ela perceber que o resultado real
  * oscila em volta dessa chance.
  */
@@ -104,7 +104,7 @@ export function Urna({ bolas }: { bolas: Bola[] }) {
 
 /** Sorteio simulado: aperta, sai uma bola, a contagem acumula. */
 export function Sorteio({ bolas }: { bolas: Bola[] }) {
-  const [ultima, setUltima] = useState<string | null>(null)
+  const [ultima, setÚltima] = useState<string | null>(null)
   const [contagem, setContagem] = useState<Record<string, number>>({})
 
   const total = bolas.reduce((s, b) => s + b.qtd, 0)
@@ -112,7 +112,7 @@ export function Sorteio({ bolas }: { bolas: Bola[] }) {
     let n = Math.floor(Math.random() * total)
     for (const bola of bolas) {
       if (n < bola.qtd) {
-        setUltima(bola.cor)
+        setÚltima(bola.cor)
         setContagem((atual) => ({ ...atual, [bola.cor]: (atual[bola.cor] ?? 0) + 1 }))
         return
       }

@@ -62,16 +62,27 @@ export function AppShell({ children, showNav = true }: { children: React.ReactNo
             <nav className={`subject-nav ${menuOpen ? 'subject-nav-open' : ''}`} aria-label="Assuntos">
               <p className="nav-group">Assuntos</p>
               {contentModules().map((module) => (
-                <NavLink
-                  key={module.id}
-                  to={`/modulo/${module.id}`}
-                  className={({ isActive }) => `nav-item ${isActive ? 'nav-item-on' : ''}`}
-                  onClick={close}
-                >
-                  <span className="nav-dot" style={{ background: module.accent }} />
-                  {module.title}
-                  {module.status === 'soon' && <span className="badge badge-sm">em breve</span>}
-                </NavLink>
+                <div className="nav-grupo" key={module.id}>
+                  <NavLink
+                    to={`/modulo/${module.id}`}
+                    className={({ isActive }) => `nav-item ${isActive ? 'nav-item-on' : ''}`}
+                    onClick={close}
+                  >
+                    <span className="nav-dot" style={{ background: module.accent }} />
+                    {module.title}
+                    {module.status === 'soon' && <span className="badge badge-sm">em breve</span>}
+                  </NavLink>
+                  {/* sub-opcao ao lado dos exercícios, como o spec pede */}
+                  {module.apoio?.length ? (
+                    <NavLink
+                      to={`/apoio/${module.id}`}
+                      className={({ isActive }) => `nav-sub ${isActive ? 'nav-item-on' : ''}`}
+                      onClick={close}
+                    >
+                      Material de apoio
+                    </NavLink>
+                  ) : null}
+                </div>
               ))}
 
               <p className="nav-group">Jogos</p>
@@ -89,7 +100,7 @@ export function AppShell({ children, showNav = true }: { children: React.ReactNo
 
               <p className="nav-group">DuoMath</p>
               <NavLink to="/responsavel" className="nav-item" onClick={close}>
-                Painel do responsavel
+                Painel do responsável
               </NavLink>
               <NavLink to="/sobre" className="nav-item" onClick={close}>
                 Sobre

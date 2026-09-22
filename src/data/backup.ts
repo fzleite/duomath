@@ -68,10 +68,10 @@ export async function shareOrDownloadBackup(backup: BackupFile): Promise<'shared
 function assertBackup(data: unknown): BackupFile {
   const candidate = data as Partial<BackupFile>
   if (!candidate || candidate.format !== 'duomath-backup') {
-    throw new Error('Arquivo nao parece um backup do DuoMath.')
+    throw new Error('Arquivo não parece um backup do DuoMath.')
   }
   if (typeof candidate.version !== 'number' || candidate.version > BACKUP_VERSION) {
-    throw new Error('Este backup foi gerado por uma versao mais nova do DuoMath.')
+    throw new Error('Este backup foi gerado por uma versão mais nova do DuoMath.')
   }
   return {
     format: 'duomath-backup',

@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && node tools/check-content.mts && vite build && node tools/spa-fallback.mjs",
+    "build": "tsc -b && node tools/check-content.mts && node tools/acentuar.mjs --check && vite build && node tools/spa-fallback.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
-    "check:content": "node tools/check-content.mts"
+    "check:content": "node tools/check-content.mts",
+    "acentuar": "node tools/acentuar.mjs && node tools/acentuar-ui.mjs",
+    "check:acentos": "node tools/acentuar.mjs --check"
   },
   "dependencies": {
     "idb": "^8.0.3",

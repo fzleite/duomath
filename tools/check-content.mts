@@ -18,6 +18,15 @@ import { studyStages } from '../src/modules/tabuada-estudo/exercises.ts'
 import { algebraStages } from '../src/modules/algebra/stages.ts'
 import { geometriaStages } from '../src/modules/geometria/stages.ts'
 import { probabilidadeStages } from '../src/modules/probabilidade/stages.ts'
+import { primeirosNumerosApoio } from '../src/modules/primeiros-numeros/apoio.ts'
+import { fractionsApoio } from '../src/modules/fractions/apoio.ts'
+import { tabuadaEstudoApoio } from '../src/modules/tabuada-estudo/apoio.ts'
+import { porcentagemApoio } from '../src/modules/porcentagem/apoio.ts'
+import { grandezasApoio } from '../src/modules/grandezas/apoio.ts'
+import { algebraApoio } from '../src/modules/algebra/apoio.ts'
+import { geometriaApoio } from '../src/modules/geometria/apoio.ts'
+import { probabilidadeApoio } from '../src/modules/probabilidade/apoio.ts'
+import { FONTES_CONFIAVEIS, type MaterialApoio } from '../src/modules/shared/apoio.ts'
 
 type AnyStage = { id: string; title: string; years: number[]; exercises: any[] }
 
@@ -34,6 +43,18 @@ const quizModules: [string, AnyStage[]][] = [
 
 const BLOOM = ['lembrar', 'entender', 'aplicar', 'analisar', 'avaliar']
 const PLANE_RANGE = 6 // tem que casar com o default de CartesianPlane
+
+/** Material de apoio por modulo, para conferir cobertura e proveniencia das fontes. */
+const apoioPorModulo: [string, MaterialApoio[]][] = [
+  ['primeiros-numeros', primeirosNumerosApoio],
+  ['tabuada-estudo', tabuadaEstudoApoio],
+  ['porcentagem', porcentagemApoio],
+  ['grandezas', grandezasApoio],
+  ['algebra', algebraApoio],
+  ['geometria', geometriaApoio],
+  ['probabilidade', probabilidadeApoio],
+  ['fracoes', fractionsApoio],
+]
 
 let problemas = 0
 const falha = (ctx: string, msg: string) => {
@@ -463,6 +484,57 @@ const todasStages = [...quizModules.flatMap(([, s]) => s), ...(fractionStages as
 for (const stage of todasStages) {
   if (!Array.isArray(stage.years) || stage.years.length === 0) falha(stage.id, 'etapa sem years')
   if (stage.years.some((y) => y < 1 || y > 9)) falha(stage.id, 'ano fora de 1..9')
+}
+
+// ---------------------------------------------------------------------------
+// Material de apoio: cobertura por etapa e proveniencia dos links
+// ---------------------------------------------------------------------------
+
+const dominios = new Map(FONTES_CONFIAVEIS.map((f) => [f.id, f.dominio]))
+const stagesPorModulo = new Map<string, AnyStage[]>([
+  ...quizModules,
+  ['fracoes', fractionStages as unknown as AnyStage[]],
+])
+
+let blocos = 0
+console.log('\nmaterial de apoio:')
+for (const [nome, materiais] of apoioPorModulo) {
+  const stages = stagesPorModulo.get(nome) ?? []
+  const idsDeEtapa = new Set(stages.map((s) => s.id))
+
+  for (const material of materiais) {
+    const ctx = `${nome}/apoio/${material.stageId}`
+    if (!idsDeEtapa.has(material.stageId)) falha(ctx, 'material aponta para etapa inexistente')
+    if (!material.titulo?.trim() || !material.resumo?.trim()) falha(ctx, 'sem titulo ou resumo')
+    if (!material.blocos.length) falha(ctx, 'material sem blocos')
+    if (material.blocos[0]?.tipo !== 'texto') falha(ctx, 'o primeiro bloco precisa ser de texto')
+
+    for (const bloco of material.blocos) {
+      blocos++
+      if (bloco.tipo === 'texto') {
+        if (bloco.corpo.length < 80) falha(ctx, 'bloco de texto curto demais para explicar o conceito')
+        continue
+      }
+      // video e citacao: a fonte precisa estar na lista curada e a URL bater com o dominio dela
+      const dominio = dominios.get(bloco.fonteId)
+      if (!dominio) {
+        falha(ctx, `fonte '${bloco.fonteId}' nao esta em FONTES_CONFIAVEIS`)
+        continue
+      }
+      if (!bloco.url.startsWith('https://')) falha(ctx, `link sem https: ${bloco.url}`)
+      if (!bloco.url.includes(dominio)) {
+        falha(ctx, `link de '${bloco.fonteId}' fora do dominio ${dominio}: ${bloco.url}`)
+      }
+    }
+  }
+
+  // toda etapa com exercicio precisa de material: o spec pede apoio por tema
+  const semMaterial = stages.filter(
+    (s) => s.exercises.length > 0 && !materiais.some((m) => m.stageId === s.id),
+  )
+  for (const s of semMaterial) falha(`${nome}/${s.id}`, 'etapa com exercicios e sem material de apoio')
+
+  console.log(`${nome.padEnd(18)} ${materiais.length}/${stages.length} etapas com material`)
 }
 
 console.log('\ncobertura da navegacao por serie:')

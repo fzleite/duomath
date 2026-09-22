@@ -31,7 +31,7 @@ export function StageList() {
       <ol className="stage-path">
         {module.stages.map((stage, index) => {
           const stageMetrics = metrics.stages[index]
-          // etapa declarada mas sem exercicios escritos: mostra o plano, nao deixa entrar
+          // etapa declarada mas sem exercícios escritos: mostra o plano, nao deixa entrar
           const vazia = stageMetrics.totalExercises === 0
           const done = !vazia && stageMetrics.clearedExercises >= stageMetrics.totalExercises
           const anterior = metrics.stages[index - 1]
@@ -59,8 +59,8 @@ export function StageList() {
                   <small>{stage.curriculum}</small>
                   <span className="stage-kpi">
                     {vazia
-                      ? 'conteudo em preparacao'
-                      : `${stageMetrics.clearedExercises}/${stageMetrics.totalExercises} exercicios · ${formatPercent(stageMetrics.firstTryAccuracy)} de primeira`}
+                      ? 'conteúdo em preparação'
+                      : `${stageMetrics.clearedExercises}/${stageMetrics.totalExercises} exercícios · ${formatPercent(stageMetrics.firstTryAccuracy)} de primeira`}
                   </span>
                 </span>
               </button>
@@ -68,6 +68,12 @@ export function StageList() {
           )
         })}
       </ol>
+
+      {module.apoio?.length ? (
+        <Link className="companion-link" to={`/apoio/${module.id}`}>
+          Material de apoio deste assunto →
+        </Link>
+      ) : null}
 
       {/* as duas metades do mesmo assunto: estudo aqui, treino cronometrado no jogo */}
       {module.companionGameId && (

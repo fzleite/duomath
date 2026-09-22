@@ -1,5 +1,7 @@
 import type { ComponentType } from 'react'
 
+import type { MaterialApoio } from './shared/apoio'
+
 /** Niveis da Taxonomia de Bloom — cada etapa de modulo de conteudo progride por eles. */
 export type BloomLevel = 'lembrar' | 'entender' | 'aplicar' | 'analisar' | 'avaliar'
 
@@ -54,6 +56,12 @@ export interface ContentModule<E extends ExerciseBase = ExerciseBase> extends Mo
    * A trilha de etapas oferece o atalho, sem obrigar a passar por ela.
    */
   companionGameId?: string
+  /**
+   * Material de apoio por etapa. Consultavel dentro do exercicio e tambem fora dele, pela
+   * sub-opcao do menu por assunto — o spec e explicito em que nao pode depender de estar
+   * respondendo exercicio naquele momento.
+   */
+  apoio?: MaterialApoio[]
 }
 
 /**
