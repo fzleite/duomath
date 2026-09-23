@@ -42,9 +42,18 @@ PWA standalone (receita `pwa-standalone:pwa-scaffold`). Fonte da verdade funcion
 - **Textos de UI e conteúdo em pt-BR ACENTUADO.** `npm run acentuar` aplica; o `build` roda
   `--check` e falha se sobrar texto sem acento. A substituição é escopada ao valor das chaves de
   texto conhecidas (`prompt`, `hint`, `corpo`, `options`, …) porque literais de TIPO precisam
-  ficar em ASCII: `kind: 'construcao'`, `id: 'angulo'`, `category: 'conteudo'`. Palavras curtas
-  ambíguas (e/é, da/dá, tem/têm) não entram no mapa por palavra — são tratadas por padrão de
-  frase e por uma lista de reparos literais em `tools/acentuar.mjs`.
+  ficar em ASCII: `kind: 'construcao'`, `id: 'angulo'`, `category: 'conteudo'`.
+
+  São **dois** scripts: `tools/acentuar.mjs` (conteúdo dos módulos, ancorado em chave) e
+  `tools/acentuar-ui.mjs` (telas e componentes, por par literal revisado à mão — em JSX não há
+  chave para ancorar).
+
+  **Palavras que NÃO podem entrar num mapa por palavra**, porque mudam de sentido com o acento:
+  `e`/`é`, `da`/`dá`, `tem`/`têm`, `as`/`às` e — a que me pegou — `media`/`média`, que é
+  substantivo *e* verbo ("cada região **media** com o próprio pé"). Elas são tratadas por padrão
+  de frase e por uma lista de reparos literais no fim do arquivo. Ao escrever conteúdo novo,
+  rode `npm run acentuar` e depois **leia o diff**: regra de frase erra o sentido de vez em
+  quando ("dezena **e** o que sobra" virou "**é** o que sobra" numa das rodadas).
 - Identificadores em ASCII. Comentários podem ficar em ASCII.
 
 ## Gotchas já resolvidos (não re-derivar)
@@ -166,6 +175,47 @@ novo, rode isso antes de commitar.
 Só importa arquivos de DADOS. É por isso que os módulos declarados guardam as etapas em
 `stages.ts` e não no `index.ts`: `index.ts` importa componente React, e o executor de `.ts` do
 Node não processa JSX.
+
+**Valide o validador por mutação.** Uma regra que não dispara é pior que nenhuma, porque dá
+falsa confiança. Depois de escrever validação nova, quebre de propósito alguns valores certos e
+confirme que cada um é pego. Foi assim que as regras de sólido, balança, ângulo colateral,
+seno, urna e gráfico foram confirmadas — seis mutações, seis capturas. E foi um teste desses que
+revelou um bug **no próprio verificador**: `/media/i` casava dentro de "**media**na", então ele
+calculava a média onde o enunciado pedia a mediana e reprovava a resposta correta. Bordas de
+palavra (`\bmediana\b`) resolveram.
+
+## PRÓXIMO TRABALHO: geradores aleatórios e 20 exercícios por etapa
+
+Duas exigências do spec ainda **não implementadas**, e que são uma coisa só:
+
+> "Cada sessão ou etapa deve conter 20 exercícios."
+> "Os exercícios não devem ter valores numéricos fixos. Cada tipo de exercício deve ser guardado
+> como um padrão ou fórmula, com os valores gerados de forma aleatória a cada vez, dentro de
+> faixas apropriadas ao conceito e à etapa."
+
+Hoje são 214 exercícios **fixos** (6 por etapa). A segunda exigência resolve a primeira: em vez
+de escrever 800 itens fixos, escrevem-se geradores, e a criança refaz a etapa com números
+diferentes — que é exatamente o motivo dado no spec.
+
+**Desenho pretendido** (pensado, não codado — vale revisar antes de executar):
+
+- `QuizExercise` deixa de ser o dado e vira o **resultado**. A etapa passa a declarar
+  `templates: ExerciseTemplate[]`, com `gerar(rng): QuizExercise` e as faixas por etapa.
+- **O id continua sendo do template, não da instância.** `progress.clearedExerciseIds` e as
+  métricas por exercício são por template ("dominou este tipo"), o que preserva os dados já
+  gravados e mantém o KPI de primeira tentativa com sentido.
+- O player gera as 20 instâncias no início da sessão (`useMemo` por etapa), não a cada render —
+  senão o exercício muda embaixo da criança durante o feedback.
+- O `rng` precisa ser explícito (semente por sessão), não `Math.random()` solto: sem isso o
+  verificador não consegue reproduzir um caso que falhou.
+- **O verificador muda de natureza**: em vez de conferir valores fixos, roda cada gerador
+  algumas centenas de vezes e valida a propriedade — resposta bate com o cálculo independente,
+  alternativas sem repetição, distratores diferentes da resposta, visual coerente com os
+  números sorteados, faixa dentro do previsto para a etapa. É teste de propriedade, e é mais
+  forte que o de hoje.
+- Cuidado conhecido: gerador de alternativas precisa garantir distratores **plausíveis e
+  distintos** — sorteio ingênuo produz duas alternativas iguais ou um distrator absurdo que
+  entrega a resposta.
 
 ## Pendências de conteúdo (decisões já tomadas, execução aberta)
 
